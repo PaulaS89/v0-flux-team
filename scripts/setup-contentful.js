@@ -77,6 +77,26 @@ async function setupContentTypes() {
         { id: "tagline", name: "Tagline", type: "Symbol" },
       ],
     },
+    {
+      id: "designSystem",
+      name: "Design System",
+      fields: [
+        { id: "name", name: "Theme Name", type: "Symbol", required: true },
+        { id: "primaryColor", name: "Primary Color", type: "Symbol", required: true },
+        { id: "backgroundColor", name: "Background Color", type: "Symbol", required: true },
+        { id: "foregroundColor", name: "Foreground Color", type: "Symbol", required: true },
+        { id: "accentColor", name: "Accent Color", type: "Symbol" },
+        { id: "mutedColor", name: "Muted Color", type: "Symbol" },
+        { id: "mutedForegroundColor", name: "Muted Foreground Color", type: "Symbol" },
+        { id: "borderColor", name: "Border Color", type: "Symbol" },
+        { id: "cardColor", name: "Card Color", type: "Symbol" },
+        { id: "destructiveColor", name: "Destructive Color", type: "Symbol" },
+        { id: "headingFont", name: "Heading Font", type: "Symbol" },
+        { id: "bodyFont", name: "Body Font", type: "Symbol" },
+        { id: "borderRadius", name: "Border Radius", type: "Symbol" },
+        { id: "isDarkMode", name: "Is Dark Mode", type: "Boolean" },
+      ],
+    },
   ];
 
   for (const ct of contentTypes) {

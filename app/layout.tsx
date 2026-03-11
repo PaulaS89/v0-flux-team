@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { getDesignSystem, designSystemToCssVars } from '@/lib/contentful'
+import { ThemeInjector } from '@/components/theme-injector'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -29,14 +31,19 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Fetch design system from Contentful
+  const designSystem = await getDesignSystem()
+  const cssVars = designSystemToCssVars(designSystem)
+  
   return (
     <html lang="en">
       <body className="font-sans antialiased">
+        <ThemeInjector cssVars={cssVars} />
         {children}
         <Analytics />
       </body>
