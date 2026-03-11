@@ -50,7 +50,8 @@ interface EventPricingProps {
 }
 
 export function EventPricing({ pricing }: EventPricingProps) {
-  const pricingTiers = pricing && pricing.length > 0 ? pricing : defaultPricing;
+  // Always use default pricing with the updated tiers (Early Bird, Regular, Client Special, VIP)
+  const pricingTiers = defaultPricing;
 
   return (
     <section id="pricing" className="relative bg-background px-8 md:px-16 lg:px-24 py-16 overflow-hidden">
