@@ -40,9 +40,10 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
       try {
         const response = await fetch("/api/auth/session");
         const data = await response.json();
+        console.log("[v0] Session response:", data);
         setUser(data.user);
       } catch (error) {
-        console.error("Failed to fetch session:", error);
+        console.error("[v0] Failed to fetch session:", error);
       } finally {
         setIsLoading(false);
       }

@@ -43,11 +43,13 @@ export async function POST(request: Request) {
     // Create session
     const sessionToken = generateSessionToken()
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days
+    console.log("[v0] Creating session for user:", user.id, "token:", sessionToken.substring(0, 8) + "...")
 
     await sql`
       INSERT INTO sessions (user_id, session_token, expires_at, created_at)
       VALUES (${user.id}, ${sessionToken}, ${expiresAt.toISOString()}, NOW())
     `
+    console.log("[v0] Session inserted into database")
 
     // Set session cookie
     const cookieStore = await cookies()
@@ -58,6 +60,7 @@ export async function POST(request: Request) {
       expires: expiresAt,
       path: '/',
     })
+    console.log("[v0] Session cookie set")
 
     return NextResponse.json({
       success: true,
