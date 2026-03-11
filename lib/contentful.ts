@@ -194,7 +194,9 @@ export async function getScheduleItems(preview = false): Promise<ScheduleItemEnt
   try {
     const entries = await client.getEntries<ScheduleItemFields>({
       content_type: "scheduleItem",
+      order: ["fields.time"] as const,
     });
+    console.log("[v0] Fetched schedule items from Contentful:", entries.items.length);
     return entries.items;
   } catch (error) {
     console.error("Error fetching schedule:", error);
