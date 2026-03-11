@@ -73,15 +73,22 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                       src={speaker.photo || speaker.image || ""}
                       alt={speaker.name}
                       fill
-                      className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0 group-hover:scale-110"
+                      className="object-cover transition-all duration-500 ease-out group-hover:grayscale group-hover:scale-110 group-hover:contrast-125"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
                       <div className="h-20 w-20 rounded-full bg-muted" />
                     </div>
                   )}
-                  {/* Overlay that fades out on hover */}
-                  <div className="absolute inset-0 bg-background/20 transition-opacity duration-500 group-hover:opacity-0" />
+                  {/* Noise/grain overlay that appears on hover */}
+                  <div 
+                    className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-30 pointer-events-none mix-blend-overlay"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                    }}
+                  />
+                  {/* Dark overlay that appears on hover for the B&W effect */}
+                  <div className="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
                 </div>
                 <h3 className="mb-1 text-lg font-medium tracking-tight">{speaker.name}</h3>
                 <p className="mb-3 text-sm text-muted-foreground">
