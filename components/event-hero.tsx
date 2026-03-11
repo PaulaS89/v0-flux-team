@@ -107,37 +107,28 @@ export function EventHero({ data }: EventHeroProps) {
         }
       `}</style>
 
-      {/* Hero Content - Split layout with flux on left and 2026 on right */}
-      <div className="relative z-10 flex-1 flex items-center justify-between w-full">
-        {/* Left side - Deloitte + flux */}
-        <div className="md:ml-[8%] lg:ml-[12%]">
+      {/* Hero Content */}
+      <div className="relative z-10 flex-1 flex items-center w-full">
+        <div className="max-w-xl">
           {heroData.themeName && (
-            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/80 mb-3">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/80 mb-4">
               {heroData.themeName}
             </p>
           )}
-          <span 
-            className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-medium tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
-            style={{
-              backgroundSize: '200% 100%',
-              backgroundPosition: '0% 0%',
-            }}
-          >
-            flux
-          </span>
-        </div>
-
-        {/* Right side - 2026 */}
-        <div className="md:mr-[8%] lg:mr-[12%]">
-          <span 
-            className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-medium tracking-[0.02em] bg-gradient-to-l from-foreground via-foreground to-primary bg-clip-text text-transparent"
-            style={{
-              backgroundSize: '200% 100%',
-              backgroundPosition: '100% 0%',
-            }}
-          >
-            2026
-          </span>
+          <h1 className="leading-none">
+            <span 
+              className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-medium tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
+              style={{
+                backgroundSize: '200% 100%',
+                backgroundPosition: '0% 0%',
+              }}
+            >
+              flux
+            </span>
+            <span className="block text-sm md:text-base font-medium tracking-[0.4em] text-primary mt-3 ml-1">
+              2026
+            </span>
+          </h1>
         </div>
       </div>
 
