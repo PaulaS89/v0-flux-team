@@ -94,7 +94,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
       </svg>
       
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
+        <h2 className="mb-8 ml-6 text-3xl font-light tracking-tight md:text-4xl">
           Speakers
         </h2>
         <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
@@ -107,7 +107,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
               key={speaker.id || `${speaker.name}-${index}`}
               className="cursor-pointer border-0 bg-transparent"
             >
-              <CardContent className="p-6">
+              <CardContent className="p-6 pt-0">
                 <div className="group mb-6 aspect-[4/3] w-full relative overflow-hidden rounded-lg bg-muted/50">
                   <Image
                     src={speakerImage}
