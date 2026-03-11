@@ -268,7 +268,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
               </div>
             </div>
           )}
-          <h2 className="mb-4 text-5xl md:text-7xl font-medium tracking-[0.02em] text-foreground">
+          <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
             AGENDA
           </h2>
           <p className="text-muted-foreground text-sm md:text-base tracking-wide">
