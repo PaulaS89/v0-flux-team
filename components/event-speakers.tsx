@@ -130,7 +130,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                   {speaker.role}
                 </p>
                 {(speaker.topic || speaker.bio) && (
-                  <p className="text-sm text-muted-foreground/80">{speaker.topic || speaker.bio}</p>
+                  <p className="text-sm text-muted-foreground">{speaker.topic || speaker.bio}</p>
                 )}
               </CardContent>
             </Card>

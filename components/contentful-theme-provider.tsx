@@ -76,7 +76,8 @@ export function ContentfulThemeProvider({ children, theme }: ContentfulThemeProv
       root.style.setProperty("--secondary-foreground", theme.foregroundColor);
       root.style.setProperty("--accent-foreground", theme.foregroundColor);
       root.style.setProperty("--sidebar-accent-foreground", theme.foregroundColor);
-      root.style.setProperty("--muted-foreground", adjustLightness(theme.foregroundColor, -0.4));
+      // Use #D4D4D4 for muted-foreground - accessible on dark backgrounds (WCAG AA)
+      root.style.setProperty("--muted-foreground", "#D4D4D4");
       // Primary foreground should contrast with primary (usually dark on light primary)
       root.style.setProperty("--primary-foreground", theme.backgroundColor || '#0A0A0A');
     }
