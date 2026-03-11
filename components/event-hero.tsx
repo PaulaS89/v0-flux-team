@@ -63,6 +63,8 @@ export function EventHero({ data }: EventHeroProps) {
             fill
             className="object-contain scale-110"
             priority
+            quality={100}
+            sizes="(max-width: 768px) 420px, (max-width: 1024px) 540px, 660px"
           />
         </div>
       </div>
