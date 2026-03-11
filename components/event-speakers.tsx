@@ -79,9 +79,9 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
 
   return (
     <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
-      <div className="mx-auto max-w-5xl">
-        {/* Header matching agenda style */}
-        <div className="mb-12 text-center">
+      <div className="mx-auto max-w-6xl">
+        {/* Header matching agenda style - left aligned */}
+        <div className="mb-12">
           <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
             SPEAKERS
           </h2>
@@ -90,18 +90,18 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
           </p>
         </div>
         
-        {/* Speakers grid with larger circular images */}
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Speakers in 2x2 grid with horizontal cards */}
+        <div className="grid gap-6 md:grid-cols-2">
           {speakersList.map((speaker, index) => {
             const speakerImage = getSpeakerImage(speaker.name, index, speaker.photo || speaker.image);
             
             return (
               <div
                 key={speaker.id || `${speaker.name}-${index}`}
-                className="group text-center"
+                className="group flex items-start gap-5"
               >
-                {/* Larger circular image */}
-                <div className="mx-auto mb-4 w-28 h-28 relative overflow-hidden rounded-full bg-muted/30 border border-muted-foreground/20">
+                {/* Square image with subtle rounded corners */}
+                <div className="w-24 h-24 md:w-28 md:h-28 relative overflow-hidden rounded-lg bg-muted/30 shrink-0">
                   <Image
                     src={speakerImage}
                     alt={speaker.name}
@@ -110,14 +110,16 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                   />
                 </div>
                 
-                {/* Speaker info */}
-                <h3 className="text-sm font-medium text-foreground mb-0.5">{speaker.name}</h3>
-                <p className="text-xs text-muted-foreground mb-2">
-                  {speaker.role}
-                </p>
-                {(speaker.topic || speaker.bio) && (
-                  <p className="text-xs text-muted-foreground/70 leading-relaxed">{speaker.topic || speaker.bio}</p>
-                )}
+                {/* Speaker info - left aligned */}
+                <div className="pt-1">
+                  <h3 className="text-base font-medium text-foreground mb-1">{speaker.name}</h3>
+                  <p className="text-sm text-primary mb-2">
+                    {speaker.role}
+                  </p>
+                  {(speaker.topic || speaker.bio) && (
+                    <p className="text-sm text-muted-foreground leading-relaxed">{speaker.topic || speaker.bio}</p>
+                  )}
+                </div>
               </div>
             );
           })}
