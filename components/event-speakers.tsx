@@ -48,36 +48,42 @@ const defaultSpeakers: Speaker[] = [
     name: "Sarah Chen",
     role: "AI Research Lead",
     topic: "OpenAI",
+    bio: "Exploring how large language models can understand and generate more intuitive user interfaces.",
     image: "/speakers/speaker-woman-1.jpg",
   },
   {
     name: "James Liu",
     role: "Principal Designer",
     topic: "Vercel",
+    bio: "Building design systems that scale with AI-powered tooling and real-time collaboration.",
     image: "/speakers/speaker-man-1.jpg",
   },
   {
     name: "Elena Rodriguez",
     role: "UX Director",
     topic: "Figma",
+    bio: "Creating human-centered experiences that bridge the gap between AI capabilities and user needs.",
     image: "/speakers/speaker-woman-2.jpg",
   },
   {
     name: "Marcus Weber",
     role: "Design Systems Lead",
     topic: "Stripe",
+    bio: "Designing payment experiences that leverage machine learning for fraud detection and personalization.",
     image: "/speakers/speaker-man-2.jpg",
   },
   {
     name: "Nina Patel",
     role: "Product Design Manager",
     topic: "Anthropic",
+    bio: "Crafting conversational interfaces that feel natural while maintaining safety and alignment.",
     image: "/speakers/speaker-woman-3.jpg",
   },
   {
     name: "David Kim",
     role: "Creative Director",
     topic: "Linear",
+    bio: "Reimagining productivity tools with AI-first workflows and predictive interactions.",
     image: "/speakers/speaker-man-3.jpg",
   },
 ];
@@ -121,26 +127,48 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
             return (
               <div
                 key={speaker.id || `${speaker.name}-${index}`}
-                className="group rounded-2xl border border-muted-foreground/20 p-6 text-center transition-all duration-300 hover:border-muted-foreground/40"
+                className="group relative h-[280px] perspective-1000"
               >
-                {/* Square image with colored background */}
-                <div className={`mx-auto mb-5 w-28 h-28 relative overflow-hidden rounded-xl ${bgColor}`}>
-                  <Image
-                    src={speakerImage}
-                    alt={speaker.name}
-                    fill
-                    className="object-cover transition-all duration-500 group-hover:scale-105"
-                  />
+                {/* Card container with flip animation */}
+                <div className="relative w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+                  
+                  {/* Front of card */}
+                  <div className="absolute inset-0 backface-hidden rounded-2xl border border-muted-foreground/20 p-6 text-center bg-background">
+                    {/* Square image with colored background */}
+                    <div className={`mx-auto mb-5 w-28 h-28 relative overflow-hidden rounded-xl ${bgColor}`}>
+                      <Image
+                        src={speakerImage}
+                        alt={speaker.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    
+                    {/* Speaker info - centered */}
+                    <h3 className="text-lg font-semibold text-foreground mb-1">{speaker.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      {speaker.role}
+                    </p>
+                    <p className="text-sm font-medium text-foreground">{speaker.topic}</p>
+                  </div>
+                  
+                  {/* Back of card */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl border border-muted-foreground/20 p-6 bg-background flex flex-col justify-center">
+                    <div className={`mx-auto mb-4 w-16 h-16 relative overflow-hidden rounded-lg ${bgColor}`}>
+                      <Image
+                        src={speakerImage}
+                        alt={speaker.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <h3 className="text-base font-semibold text-foreground mb-1 text-center">{speaker.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-3 text-center">{speaker.role} · {speaker.topic}</p>
+                    <p className="text-sm text-muted-foreground text-center leading-relaxed">
+                      {speaker.bio}
+                    </p>
+                  </div>
                 </div>
-                
-                {/* Speaker info - centered */}
-                <h3 className="text-lg font-semibold text-foreground mb-1">{speaker.name}</h3>
-                <p className="text-sm text-muted-foreground mb-1">
-                  {speaker.role}
-                </p>
-                {(speaker.topic || speaker.bio) && (
-                  <p className="text-sm font-medium text-foreground">{speaker.topic || speaker.bio}</p>
-                )}
               </div>
             );
           })}
