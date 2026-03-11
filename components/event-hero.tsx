@@ -53,10 +53,10 @@ export function EventHero({ data }: EventHeroProps) {
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden pl-6 pr-6 md:pl-12 md:pr-12 pt-14">
-      {/* Background Image from Contentful - with morphing animation for Deloitte theme */}
+      {/* Background Image from Contentful - positioned to the left with morphing animation for Deloitte theme */}
       {heroData.backgroundImageUrl && (
-        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
-          <div className={`relative h-[600px] w-[600px] md:h-[750px] md:w-[750px] lg:h-[900px] lg:w-[900px] mx-auto ${isDeloitteTheme ? 'animate-morph' : ''}`}>
+        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-start">
+          <div className={`relative h-[600px] w-[600px] md:h-[750px] md:w-[750px] lg:h-[900px] lg:w-[900px] -ml-[150px] md:-ml-[200px] lg:-ml-[250px] ${isDeloitteTheme ? 'animate-morph' : ''}`}>
             <Image
               src={heroData.backgroundImageUrl}
               alt=""
@@ -107,11 +107,11 @@ export function EventHero({ data }: EventHeroProps) {
         }
       `}</style>
 
-      {/* Hero Content */}
-      <div className="relative z-10 flex-1 flex items-center w-full md:pl-[5%] lg:pl-[8%]">
-        <div className="max-w-xl">
+      {/* Hero Content - Right aligned */}
+      <div className="relative z-10 flex-1 flex items-center justify-end w-full">
+        <div className="max-w-xl text-right pr-6 md:pr-12">
           {heroData.themeName && (
-            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3" style={{ marginLeft: '4px' }}>
+            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3">
               {heroData.themeName}
             </p>
           )}
@@ -126,7 +126,7 @@ export function EventHero({ data }: EventHeroProps) {
               FLUX
             </span>
           </h1>
-          <div className="mt-6" style={{ marginLeft: '4px' }}>
+          <div className="mt-6">
             <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground/70 mb-1">
               Future · LLMs · UX
             </p>
@@ -136,7 +136,7 @@ export function EventHero({ data }: EventHeroProps) {
           </div>
           
           {/* Early Bird & CTA moved here */}
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8" style={{ marginLeft: '4px' }}>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end sm:gap-8">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 {heroData.earlyBirdLabel || "Early Bird Tickets"}
@@ -166,10 +166,10 @@ export function EventHero({ data }: EventHeroProps) {
         </div>
       </div>
 
-      {/* Event Details Footer */}
+      {/* Event Details Footer - Right aligned */}
       <div className="relative z-10 pb-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="flex flex-col gap-4 md:flex-row md:gap-16">
+        <div className="flex justify-end pr-6 md:pr-12">
+          <div className="flex flex-col gap-4 md:flex-row md:gap-16 text-right">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 {heroData.location}
@@ -189,8 +189,6 @@ export function EventHero({ data }: EventHeroProps) {
               </p>
             </div>
           </div>
-
-
         </div>
       </div>
     </section>

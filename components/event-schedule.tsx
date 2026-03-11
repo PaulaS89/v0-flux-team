@@ -193,10 +193,10 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       
       <div className="relative mx-auto max-w-4xl">
-        {/* Header with optional circle motif image */}
-        <div className="mb-16 text-center">
+        {/* Header with optional circle motif image - Right aligned to match hero */}
+        <div className="mb-16 text-right pr-6 md:pr-12">
           {headerImageUrl && (
-            <div className="relative mx-auto mb-8 w-32 h-32 md:w-40 md:h-40">
+            <div className="relative ml-auto mb-8 w-32 h-32 md:w-40 md:h-40">
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent blur-xl" />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-primary/30 shadow-lg shadow-primary/10">
                 <Image
