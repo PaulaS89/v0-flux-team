@@ -56,6 +56,20 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
 
   return (
     <section id="speakers" className="bg-card px-6 py-24">
+      {/* SVG filter for halftone effect */}
+      <svg className="absolute w-0 h-0" aria-hidden="true">
+        <defs>
+          <filter id="halftone" x="0" y="0" width="100%" height="100%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur" />
+            <feComponentTransfer in="blur" result="contrast">
+              <feFuncR type="linear" slope="1.5" intercept="-0.2" />
+              <feFuncG type="linear" slope="1.5" intercept="-0.2" />
+              <feFuncB type="linear" slope="1.5" intercept="-0.2" />
+            </feComponentTransfer>
+          </filter>
+        </defs>
+      </svg>
+      
       <div className="mx-auto max-w-7xl">
         <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
           Speakers
@@ -67,28 +81,31 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
               className="group cursor-pointer border-0 bg-transparent transition-all hover:bg-secondary/50"
             >
               <CardContent className="p-6">
-                <div className="mb-6 aspect-[4/3] w-full bg-muted/50 relative overflow-hidden rounded-lg">
+                <div className="mb-6 aspect-[4/3] w-full relative overflow-hidden rounded-lg bg-primary/80">
                   {(speaker.photo || speaker.image) ? (
-                    <Image
-                      src={speaker.photo || speaker.image || ""}
-                      alt={speaker.name}
-                      fill
-                      className="object-cover transition-all duration-500 ease-out group-hover:grayscale group-hover:scale-110 group-hover:contrast-125"
-                    />
+                    <>
+                      <Image
+                        src={speaker.photo || speaker.image || ""}
+                        alt={speaker.name}
+                        fill
+                        className="object-cover transition-all duration-500 ease-out group-hover:scale-110 group-hover:sepia group-hover:contrast-150 group-hover:brightness-110"
+                      />
+                      {/* Halftone dot pattern overlay */}
+                      <div 
+                        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none mix-blend-multiply"
+                        style={{
+                          backgroundImage: `radial-gradient(circle, #000 1px, transparent 1px)`,
+                          backgroundSize: '4px 4px',
+                        }}
+                      />
+                      {/* Teal/cyan color overlay */}
+                      <div className="absolute inset-0 bg-primary/40 opacity-0 transition-opacity duration-500 group-hover:opacity-70 pointer-events-none mix-blend-color" />
+                    </>
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
                       <div className="h-20 w-20 rounded-full bg-muted" />
                     </div>
                   )}
-                  {/* Noise/grain overlay that appears on hover */}
-                  <div 
-                    className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-30 pointer-events-none mix-blend-overlay"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-                    }}
-                  />
-                  {/* Dark overlay that appears on hover for the B&W effect */}
-                  <div className="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
                 </div>
                 <h3 className="mb-1 text-lg font-medium tracking-tight">{speaker.name}</h3>
                 <p className="mb-3 text-sm text-muted-foreground">
