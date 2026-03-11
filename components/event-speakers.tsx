@@ -16,34 +16,29 @@ interface Speaker {
 // Default fallback speakers
 const defaultSpeakers: Speaker[] = [
   {
-    name: "Dr. Anna Weber",
-    role: "CEO, TechVision GmbH",
-    topic: "Die Zukunft der KI im Unternehmen",
+    name: "Dr. Lena Hoffmann",
+    role: "Partner, Digital Customer & Marketing, Deloitte Germany",
+    topic: "The Future of Digital Experiences",
   },
   {
-    name: "Marcus Schmidt",
-    role: "Lead Developer, CloudScale",
-    topic: "Skalierbare Architekturen",
+    name: "Markus Stein",
+    role: "Director, AI & Data Strategy, Deloitte",
+    topic: "AI, Personalization & Trust",
   },
   {
-    name: "Lisa Hoffmann",
-    role: "CTO, StartupLab",
-    topic: "Von 0 auf 1 Million Nutzer",
+    name: "Sofia Alvarez",
+    role: "Experience Design Lead, Deloitte Digital",
+    topic: "Human-Centered Digital Journeys",
   },
   {
-    name: "Thomas Mueller",
-    role: "VP Engineering, DataFlow",
-    topic: "Datengetriebene Entscheidungen",
+    name: "Prof. Dr. Adrian Keller",
+    role: "Chair of Human-Computer Interaction, TU Munich",
+    topic: "Guest Speaker",
   },
   {
-    name: "Sarah Klein",
-    role: "Founder, DevOps Academy",
-    topic: "CI/CD Best Practices",
-  },
-  {
-    name: "Michael Braun",
-    role: "Principal Architect, Enterprise Co",
-    topic: "Microservices in der Praxis",
+    name: "Julia Brandt",
+    role: "Chief Digital Officer, Global Retail Group",
+    topic: "Industry Case Study",
   },
 ];
 
@@ -58,7 +53,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
     <section id="speaker" className="bg-background px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
-          Speaker
+          Speakers
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {speakersList.map((speaker, index) => (

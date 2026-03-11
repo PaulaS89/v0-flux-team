@@ -9,8 +9,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'FLUX 26 | Die Konferenz fur Entwickler und Unternehmer',
-  description: 'Die eintaegige Konferenz fur Entwickler und Business-Leader. Berlin, 15. Mai 2026.',
+  title: 'Future of Digital Experiences | Deloitte Executive Briefing',
+  description: 'A Deloitte Executive Briefing exploring hyper-personalization, AI-driven interfaces, and connected ecosystems. Frankfurt, 16 April 2026.',
   generator: 'v0.app',
   icons: {
     icon: [

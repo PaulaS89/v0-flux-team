@@ -2,6 +2,8 @@ import { EventHeader } from "@/components/event-header";
 import { EventHero } from "@/components/event-hero";
 import { EventSpeakers } from "@/components/event-speakers";
 import { EventSchedule } from "@/components/event-schedule";
+import { EventPricing } from "@/components/event-pricing";
+import { EventLocation } from "@/components/event-location";
 import { EventFAQ } from "@/components/event-faq";
 import { EventFooter } from "@/components/event-footer";
 import {
@@ -87,6 +89,8 @@ export default async function Home() {
         <EventHero data={heroData} />
         <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
+        <EventPricing />
+        <EventLocation />
         <EventFAQ items={faqData} />
       </main>
       <EventFooter siteSettings={siteSettings} />
