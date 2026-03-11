@@ -81,30 +81,18 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
               className="group cursor-pointer border-0 bg-transparent transition-all hover:bg-secondary/50"
             >
               <CardContent className="p-6">
-                <div className="mb-6 aspect-[4/3] w-full relative overflow-hidden rounded-lg">
-                  {/* Background color that shows through the halftone */}
-                  <div className="absolute inset-0 bg-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="mb-6 aspect-[4/3] w-full relative overflow-hidden rounded-lg bg-muted/50">
                   {(speaker.photo || speaker.image) ? (
                     <>
                       <Image
                         src={speaker.photo || speaker.image || ""}
                         alt={speaker.name}
                         fill
-                        className="object-cover transition-all duration-500 ease-out group-hover:scale-105"
-                        style={{
-                          filter: 'grayscale(0) contrast(1)',
-                          transition: 'filter 500ms ease-out, transform 500ms ease-out',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.filter = 'grayscale(1) contrast(1.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.filter = 'grayscale(0) contrast(1)';
-                        }}
+                        className="object-cover transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:grayscale group-hover:contrast-125"
                       />
-                      {/* Halftone dot pattern overlay - smaller dots, more subtle */}
+                      {/* Halftone dot pattern overlay - gradual fade */}
                       <div 
-                        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-60 pointer-events-none"
+                        className="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-50 pointer-events-none"
                         style={{
                           backgroundImage: `radial-gradient(circle at center, #000 0.5px, transparent 0.5px)`,
                           backgroundSize: '3px 3px',
@@ -113,7 +101,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                       />
                     </>
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+                    <div className="absolute inset-0 flex items-center justify-center">
                       <div className="h-20 w-20 rounded-full bg-muted" />
                     </div>
                   )}
