@@ -136,7 +136,7 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
           )}
           <Link
             href="/tickets"
-            className="group hidden lg:flex items-center gap-2 rounded-md bg-foreground px-4 py-2 text-background hover:bg-foreground/90"
+            className="group hidden lg:flex items-center gap-2 border border-foreground bg-foreground px-4 py-2 text-background transition-all hover:bg-transparent hover:text-foreground"
           >
             <span className="text-xs font-medium uppercase tracking-[0.15em]">
               Get Tickets
