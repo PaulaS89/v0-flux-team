@@ -1,35 +1,20 @@
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Train, Car, PersonStanding } from "lucide-react";
+import { MapPin, Train, Car, Plane } from "lucide-react";
+import { Location } from "@/lib/contentful";
 
-interface LocationData {
-  venue: string;
-  address: string;
-  city: string;
-  directions?: {
-    publicTransport?: string;
-    byCar?: string;
-    byFoot?: string;
-  };
-}
-
-const defaultLocation: LocationData = {
-  venue: "Deloitte Frankfurt Office",
+const defaultLocation: Location = {
+  id: "default",
+  venueName: "Deloitte Frankfurt Office",
   address: "Europa-Allee 91",
   city: "60486 Frankfurt am Main, Germany",
-  directions: {
-    publicTransport:
-      "From Frankfurt Hauptbahnhof, take tram line 17 toward Rebstockbad. Exit at Europaviertel West. Walk 3 minutes to Europa-Allee 91.",
-    byCar:
-      "Follow A648 toward Frankfurt Messe. Take the exit Frankfurt-Rebstock. Underground parking is available in the Deloitte building (entrance via Emser Bruecke).",
-    byFoot:
-      "Approx. 10-12 minutes walking distance from Messe Frankfurt's main entrance.",
-  },
+  mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2557.8927682775256!2d8.630611076891024!3d50.11181087152296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bd0ea72eb9c3b5%3A0x5d8f1bb0f3d3c3c0!2sEuropa-Allee%2091%2C%2060486%20Frankfurt%20am%20Main!5e0!3m2!1sen!2sde!4v1699999999999!5m2!1sen!2sde",
+  directionsTrain: "From Frankfurt Hauptbahnhof, take tram line 17 toward Rebstockbad. Exit at Europaviertel West. Walk 3 minutes to Europa-Allee 91.",
+  directionsCar: "Follow A648 toward Frankfurt Messe. Take the exit Frankfurt-Rebstock. Underground parking is available in the Deloitte building (entrance via Emser Bruecke).",
+  directionsPlane: "Frankfurt Airport (FRA) is approximately 15 minutes by taxi or 25 minutes via S-Bahn (S8/S9 to Hauptbahnhof, then tram 17).",
 };
 
 interface EventLocationProps {
-  location?: LocationData;
+  location?: Location | null;
 }
 
 export function EventLocation({ location }: EventLocationProps) {
@@ -42,7 +27,7 @@ export function EventLocation({ location }: EventLocationProps) {
           Location & Directions
         </h2>
         <p className="mb-16 text-muted-foreground">
-          Join us at the Deloitte Frankfurt Office
+          Join us at {locationData.venueName}
         </p>
 
         <div className="grid gap-8 lg:grid-cols-2">
@@ -55,62 +40,64 @@ export function EventLocation({ location }: EventLocationProps) {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <p className="text-lg font-medium">{locationData.venue}</p>
+              <p className="text-lg font-medium">{locationData.venueName}</p>
               <p className="text-muted-foreground">{locationData.address}</p>
               <p className="text-muted-foreground">{locationData.city}</p>
-              <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg bg-muted">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2557.8927682775256!2d8.630611076891024!3d50.11181087152296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bd0ea72eb9c3b5%3A0x5d8f1bb0f3d3c3c0!2sEuropa-Allee%2091%2C%2060486%20Frankfurt%20am%20Main!5e0!3m2!1sen!2sde!4v1699999999999!5m2!1sen!2sde"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Event Location Map"
-                />
-              </div>
+              {locationData.mapEmbedUrl && (
+                <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg bg-muted">
+                  <iframe
+                    src={locationData.mapEmbedUrl}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Event Location Map"
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
 
           {/* Directions */}
           <div className="space-y-4">
-            {locationData.directions?.publicTransport && (
+            {locationData.directionsTrain && (
               <Card className="border-border bg-background">
                 <CardContent className="flex gap-4 p-6">
                   <Train className="h-6 w-6 shrink-0 text-primary" />
                   <div>
                     <h3 className="mb-2 font-medium">By Public Transport</h3>
                     <p className="text-sm text-muted-foreground">
-                      {locationData.directions.publicTransport}
+                      {locationData.directionsTrain}
                     </p>
                   </div>
                 </CardContent>
               </Card>
             )}
 
-            {locationData.directions?.byCar && (
+            {locationData.directionsCar && (
               <Card className="border-border bg-background">
                 <CardContent className="flex gap-4 p-6">
                   <Car className="h-6 w-6 shrink-0 text-primary" />
                   <div>
                     <h3 className="mb-2 font-medium">By Car</h3>
                     <p className="text-sm text-muted-foreground">
-                      {locationData.directions.byCar}
+                      {locationData.directionsCar}
                     </p>
                   </div>
                 </CardContent>
               </Card>
             )}
 
-            {locationData.directions?.byFoot && (
+            {locationData.directionsPlane && (
               <Card className="border-border bg-background">
                 <CardContent className="flex gap-4 p-6">
-                  <PersonStanding className="h-6 w-6 shrink-0 text-primary" />
+                  <Plane className="h-6 w-6 shrink-0 text-primary" />
                   <div>
-                    <h3 className="mb-2 font-medium">By Foot from Messe</h3>
+                    <h3 className="mb-2 font-medium">By Plane</h3>
                     <p className="text-sm text-muted-foreground">
-                      {locationData.directions.byFoot}
+                      {locationData.directionsPlane}
                     </p>
                   </div>
                 </CardContent>
