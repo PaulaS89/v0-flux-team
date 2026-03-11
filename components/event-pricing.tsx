@@ -76,7 +76,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
           {pricingTiers.map((tier) => (
             <div
               key={tier.id}
-              className={`group relative rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-lg ${
+              className={`group relative flex flex-col h-full rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm p-6 transition-all duration-300 hover:border-border hover:shadow-lg ${
                 tier.isHighlighted ? "border-primary/50 bg-primary/5" : ""
               }`}
             >
@@ -108,7 +108,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
 
               {/* Features */}
               {tier.features && tier.features.length > 0 && (
-                <ul className="mb-8 space-y-2">
+                <ul className="flex-grow space-y-2 mb-8">
                   {tier.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -118,22 +118,24 @@ export function EventPricing({ pricing }: EventPricingProps) {
                 </ul>
               )}
 
-              {/* CTA Button */}
-              <Button 
-                className={`w-full group/btn flex items-center justify-center gap-2 border transition-all ${
-                  tier.isHighlighted 
-                    ? "border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground" 
-                    : "border-border bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
-                }`}
-                asChild
-              >
-                <a href="/tickets">
-                  <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                    {tier.ctaText || "Register"}
-                  </span>
-                  <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
-                </a>
-              </Button>
+              {/* CTA Button - always at bottom */}
+              <div className="mt-auto">
+                <Button 
+                  className={`w-full group/btn flex items-center justify-center gap-2 border transition-all ${
+                    tier.isHighlighted 
+                      ? "border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground" 
+                      : "border-border bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
+                  }`}
+                  asChild
+                >
+                  <a href="/tickets">
+                    <span className="text-xs font-medium uppercase tracking-[0.15em]">
+                      {tier.ctaText || "Register"}
+                    </span>
+                    <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
+                  </a>
+                </Button>
+              </div>
 
               {/* Subtle glow on hover */}
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
