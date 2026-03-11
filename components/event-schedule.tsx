@@ -9,7 +9,7 @@ interface ScheduleItem {
   type: "keynote" | "talk" | "break";
 }
 
-// Default fallback schedule
+// Default fallback schedule (using Contentful speaker names)
 const defaultSchedule: ScheduleItem[] = [
   {
     time: "08:30",
@@ -26,13 +26,13 @@ const defaultSchedule: ScheduleItem[] = [
   {
     time: "09:15",
     title: "Keynote: The Future of Digital Experiences",
-    speaker: "Dr. Lena Hoffmann",
+    speaker: "Sarah Chen",
     type: "keynote",
   },
   {
     time: "10:00",
     title: "Panel Discussion: AI, Personalization & Trust",
-    speaker: "Markus Stein, Sofia Alvarez, Prof. Dr. Adrian Keller",
+    speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
   {
@@ -44,13 +44,13 @@ const defaultSchedule: ScheduleItem[] = [
   {
     time: "11:00",
     title: "Deep Dive: Designing Human-Centered Digital Journeys",
-    speaker: "Sofia Alvarez",
+    speaker: "Elena Rodriguez",
     type: "talk",
   },
   {
     time: "11:45",
     title: "Case Studies: Transformations Across Industries",
-    speaker: "Julia Brandt",
+    speaker: "James Liu",
     type: "talk",
   },
   {
@@ -68,7 +68,7 @@ const defaultSchedule: ScheduleItem[] = [
   {
     time: "14:15",
     title: "Closing Insights & Q&A",
-    speaker: "Dr. Lena Hoffmann",
+    speaker: "Sarah Chen",
     type: "keynote",
   },
   {

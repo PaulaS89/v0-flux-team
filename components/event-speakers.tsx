@@ -42,43 +42,31 @@ function getSpeakerImage(name: string, index: number, contentfulImage?: string |
   return fallbackImages[index % fallbackImages.length];
 }
 
-// Default fallback speakers (3 women, 3 men)
+// Default fallback speakers (matching Contentful speaker names)
 const defaultSpeakers: Speaker[] = [
   {
     name: "Sarah Chen",
-    role: "CEO, TechVision Inc",
-    topic: "The Future of AI in Enterprise",
+    role: "Keynote Speaker",
+    topic: "The Future of Digital Experiences",
     image: "/speakers/speaker-woman-1.jpg",
   },
   {
-    name: "Marcus Johnson",
-    role: "Lead Developer, CloudScale",
-    topic: "Scalable Architectures",
+    name: "James Liu",
+    role: "Panelist",
+    topic: "AI, Personalization & Trust",
     image: "/speakers/speaker-man-1.jpg",
   },
   {
-    name: "Amara Williams",
-    role: "CTO, StartupLab",
-    topic: "From 0 to 1 Million Users",
+    name: "Elena Rodriguez",
+    role: "UX Director",
+    topic: "Designing Human-Centered Digital Journeys",
     image: "/speakers/speaker-woman-2.jpg",
   },
   {
-    name: "Raj Patel",
-    role: "VP Engineering, DataFlow",
-    topic: "Data-Driven Decisions",
+    name: "Marcus Weber",
+    role: "Panelist",
+    topic: "AI, Personalization & Trust",
     image: "/speakers/speaker-man-2.jpg",
-  },
-  {
-    name: "Christine Weber",
-    role: "Founder, DevOps Academy",
-    topic: "CI/CD Best Practices",
-    image: "/speakers/speaker-woman-3.jpg",
-  },
-  {
-    name: "David Thompson",
-    role: "Principal Architect, Enterprise Co",
-    topic: "Microservices in Practice",
-    image: "/speakers/speaker-man-3.jpg",
   },
 ];
 
@@ -106,7 +94,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
       </svg>
       
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
+        <h2 className="mb-8 ml-6 text-3xl font-light tracking-tight md:text-4xl">
           Speakers
         </h2>
         <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
@@ -119,7 +107,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
               key={speaker.id || `${speaker.name}-${index}`}
               className="cursor-pointer border-0 bg-transparent"
             >
-              <CardContent className="p-6">
+              <CardContent className="p-6 pt-0">
                 <div className="group mb-6 aspect-[4/3] w-full relative overflow-hidden rounded-lg bg-muted/50">
                   <Image
                     src={speakerImage}
