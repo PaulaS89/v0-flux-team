@@ -233,22 +233,52 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
             return (
               <div
                 key={speaker.id || `${speaker.name}-${index}`}
-                className="group relative h-[280px]"
-                style={{ perspective: '1000px' }}
+                className="group relative h-[280px] rounded-2xl border border-muted-foreground/20 bg-background overflow-hidden"
               >
-                {/* Card container with flip animation */}
-                <div 
-                  className="relative w-full h-full transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
+                {/* Front content - always visible */}
+                <div className="absolute inset-0 p-6 text-center flex flex-col items-center">
+                  {/* Square image with colored background */}
+                  <div className={`mb-5 w-28 h-28 relative overflow-hidden rounded-xl ${bgColor} shrink-0`}>
+                    <Image
+                      src={speakerImage}
+                      alt={speaker.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   
-                  {/* Front of card */}
-                  <div 
-                    className="absolute inset-0 rounded-2xl border border-muted-foreground/20 p-6 text-center bg-background"
-                    style={{ backfaceVisibility: 'hidden' }}
-                  >
-                    {/* Square image with colored background */}
-                    <div className={`mx-auto mb-5 w-28 h-28 relative overflow-hidden rounded-xl ${bgColor}`}>
+                  {/* Speaker info - centered */}
+                  <h3 className="text-lg font-semibold text-foreground mb-1">{speaker.name}</h3>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    {speaker.role}
+                  </p>
+                  <p className="text-sm font-medium text-foreground">{speaker.topic}</p>
+                </div>
+                
+                {/* Slide-in overlay - slides up from bottom on hover */}
+                <div className="absolute inset-0 bg-background/95 backdrop-blur-sm p-4 flex flex-col translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                  {/* Talk time badge */}
+                  {speaker.talkTime && (
+                    <span className="inline-block self-start font-mono text-[10px] text-primary mb-1.5 shrink-0">
+                      {speaker.talkTime}
+                    </span>
+                  )}
+                  
+                  {/* Talk title */}
+                  <h4 className="text-sm font-semibold text-foreground mb-2 leading-snug shrink-0">
+                    {speaker.talkTitle || speaker.topic}
+                  </h4>
+                  
+                  {/* Talk description - scrollable */}
+                  <div className="flex-1 overflow-y-auto min-h-0 pr-1">
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                      {speaker.bio}
+                    </p>
+                  </div>
+                  
+                  {/* Speaker attribution */}
+                  <div className="flex items-center gap-2 mt-2 pt-2 border-t border-muted-foreground/10 shrink-0">
+                    <div className={`w-6 h-6 relative overflow-hidden rounded-full ${bgColor}`}>
                       <Image
                         src={speakerImage}
                         alt={speaker.name}
@@ -256,53 +286,9 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                         className="object-cover"
                       />
                     </div>
-                    
-                    {/* Speaker info - centered */}
-                    <h3 className="text-lg font-semibold text-foreground mb-1">{speaker.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-1">
-                      {speaker.role}
-                    </p>
-                    <p className="text-sm font-medium text-foreground">{speaker.topic}</p>
-                  </div>
-                  
-                  {/* Back of card - shows talk details */}
-                  <div 
-                    className="absolute inset-0 rounded-2xl border border-muted-foreground/20 p-4 bg-background flex flex-col overflow-hidden"
-                    style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-                  >
-                    {/* Talk time badge */}
-                    {speaker.talkTime && (
-                      <span className="inline-block self-start font-mono text-[10px] text-primary mb-1.5 shrink-0">
-                        {speaker.talkTime}
-                      </span>
-                    )}
-                    
-                    {/* Talk title */}
-                    <h4 className="text-sm font-semibold text-foreground mb-2 leading-snug shrink-0">
-                      {speaker.talkTitle || speaker.topic}
-                    </h4>
-                    
-                    {/* Talk description - scrollable */}
-                    <div className="flex-1 overflow-y-auto min-h-0 pr-1">
-                      <p className="text-[11px] text-muted-foreground leading-relaxed whitespace-pre-line">
-                        {speaker.bio}
-                      </p>
-                    </div>
-                    
-                    {/* Speaker attribution */}
-                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-muted-foreground/10 shrink-0">
-                      <div className={`w-6 h-6 relative overflow-hidden rounded-full ${bgColor}`}>
-                        <Image
-                          src={speakerImage}
-                          alt={speaker.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-foreground">{speaker.name}</p>
-                        <p className="text-[10px] text-muted-foreground">{speaker.topic}</p>
-                      </div>
+                    <div>
+                      <p className="text-xs font-medium text-foreground">{speaker.name}</p>
+                      <p className="text-[10px] text-muted-foreground">{speaker.topic}</p>
                     </div>
                   </div>
                 </div>
