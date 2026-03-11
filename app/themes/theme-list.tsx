@@ -3,12 +3,40 @@
 import { Theme } from "@/lib/contentful";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface ThemeListProps {
   initialThemes: Theme[];
 }
 
 export function ThemeList({ initialThemes }: ThemeListProps) {
+  const [activating, setActivating] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleActivate = async (themeId: string) => {
+    setActivating(themeId);
+    try {
+      const response = await fetch("/api/themes/activate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ themeId }),
+      });
+      
+      if (response.ok) {
+        router.refresh();
+      } else {
+        const data = await response.json();
+        alert(`Error: ${data.error || "Failed to activate theme"}`);
+      }
+    } catch (error) {
+      alert(`Error: ${error}`);
+    } finally {
+      setActivating(null);
+    }
+  };
+
   if (initialThemes.length === 0) {
     return (
       <Card>
@@ -26,9 +54,20 @@ export function ThemeList({ initialThemes }: ThemeListProps) {
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg">{theme.name}</CardTitle>
-              {theme.isActive && (
-                <Badge variant="default">Active</Badge>
-              )}
+              <div className="flex items-center gap-2">
+                {theme.isActive ? (
+                  <Badge variant="default">Active</Badge>
+                ) : (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleActivate(theme.id)}
+                    disabled={activating === theme.id}
+                  >
+                    {activating === theme.id ? "Activating..." : "Activate"}
+                  </Button>
+                )}
+              </div>
             </div>
           </CardHeader>
           <CardContent>

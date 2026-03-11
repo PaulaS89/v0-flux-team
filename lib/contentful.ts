@@ -1,4 +1,5 @@
 import { createClient, Entry, Asset, EntryFieldTypes } from "contentful";
+import { unstable_cache } from "next/cache";
 
 // Create the Contentful client
 const client = createClient({
@@ -190,10 +191,10 @@ export function getAssetUrl(asset: Asset | undefined): string | null {
 // Theme Functions
 // ===================
 
-export async function getThemes(preview = false): Promise<Theme[]> {
-  const client = getClient(preview);
+async function fetchThemes(preview = false): Promise<Theme[]> {
+  const contentfulClient = getClient(preview);
   try {
-    const entries = await client.getEntries<ThemeFields>({
+    const entries = await contentfulClient.getEntries<ThemeFields>({
       content_type: "theme",
     });
     return entries.items.map((entry) => ({
@@ -212,10 +213,24 @@ export async function getThemes(preview = false): Promise<Theme[]> {
   }
 }
 
-export async function getActiveTheme(preview = false): Promise<Theme | null> {
-  const themes = await getThemes(preview);
+// Cached version of getThemes with revalidation tag
+export const getThemes = unstable_cache(
+  async (preview = false) => fetchThemes(preview),
+  ["contentful-themes"],
+  { tags: ["contentful-themes"], revalidate: 60 }
+);
+
+async function fetchActiveTheme(preview = false): Promise<Theme | null> {
+  const themes = await fetchThemes(preview);
   return themes.find((theme) => theme.isActive) || themes[0] || null;
 }
+
+// Cached version of getActiveTheme with revalidation tag
+export const getActiveTheme = unstable_cache(
+  async (preview = false) => fetchActiveTheme(preview),
+  ["contentful-active-theme"],
+  { tags: ["contentful-themes", "contentful-active-theme"], revalidate: 60 }
+);
 
 export async function getThemeById(id: string, preview = false): Promise<Theme | null> {
   const client = getClient(preview);
