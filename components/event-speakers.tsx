@@ -116,8 +116,59 @@ const speakerColors = [
   "bg-cyan-400/80",
 ];
 
+// Talk details by speaker name - used to enrich Contentful speakers with detailed talk info
+const talkDetailsByName: Record<string, { talkTitle: string; talkTime: string; talkDescription: string }> = {
+  "Sarah Chen": {
+    talkTitle: "When Machines Dream: Reimagining UX for the AI Era",
+    talkTime: "09:30 - 10:30 · Opening Keynote",
+    talkDescription: "The era of command-line AI is ending. In this opening keynote, Sarah Chen draws from her pioneering work at OpenAI to unveil what comes next: AI systems that don't wait for prompts but anticipate, adapt, and collaborate in real-time.\n\nYou'll explore: How multimodal AI is dissolving the boundaries between text, voice, and gesture • Why the best AI interfaces will become invisible • Research findings on 'ambient intelligence' - AI that understands context without being told • The cognitive science behind interfaces that feel like thinking alongside a partner, not commanding a tool • Practical frameworks for designing AI experiences that enhance rather than replace human agency.\n\nSarah will demo unreleased interaction prototypes and share the design principles shaping OpenAI's next generation of consumer products.",
+  },
+  "James Liu": {
+    talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
+    talkTime: "10:30 - 12:00 · Panel Discussion",
+    talkDescription: "The text box is a dead end. In this panel, James Liu joins fellow designers to dismantle the myth that prompts are the future of AI interaction and reveal what actually works.\n\nDrawing from his work on Vercel's v0, James will share: Why 73% of users abandon AI tools after their first failed prompt • The 'progressive disclosure' pattern that increased v0's success rate by 40% • How inline suggestions outperform chat interfaces for creative tasks • Real A/B test data comparing different AI interaction paradigms • The surprising role of constraints in making AI feel more capable.\n\nThe panel will include live critiques of popular AI interfaces and concrete recommendations you can implement immediately.",
+  },
+  "Elena Rodriguez": {
+    talkTitle: "The Empathy Algorithm: Human-Centered AI Design",
+    talkTime: "13:30 - 14:30 · Afternoon Talk",
+    talkDescription: "AI doesn't understand emotions - but your interface must. Elena Rodriguez reveals Figma's internal framework for designing AI features that respect human psychology, reduce anxiety, and build genuine trust over time.\n\nThis session covers: The 'Emotional Audit' - a method for mapping where AI creates stress vs. delight in user journeys • Why AI confidence indicators often backfire (and what to show instead) • Designing 'graceful degradation' - how AI should fail without breaking user trust • Case study: The Figma AI feature they killed after user research revealed unexpected harm • Building feedback loops that actually improve AI behavior • The 'Human Override Principle' and why every AI action needs an escape hatch.\n\nElena will share templates and frameworks you can adapt for your own AI feature development.",
+  },
+  "Marcus Weber": {
+    talkTitle: "Hands-On: Prototyping Conversational Experiences",
+    talkTime: "14:30 - 16:00 · Interactive Workshop",
+    talkDescription: "Stop wireframing chatbots. Start prototyping conversations. In this 90-minute hands-on workshop, Marcus Weber teaches Stripe's battle-tested methodology for rapidly designing and testing conversational AI interfaces.\n\nWhat you'll build: A functional conversational prototype using no-code tools • Realistic dialogue trees that handle edge cases gracefully • AI-powered stress tests that find breaking points before users do.\n\nWhat you'll learn: The 'Conversation Mapping' technique used by Stripe's AI team • How to prototype a week's worth of chatbot design in 2 hours • Testing scripts that reveal UX problems invisible in static mockups • Using Claude and GPT to roleplay difficult users and break your designs • The 3 conversation patterns that handle 80% of user intents.\n\nBring your laptop. Leave with a working prototype and a repeatable process.",
+  },
+  "Nina Patel": {
+    talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
+    talkTime: "10:30 - 12:00 · Panel Discussion",
+    talkDescription: "How do you design trust into systems that might be wrong? Nina Patel brings Anthropic's safety-first perspective to the panel, sharing hard-won lessons from building Claude's interface.\n\nHer contributions focus on: Why transparency about AI limitations increases user confidence (counterintuitively) • The 'Constitutional UX' framework - embedding values into interaction design • Designing for appropriate reliance - helping users know when to trust AI and when to verify • Visual patterns for communicating uncertainty without creating anxiety • Case study: How Claude's 'I'm not sure' responses were designed and iterated.\n\nNina will share Anthropic's internal guidelines for AI interface ethics and discuss the tension between capability and safety in consumer AI products.",
+  },
+  "David Kim": {
+    talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
+    talkTime: "10:30 - 12:00 · Panel Discussion",
+    talkDescription: "The best AI is the AI you don't notice. David Kim shares Linear's contrarian approach: embedding intelligence throughout the product without ever showing a chatbot or prompt field.\n\nIn this panel, David reveals: Why Linear rejected the 'AI assistant' paradigm entirely • The 'Invisible AI' principle - intelligence that enhances existing workflows rather than creating new ones • How predictive issue prioritization reduced triage time by 60% • Auto-generated project updates that users actually read (and the 12 versions that failed) • The decision framework for choosing 'AI-enhanced' vs. 'AI-powered' features.\n\nDavid will share Linear's internal AI feature evaluation rubric and explain why saying 'no' to obvious AI features was their best product decision.",
+  },
+};
+
+// Function to enrich a speaker with talk details
+function enrichSpeakerWithTalkDetails(speaker: Speaker): Speaker {
+  const talkDetails = talkDetailsByName[speaker.name];
+  if (talkDetails) {
+    return {
+      ...speaker,
+      talkTitle: speaker.talkTitle || talkDetails.talkTitle,
+      talkTime: speaker.talkTime || talkDetails.talkTime,
+      bio: talkDetails.talkDescription, // Always use the detailed description
+    };
+  }
+  return speaker;
+}
+
 export function EventSpeakers({ speakers }: EventSpeakersProps) {
-  const speakersList = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
+  // Use Contentful speakers if available, otherwise use defaults
+  const baseSpeakers = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
+  // Enrich all speakers with detailed talk info
+  const speakersList = baseSpeakers.map(enrichSpeakerWithTalkDetails);
 
   return (
     <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
