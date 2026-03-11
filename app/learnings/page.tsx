@@ -10,12 +10,9 @@ export default function LearningsPage() {
     <main className="min-h-screen bg-background px-4 py-4 md:px-6 md:py-6">
       <div className="w-full">
         <header className="mb-12 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
             Project Learnings
           </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
-            Visualisierung der Learnings bei der Erstellung dieser Seite mit v0, Contentful, Figma und GitHub
-          </p>
         </header>
 
         <LearningsChart />
