@@ -108,31 +108,29 @@ export function EventHero({ data }: EventHeroProps) {
       `}</style>
 
       {/* Hero Content - Split layout with flux on left and 2026 on right */}
-      <div className="relative z-10 flex-1 flex items-center w-full">
+      <div className="relative z-10 flex-1 flex items-center justify-between w-full">
         {/* Left side - Deloitte + flux */}
-        <div className="max-w-xl md:ml-[3%]">
+        <div className="md:ml-[8%] lg:ml-[12%]">
           {heroData.themeName && (
-            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/80 mb-4">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/80 mb-3">
               {heroData.themeName}
             </p>
           )}
-          <h1 className="leading-none">
-            <span 
-              className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-medium tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
-              style={{
-                backgroundSize: '200% 100%',
-                backgroundPosition: '0% 0%',
-              }}
-            >
-              flux
-            </span>
-          </h1>
+          <span 
+            className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-medium tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
+            style={{
+              backgroundSize: '200% 100%',
+              backgroundPosition: '0% 0%',
+            }}
+          >
+            flux
+          </span>
         </div>
 
         {/* Right side - 2026 */}
-        <div className="absolute right-0 md:right-[5%] lg:right-[8%] top-1/2 -translate-y-1/2">
+        <div className="md:mr-[8%] lg:mr-[12%]">
           <span 
-            className="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-[0.02em] bg-gradient-to-l from-foreground via-foreground to-primary bg-clip-text text-transparent"
+            className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-medium tracking-[0.02em] bg-gradient-to-l from-foreground via-foreground to-primary bg-clip-text text-transparent"
             style={{
               backgroundSize: '200% 100%',
               backgroundPosition: '100% 0%',
