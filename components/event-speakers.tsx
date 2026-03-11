@@ -148,6 +148,26 @@ const talkDetailsByName: Record<string, { talkTitle: string; talkTime: string; t
     talkTime: "10:30 · Panel",
     talkDescription: "The best AI is the AI you don't notice. David shares Linear's contrarian approach: embedding intelligence throughout the product without ever showing a chatbot. Learn how predictive issue prioritization reduced triage time by 60%.",
   },
+  "Jessica": {
+    talkTitle: "Designing for AI Uncertainty",
+    talkTime: "11:00 · Talk",
+    talkDescription: "When AI doesn't know, how should it tell users? Jessica explores patterns for communicating uncertainty in AI systems - from confidence indicators to graceful fallbacks. Learn how to design interfaces that build trust even when the AI isn't 100% sure.",
+  },
+  "Nora": {
+    talkTitle: "The Future of Creative AI Tools",
+    talkTime: "15:00 · Talk",
+    talkDescription: "AI is transforming creative workflows, but not always for the better. Nora examines the tension between AI assistance and creative autonomy, sharing frameworks for designing AI tools that amplify human creativity rather than replace it.",
+  },
+  "Jessica Schwabe": {
+    talkTitle: "Designing for AI Uncertainty",
+    talkTime: "11:00 · Talk",
+    talkDescription: "When AI doesn't know, how should it tell users? Jessica explores patterns for communicating uncertainty in AI systems - from confidence indicators to graceful fallbacks. Learn how to design interfaces that build trust even when the AI isn't 100% sure.",
+  },
+  "Nora Schmidt": {
+    talkTitle: "The Future of Creative AI Tools",
+    talkTime: "15:00 · Talk",
+    talkDescription: "AI is transforming creative workflows, but not always for the better. Nora examines the tension between AI assistance and creative autonomy, sharing frameworks for designing AI tools that amplify human creativity rather than replace it.",
+  },
 };
 
 // Function to enrich a speaker with talk details
