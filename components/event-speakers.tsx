@@ -42,37 +42,31 @@ function getSpeakerImage(name: string, index: number, contentfulImage?: string |
   return fallbackImages[index % fallbackImages.length];
 }
 
-// Default fallback speakers (matching agenda names)
+// Default fallback speakers (matching Contentful speaker names)
 const defaultSpeakers: Speaker[] = [
   {
-    name: "Dr. Lena Hoffmann",
+    name: "Sarah Chen",
     role: "Keynote Speaker",
     topic: "The Future of Digital Experiences",
     image: "/speakers/speaker-woman-1.jpg",
   },
   {
-    name: "Markus Stein",
+    name: "James Liu",
     role: "Panelist",
     topic: "AI, Personalization & Trust",
     image: "/speakers/speaker-man-1.jpg",
   },
   {
-    name: "Sofia Alvarez",
+    name: "Elena Rodriguez",
     role: "UX Director",
     topic: "Designing Human-Centered Digital Journeys",
     image: "/speakers/speaker-woman-2.jpg",
   },
   {
-    name: "Prof. Dr. Adrian Keller",
+    name: "Marcus Weber",
     role: "Panelist",
     topic: "AI, Personalization & Trust",
     image: "/speakers/speaker-man-2.jpg",
-  },
-  {
-    name: "Julia Brandt",
-    role: "Industry Expert",
-    topic: "Transformations Across Industries",
-    image: "/speakers/speaker-woman-3.jpg",
   },
 ];
 
