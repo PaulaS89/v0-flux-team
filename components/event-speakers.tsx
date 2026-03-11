@@ -28,11 +28,17 @@ const fallbackImages = [
   "/speakers/speaker-man-3.jpg",
 ];
 
-// Get image for a speaker - first check by name, then use fallback based on index
-function getSpeakerImage(name: string, index: number): string {
+// Get image for a speaker - first use Contentful image, then check by name, then use fallback based on index
+function getSpeakerImage(name: string, index: number, contentfulImage?: string | null): string {
+  // First priority: use image from Contentful if available
+  if (contentfulImage && contentfulImage.trim() !== "") {
+    return contentfulImage;
+  }
+  // Second priority: use name-based mapping for specific speakers
   if (speakerImagesByName[name]) {
     return speakerImagesByName[name];
   }
+  // Third priority: use index-based fallback
   return fallbackImages[index % fallbackImages.length];
 }
 
@@ -105,8 +111,8 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
         </h2>
         <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
           {speakersList.map((speaker, index) => {
-            // Get speaker image by name first, then fallback to index-based image
-            const speakerImage = getSpeakerImage(speaker.name, index);
+            // Get speaker image: prioritize Contentful image, then name-based, then index-based fallback
+            const speakerImage = getSpeakerImage(speaker.name, index, speaker.photo || speaker.image);
             
             return (
             <Card
