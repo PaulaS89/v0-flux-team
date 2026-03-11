@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 interface HeroData {
   title: string;
@@ -17,6 +18,8 @@ interface HeroData {
   earlyBirdPrice: string;
   ctaButtonText: string;
   ctaButtonLink?: string;
+  backgroundImageUrl?: string;
+  themeName?: string;
 }
 
 // Default fallback content
@@ -47,70 +50,31 @@ export function EventHero({ data }: EventHeroProps) {
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden px-6 pt-14">
-      {/* Abstract 3D Shape */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="relative h-[350px] w-[350px] md:h-[450px] md:w-[450px] lg:h-[500px] lg:w-[500px]">
-          <svg
-            viewBox="0 0 400 400"
-            className="h-full w-full opacity-80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="triangleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="rgba(255,255,255,0.4)" />
-                <stop offset="40%" stopColor="rgba(255,255,255,0.1)" />
-                <stop offset="60%" stopColor="rgba(255,255,255,0.05)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0.3)" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            {/* Outer organic triangle shape */}
-            <path
-              d="M200 60 
-                 Q 240 60, 280 120
-                 Q 340 200, 320 280
-                 Q 300 340, 240 340
-                 L 160 340
-                 Q 100 340, 80 280
-                 Q 60 200, 120 120
-                 Q 160 60, 200 60"
-              stroke="url(#triangleGradient)"
-              strokeWidth="35"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-              filter="url(#glow)"
+      {/* Background Image from Contentful */}
+      {heroData.backgroundImageUrl && (
+        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
+          <div className="relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mx-auto">
+            <Image
+              src={heroData.backgroundImageUrl}
+              alt=""
+              fill
+              className="object-contain"
+              priority
+              quality={100}
+              sizes="(max-width: 768px) 500px, (max-width: 1024px) 650px, 800px"
             />
-            {/* Inner highlight */}
-            <path
-              d="M200 100 
-                 Q 230 100, 260 150
-                 Q 300 210, 285 260
-                 Q 270 300, 230 300
-                 L 170 300
-                 Q 130 300, 115 260
-                 Q 100 210, 140 150
-                 Q 170 100, 200 100"
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth="20"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-            />
-          </svg>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Hero Content */}
       <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh]">
         <div className="max-w-3xl md:ml-[5%] lg:ml-[8%]">
+          {heroData.themeName && (
+            <p className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-4 opacity-80">
+              {heroData.themeName}
+            </p>
+          )}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal leading-[1.1] tracking-tight text-foreground">
             {titleLines.map((line, index) => (
               <span key={index} className="block">

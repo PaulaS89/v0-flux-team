@@ -52,6 +52,8 @@ export default async function Home() {
         earlyBirdPrice: heroEntry.fields.earlyBirdPrice as string,
         ctaButtonText: heroEntry.fields.ctaButtonText as string,
         ctaButtonLink: heroEntry.fields.ctaButtonLink as string | undefined,
+        backgroundImageUrl: activeTheme?.scheduleHeaderImageUrl || undefined,
+        themeName: activeTheme?.name || undefined,
       }
     : null;
 
@@ -95,7 +97,7 @@ export default async function Home() {
       <EventHeader siteSettings={siteSettings} />
       <main>
         <EventHero data={heroData} />
-        <EventSchedule items={scheduleData} headerImageUrl={activeTheme?.scheduleHeaderImageUrl} />
+        <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
         <EventPricing pricing={pricingTiers} />
         <EventLocation location={locationData} />

@@ -1,7 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { PricingTier } from "@/lib/contentful";
+import { ArrowRight, Check } from "lucide-react";
 
 const defaultPricing: PricingTier[] = [
   {
@@ -54,49 +53,91 @@ export function EventPricing({ pricing }: EventPricingProps) {
   const pricingTiers = pricing && pricing.length > 0 ? pricing : defaultPricing;
 
   return (
-    <section id="pricing" className="bg-background px-6 py-24">
-      <div className="mx-auto max-w-7xl">
-        <h2 className="mb-4 text-3xl font-light tracking-tight md:text-4xl">
-          Pricing
-        </h2>
-        <p className="mb-16 text-muted-foreground">
-          Price includes breakfast, lunch, materials, and access to session recordings.
-        </p>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <section id="pricing" className="relative bg-card px-6 pt-4 pb-24 overflow-hidden">
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+      
+      <div className="relative mx-auto max-w-7xl">
+        {/* Header */}
+        <div className="mb-16 ml-6">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
+            Tickets
+          </p>
+          <h2 className="text-4xl font-light tracking-tight md:text-5xl text-foreground mb-4">
+            Pricing
+          </h2>
+          <p className="text-muted-foreground max-w-xl">
+            Price includes breakfast, lunch, materials, and access to session recordings.
+          </p>
+        </div>
+
+        {/* Pricing Grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ml-6">
           {pricingTiers.map((tier) => (
-            <Card
+            <div
               key={tier.id}
-              className={`border-border bg-secondary transition-colors hover:border-foreground/50 ${
-                tier.isHighlighted ? "ring-2 ring-primary" : ""
+              className={`group relative rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-lg ${
+                tier.isHighlighted ? "border-primary/50 bg-primary/5" : ""
               }`}
             >
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-medium">{tier.name}</CardTitle>
-                  {tier.isHighlighted && (
-                    <Badge variant="default" className="text-xs">
-                      Popular
-                    </Badge>
-                  )}
+              {/* Highlighted badge */}
+              {tier.isHighlighted && (
+                <div className="absolute -top-3 left-6">
+                  <span className="rounded-full bg-primary px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-primary-foreground">
+                    Recommended
+                  </span>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-2 text-3xl font-bold text-primary">{tier.price}</p>
-                {tier.description && (
-                  <p className="mb-4 text-sm text-muted-foreground">{tier.description}</p>
-                )}
-                {tier.features && tier.features.length > 0 && (
-                  <ul className="mb-4 space-y-1 text-xs text-muted-foreground">
-                    {tier.features.map((feature, idx) => (
-                      <li key={idx}>• {feature}</li>
-                    ))}
-                  </ul>
-                )}
-                <Button className="mt-2 w-full" variant={tier.isHighlighted ? "default" : "outline"}>
-                  {tier.ctaText || "Register"}
-                </Button>
-              </CardContent>
-            </Card>
+              )}
+
+              {/* Tier name */}
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
+                {tier.name}
+              </p>
+
+              {/* Price */}
+              <div className="mb-4">
+                <span className="text-4xl font-light text-foreground">{tier.price}</span>
+              </div>
+
+              {/* Description */}
+              {tier.description && (
+                <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">
+                  {tier.description}
+                </p>
+              )}
+
+              {/* Features */}
+              {tier.features && tier.features.length > 0 && (
+                <ul className="mb-8 space-y-2">
+                  {tier.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* CTA Button */}
+              <Button 
+                className={`w-full group/btn flex items-center justify-center gap-2 border transition-all ${
+                  tier.isHighlighted 
+                    ? "border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground" 
+                    : "border-border bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
+                }`}
+                asChild
+              >
+                <a href="/tickets">
+                  <span className="text-xs font-medium uppercase tracking-[0.15em]">
+                    {tier.ctaText || "Register"}
+                  </span>
+                  <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
+                </a>
+              </Button>
+
+              {/* Subtle glow on hover */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
+            </div>
           ))}
         </div>
       </div>
