@@ -111,7 +111,7 @@ export function EventHero({ data }: EventHeroProps) {
       <div className="relative z-10 flex-1 flex items-center w-full md:pl-[5%] lg:pl-[8%]">
         <div className="max-w-xl">
           {heroData.themeName && (
-            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3 ml-[3px]">
+            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3 ml-[5px]">
               {heroData.themeName}
             </p>
           )}
