@@ -222,64 +222,58 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-foreground/20 md:-translate-x-px" />
 
           {/* Schedule Items */}
-          <div className="space-y-8">
+          <div className="space-y-3">
             {schedule.map((item, index) => {
               const isEven = index % 2 === 0;
               
               return (
                 <div
                   key={index}
-                  className={`relative flex items-start gap-8 ${
+                  className={`relative flex items-start gap-6 ${
                     isEven ? "md:flex-row" : "md:flex-row-reverse"
                   }`}
                 >
                   {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10">
-                    <div className="group relative">
-                      <div className="w-3 h-3 rounded-full bg-muted-foreground/50 transition-all duration-300 group-hover:bg-cyan-400 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.5)]" />
-                    </div>
+                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10 top-4">
+                    <div className="w-2 h-2 rounded-full bg-muted-foreground/50" />
                   </div>
 
                   {/* Spacer for mobile */}
-                  <div className="w-8 md:hidden shrink-0" />
+                  <div className="w-6 md:hidden shrink-0" />
 
                   {/* Card */}
                   <div
                     className={`flex-1 md:w-[calc(50%-2rem)] ${
-                      isEven ? "md:pr-8" : "md:pl-8"
+                      isEven ? "md:pr-6" : "md:pl-6"
                     }`}
                   >
-                    <div className="group relative">
-                      {/* Glassmorphism card */}
-                      <div className="relative rounded-2xl border border-muted-foreground/30 bg-card/40 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-1 hover:border-muted-foreground/50 hover:shadow-lg hover:shadow-cyan-950/20">
-                        {/* Time badge */}
-                        <div className="mb-3 flex items-center justify-between gap-3">
-                          <span className="font-mono text-sm text-cyan-400">
-                            {item.time}
-                          </span>
-                          <span
-                            className={`rounded-full border px-3 py-1 text-[10px] font-medium uppercase tracking-wider ${getTagStyle(
-                              item.type
-                            )}`}
-                          >
-                            {getTagLabel(item.type)}
-                          </span>
+                    <div className="relative rounded-lg border border-muted-foreground/20 bg-card/40 backdrop-blur-md px-4 py-3 transition-all duration-300 hover:border-muted-foreground/40">
+                      <div className="flex items-center gap-4">
+                        {/* Time */}
+                        <span className="font-mono text-xs text-primary shrink-0">
+                          {item.time}
+                        </span>
+                        
+                        {/* Title & Speaker */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-sm font-medium text-foreground truncate">
+                            {item.title}
+                          </h3>
+                          {item.speaker && (
+                            <p className="text-xs text-muted-foreground truncate">
+                              {item.speaker}
+                            </p>
+                          )}
                         </div>
-
-                        {/* Title */}
-                        <h3 className="mb-2 text-lg font-medium text-foreground leading-snug">
-                          {item.title}
-                        </h3>
-
-                        {/* Speaker */}
-                        {item.speaker && (
-                          <p className="text-sm text-muted-foreground">
-                            {item.speaker}
-                          </p>
-                        )}
-
-                        {/* Subtle glow on hover */}
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
+                        
+                        {/* Type tag */}
+                        <span
+                          className={`rounded-full border px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider shrink-0 ${getTagStyle(
+                            item.type
+                          )}`}
+                        >
+                          {getTagLabel(item.type)}
+                        </span>
                       </div>
                     </div>
                   </div>
