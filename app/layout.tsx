@@ -39,11 +39,9 @@ export default async function RootLayout({
   const theme = await getActiveTheme();
 
   return (
-    <html lang="en" className="dark">
-      <body className="font-sans antialiased bg-background text-foreground">
-        <ContentfulThemeProvider theme={theme}>
-          {children}
-        </ContentfulThemeProvider>
+    <html lang="en">
+      <body className="font-sans antialiased">
+        {children}
         <Analytics />
       </body>
     </html>

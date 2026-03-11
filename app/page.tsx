@@ -6,6 +6,7 @@ import { EventPricing } from "@/components/event-pricing";
 import { EventLocation } from "@/components/event-location";
 import { EventFAQ } from "@/components/event-faq";
 import { EventFooter } from "@/components/event-footer";
+import { EventsSlider } from "@/components/events-slider";
 import {
   getHeroContent,
   getSpeakers,
@@ -17,7 +18,8 @@ import {
   getAssetUrl,
 } from "@/lib/contentful";
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 60; // Revalidate content every 60 seconds
+export const dynamic = "force-dynamic"; // Force dynamic rendering to avoid stale cache
 
 export default async function Home() {
   // Fetch all content from Contentful in parallel
@@ -91,6 +93,7 @@ export default async function Home() {
       <EventHeader siteSettings={siteSettings} />
       <main>
         <EventHero data={heroData} />
+        <EventsSlider />
         <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
         <EventPricing pricing={pricingTiers} />
