@@ -13,6 +13,11 @@ interface Speaker {
   image?: string | null;
 }
 
+// Specific speaker images by name
+const speakerImagesByName: Record<string, string> = {
+  "James Lui": "/speakers/james-lui.jpg",
+};
+
 // Fallback images for speakers (3 women, 3 men - used when Contentful doesn't provide unique images)
 const fallbackImages = [
   "/speakers/speaker-woman-1.jpg",
@@ -23,8 +28,11 @@ const fallbackImages = [
   "/speakers/speaker-man-3.jpg",
 ];
 
-// Get a fallback image based on speaker index
-function getFallbackImage(index: number): string {
+// Get image for a speaker - first check by name, then use fallback based on index
+function getSpeakerImage(name: string, index: number): string {
+  if (speakerImagesByName[name]) {
+    return speakerImagesByName[name];
+  }
   return fallbackImages[index % fallbackImages.length];
 }
 
@@ -97,8 +105,8 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
         </h2>
         <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
           {speakersList.map((speaker, index) => {
-            // Always use unique fallback images based on index to ensure each speaker has a different image
-            const speakerImage = getFallbackImage(index);
+            // Get speaker image by name first, then fallback to index-based image
+            const speakerImage = getSpeakerImage(speaker.name, index);
             
             return (
             <Card
