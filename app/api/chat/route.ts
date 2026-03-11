@@ -1,5 +1,4 @@
 import {
-  consumeStream,
   convertToModelMessages,
   streamText,
   UIMessage,
@@ -88,8 +87,5 @@ Guidelines:
     abortSignal: req.signal,
   })
 
-  return result.toUIMessageStreamResponse({
-    originalMessages: messages,
-    consumeSseStream: consumeStream,
-  })
+  return result.toUIMessageStreamResponse()
 }
