@@ -42,31 +42,43 @@ function getSpeakerImage(name: string, index: number, contentfulImage?: string |
   return fallbackImages[index % fallbackImages.length];
 }
 
-// Default fallback speakers (matching Contentful speaker names)
+// Default fallback speakers (6 total for 3x2 grid)
 const defaultSpeakers: Speaker[] = [
   {
     name: "Sarah Chen",
-    role: "Keynote Speaker",
-    topic: "The Future of Digital Experiences",
+    role: "AI Research Lead",
+    topic: "OpenAI",
     image: "/speakers/speaker-woman-1.jpg",
   },
   {
     name: "James Liu",
-    role: "Panelist",
-    topic: "AI, Personalization & Trust",
+    role: "Principal Designer",
+    topic: "Vercel",
     image: "/speakers/speaker-man-1.jpg",
   },
   {
     name: "Elena Rodriguez",
     role: "UX Director",
-    topic: "Designing Human-Centered Digital Journeys",
+    topic: "Figma",
     image: "/speakers/speaker-woman-2.jpg",
   },
   {
     name: "Marcus Weber",
-    role: "Panelist",
-    topic: "AI, Personalization & Trust",
+    role: "Design Systems Lead",
+    topic: "Stripe",
     image: "/speakers/speaker-man-2.jpg",
+  },
+  {
+    name: "Nina Patel",
+    role: "Product Design Manager",
+    topic: "Anthropic",
+    image: "/speakers/speaker-woman-3.jpg",
+  },
+  {
+    name: "David Kim",
+    role: "Creative Director",
+    topic: "Linear",
+    image: "/speakers/speaker-man-3.jpg",
   },
 ];
 
@@ -74,14 +86,24 @@ interface EventSpeakersProps {
   speakers?: Speaker[];
 }
 
+// Background colors for speaker images
+const speakerColors = [
+  "bg-amber-500/80",
+  "bg-rose-400/80", 
+  "bg-sky-400/80",
+  "bg-lime-400/80",
+  "bg-violet-400/80",
+  "bg-cyan-400/80",
+];
+
 export function EventSpeakers({ speakers }: EventSpeakersProps) {
   const speakersList = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
 
   return (
     <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
       <div className="mx-auto max-w-6xl">
-        {/* Header matching agenda style - left aligned */}
-        <div className="mb-12">
+        {/* Header matching agenda style */}
+        <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
             SPEAKERS
           </h2>
@@ -90,36 +112,35 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
           </p>
         </div>
         
-        {/* Speakers in 2x2 grid with horizontal cards */}
-        <div className="grid gap-6 md:grid-cols-2">
+        {/* 3x2 grid with bordered cards */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {speakersList.map((speaker, index) => {
             const speakerImage = getSpeakerImage(speaker.name, index, speaker.photo || speaker.image);
+            const bgColor = speakerColors[index % speakerColors.length];
             
             return (
               <div
                 key={speaker.id || `${speaker.name}-${index}`}
-                className="group flex items-start gap-5"
+                className="group rounded-2xl border border-muted-foreground/20 p-6 text-center transition-all duration-300 hover:border-muted-foreground/40"
               >
-                {/* Square image with subtle rounded corners */}
-                <div className="w-24 h-24 md:w-28 md:h-28 relative overflow-hidden rounded-lg bg-muted/30 shrink-0">
+                {/* Square image with colored background */}
+                <div className={`mx-auto mb-5 w-28 h-28 relative overflow-hidden rounded-xl ${bgColor}`}>
                   <Image
                     src={speakerImage}
                     alt={speaker.name}
                     fill
-                    className="object-cover grayscale contrast-110 transition-all duration-500 group-hover:grayscale-0 group-hover:contrast-100"
+                    className="object-cover transition-all duration-500 group-hover:scale-105"
                   />
                 </div>
                 
-                {/* Speaker info - left aligned */}
-                <div className="pt-1">
-                  <h3 className="text-base font-medium text-foreground mb-1">{speaker.name}</h3>
-                  <p className="text-sm text-primary mb-2">
-                    {speaker.role}
-                  </p>
-                  {(speaker.topic || speaker.bio) && (
-                    <p className="text-sm text-muted-foreground leading-relaxed">{speaker.topic || speaker.bio}</p>
-                  )}
-                </div>
+                {/* Speaker info - centered */}
+                <h3 className="text-lg font-semibold text-foreground mb-1">{speaker.name}</h3>
+                <p className="text-sm text-muted-foreground mb-1">
+                  {speaker.role}
+                </p>
+                {(speaker.topic || speaker.bio) && (
+                  <p className="text-sm font-medium text-foreground">{speaker.topic || speaker.bio}</p>
+                )}
               </div>
             );
           })}
