@@ -85,7 +85,7 @@ export function LearningsChart() {
           {/* Y-Axis Label */}
           <div className="absolute -left-6 top-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap">
             <span className="text-xs md:text-sm font-semibold text-foreground">
-              Schwierigkeit
+              Complexity
             </span>
           </div>
           {/* Y-Axis Values */}
@@ -118,7 +118,7 @@ export function LearningsChart() {
           {/* X-Axis Label */}
           <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap">
             <span className="text-xs md:text-sm font-semibold text-foreground">
-              Zeit
+              Time
             </span>
           </div>
           {/* X-Axis Values */}
@@ -131,10 +131,7 @@ export function LearningsChart() {
               {value === 100 ? "Ende" : `${value}%`}
             </div>
           ))}
-          {/* Start label at origin */}
-          <div className="absolute top-3 -left-2 text-[10px] md:text-xs text-muted-foreground">
-            Start
-          </div>
+
         </div>
       </div>
 
