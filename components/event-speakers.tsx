@@ -97,8 +97,8 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
         </h2>
         <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
           {speakersList.map((speaker, index) => {
-            // Use speaker's image/photo if available, otherwise use a fallback based on index
-            const speakerImage = speaker.photo || speaker.image || getFallbackImage(index);
+            // Always use unique fallback images based on index to ensure each speaker has a different image
+            const speakerImage = getFallbackImage(index);
             
             return (
             <Card
