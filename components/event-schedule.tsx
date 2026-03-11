@@ -13,19 +13,19 @@ interface ScheduleItem {
 const defaultSchedule: ScheduleItem[] = [
   {
     time: "09:00",
-    title: "Welcome & Opening Remarks",
+    title: "Welcome to FLUX",
     speaker: "",
     type: "intro",
   },
   {
     time: "09:30",
-    title: "Keynote: The Future of Digital Experiences",
+    title: "When Machines Dream: Reimagining UX for the AI Era",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
     time: "10:30",
-    title: "Panel: AI, Personalization & Trust",
+    title: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
     speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
@@ -37,19 +37,19 @@ const defaultSchedule: ScheduleItem[] = [
   },
   {
     time: "13:30",
-    title: "Deep Dive: Human-Centered Digital Journeys",
+    title: "The Empathy Algorithm: Human-Centered AI Design",
     speaker: "Elena Rodriguez",
     type: "talk",
   },
   {
     time: "14:30",
-    title: "Workshop: Designing with LLMs",
+    title: "Hands-On: Prototyping Conversational Experiences",
     speaker: "Marcus Weber",
     type: "talk",
   },
   {
     time: "16:00",
-    title: "Closing Keynote & Q&A",
+    title: "What Comes After the Chatbot?",
     speaker: "Sarah Chen",
     type: "keynote",
   },
@@ -65,19 +65,19 @@ const defaultSchedule: ScheduleItem[] = [
 const oceanSchedule: ScheduleItem[] = [
   {
     time: "09:00",
-    title: "Opening Ceremony: Navigating Digital Waters",
+    title: "Welcome to FLUX",
     speaker: "",
     type: "intro",
   },
   {
     time: "09:30",
-    title: "Keynote: Riding the Wave of Digital Transformation",
+    title: "Navigating the AI Tide: UX in Uncharted Waters",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
     time: "10:30",
-    title: "Panel: Deep Dive into AI & Machine Learning",
+    title: "Deep Currents: Designing LLM Flows That Feel Natural",
     speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
@@ -89,19 +89,19 @@ const oceanSchedule: ScheduleItem[] = [
   },
   {
     time: "13:30",
-    title: "Exploring Uncharted Waters: New Market Strategies",
+    title: "Surface Tension: Balancing AI Power with User Trust",
     speaker: "Elena Rodriguez",
     type: "talk",
   },
   {
     time: "14:30",
-    title: "Workshop: Building AI-Powered Experiences",
+    title: "Hands-On: Building Adaptive AI Interfaces",
     speaker: "Marcus Weber",
     type: "talk",
   },
   {
     time: "16:00",
-    title: "Closing Keynote: Charting the Course Ahead",
+    title: "The Next Wave: Where AI UX Is Headed",
     speaker: "Sarah Chen",
     type: "keynote",
   },
@@ -184,7 +184,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
             Agenda
           </h2>
           <p className="text-muted-foreground text-lg">
-            Explore the schedule for the day
+            One day. Big ideas. The future of human-AI interaction.
           </p>
         </div>
 
