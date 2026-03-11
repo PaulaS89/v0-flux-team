@@ -139,57 +139,54 @@ export function EventHero({ data }: EventHeroProps) {
 
       {/* Event Details Footer */}
       <div className="relative z-10 pb-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          {/* Left side: Location & Date */}
-          <div className="flex flex-col gap-4 md:flex-row md:gap-16">
-            <div>
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:gap-16">
+          {/* Location */}
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              {heroData.location}
+            </p>
+            {heroData.locationSubtext && (
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                {heroData.location}
+                {heroData.locationSubtext}
               </p>
-              {heroData.locationSubtext && (
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  {heroData.locationSubtext}
-                </p>
-              )}
-            </div>
-            <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                {heroData.eventDate}
-              </p>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                {heroData.venue}
-              </p>
-            </div>
+            )}
           </div>
-          
-          {/* Right side: Early Bird, Get Tickets & Chatbot placeholder */}
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
-            <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                {heroData.earlyBirdLabel || "Early Bird Tickets"}
-              </p>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-foreground">
-                {heroData.earlyBirdOriginalPrice && (
-                  <span className="text-muted-foreground line-through mr-2">
-                    {heroData.earlyBirdOriginalPrice}
-                  </span>
-                )}
-                {heroData.earlyBirdPrice}
-              </p>
-            </div>
-            <Button
-              size="lg"
-              className="group relative z-20 flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-background hover:bg-transparent hover:text-foreground transition-all cursor-pointer"
-              asChild
-            >
-              <a href="/tickets">
-                <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                  {heroData.ctaButtonText}
+          {/* Date & Venue */}
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              {heroData.eventDate}
+            </p>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              {heroData.venue}
+            </p>
+          </div>
+          {/* Early Bird */}
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              {heroData.earlyBirdLabel || "Early Bird Tickets"}
+            </p>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-foreground">
+              {heroData.earlyBirdOriginalPrice && (
+                <span className="text-muted-foreground line-through mr-2">
+                  {heroData.earlyBirdOriginalPrice}
                 </span>
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
-            </Button>
+              )}
+              {heroData.earlyBirdPrice}
+            </p>
           </div>
+          {/* Get Tickets Button */}
+          <Button
+            size="lg"
+            className="group relative z-20 flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-background hover:bg-transparent hover:text-foreground transition-all cursor-pointer"
+            asChild
+          >
+            <a href="/tickets">
+              <span className="text-xs font-medium uppercase tracking-[0.15em]">
+                {heroData.ctaButtonText}
+              </span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+          </Button>
         </div>
       </div>
     </section>
