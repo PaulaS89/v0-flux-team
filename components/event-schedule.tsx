@@ -188,7 +188,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
   const schedule = items && items.length > 0 ? items : fallbackSchedule;
 
   return (
-    <section id="schedule" className="relative bg-background px-6 py-16 overflow-hidden">
+    <section id="schedule" className="relative bg-background px-8 md:px-16 lg:px-24 py-16 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       
@@ -246,7 +246,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
                   {/* Card */}
                   <div
                     className={`flex-1 md:w-[calc(50%-2rem)] ${
-                      isEven ? "md:pr-12" : "md:pl-12"
+                      isEven ? "md:pr-8" : "md:pl-8"
                     }`}
                   >
                     <div className="group relative">
