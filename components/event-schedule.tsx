@@ -219,7 +219,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
         {/* Timeline */}
         <div className="relative">
           {/* Vertical timeline line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-border to-transparent md:-translate-x-px" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-muted-foreground/40 to-transparent md:-translate-x-px" />
 
           {/* Schedule Items */}
           <div className="space-y-8">
@@ -236,7 +236,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
                   {/* Timeline dot */}
                   <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10">
                     <div className="group relative">
-                      <div className="w-3 h-3 rounded-full bg-border transition-all duration-300 group-hover:bg-cyan-400 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.5)]" />
+                      <div className="w-3 h-3 rounded-full bg-muted-foreground/50 transition-all duration-300 group-hover:bg-cyan-400 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.5)]" />
                     </div>
                   </div>
 
@@ -251,7 +251,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
                   >
                     <div className="group relative">
                       {/* Glassmorphism card */}
-                      <div className="relative rounded-2xl border border-border/50 bg-card/40 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:shadow-cyan-950/20">
+                      <div className="relative rounded-2xl border border-muted-foreground/30 bg-card/40 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-1 hover:border-muted-foreground/50 hover:shadow-lg hover:shadow-cyan-950/20">
                         {/* Time badge */}
                         <div className="mb-3 flex items-center justify-between gap-3">
                           <span className="font-mono text-sm text-cyan-400">
