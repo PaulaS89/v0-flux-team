@@ -50,10 +50,10 @@ export function EventHero({ data }: EventHeroProps) {
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden px-6 pt-14">
-      {/* Background Image from Contentful */}
+      {/* Background Image from Contentful - with morphing animation */}
       {heroData.backgroundImageUrl && (
         <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
-          <div className="relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mx-auto">
+          <div className="relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mx-auto animate-morph">
             <Image
               src={heroData.backgroundImageUrl}
               alt=""
@@ -66,6 +66,31 @@ export function EventHero({ data }: EventHeroProps) {
           </div>
         </div>
       )}
+
+      {/* Morphing animation styles */}
+      <style jsx>{`
+        @keyframes morph {
+          0%, 100% {
+            transform: scale(1) rotate(0deg);
+            filter: hue-rotate(0deg) brightness(1);
+          }
+          25% {
+            transform: scale(1.03) rotate(2deg);
+            filter: hue-rotate(5deg) brightness(1.05);
+          }
+          50% {
+            transform: scale(0.98) rotate(-1deg);
+            filter: hue-rotate(-5deg) brightness(0.98);
+          }
+          75% {
+            transform: scale(1.02) rotate(-2deg);
+            filter: hue-rotate(3deg) brightness(1.02);
+          }
+        }
+        .animate-morph {
+          animation: morph 12s ease-in-out infinite;
+        }
+      `}</style>
 
       {/* Hero Content */}
       <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh]">
