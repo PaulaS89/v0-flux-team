@@ -53,10 +53,10 @@ export function EventHero({ data }: EventHeroProps) {
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden pl-6 pr-6 md:pl-12 md:pr-12 pt-14">
-      {/* Background Image from Contentful - positioned to the right with morphing animation for Deloitte theme */}
+      {/* Background Image from Contentful - centered with morphing animation for Deloitte theme */}
       {heroData.backgroundImageUrl && (
-        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-end">
-          <div className={`relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mr-[5%] md:mr-[10%] ${isDeloitteTheme ? 'animate-morph' : ''}`}>
+        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
+          <div className={`relative h-[600px] w-[600px] md:h-[750px] md:w-[750px] lg:h-[900px] lg:w-[900px] ${isDeloitteTheme ? 'animate-morph' : ''}`}>
             <Image
               src={heroData.backgroundImageUrl}
               alt=""
@@ -64,7 +64,7 @@ export function EventHero({ data }: EventHeroProps) {
               className="object-contain"
               priority
               quality={100}
-              sizes="(max-width: 768px) 500px, (max-width: 1024px) 650px, 800px"
+              sizes="(max-width: 768px) 600px, (max-width: 1024px) 750px, 900px"
             />
           </div>
         </div>
@@ -107,11 +107,11 @@ export function EventHero({ data }: EventHeroProps) {
         }
       `}</style>
 
-      {/* Hero Content - Left aligned, closer to center */}
+      {/* Hero Content */}
       <div className="relative z-10 flex-1 flex items-center w-full">
-        <div className="max-w-xl pl-6 md:pl-12 lg:pl-[15%]">
+        <div className="max-w-xl">
           {heroData.themeName && (
-            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3">
+            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3" style={{ marginLeft: '4px' }}>
               {heroData.themeName}
             </p>
           )}
@@ -126,7 +126,7 @@ export function EventHero({ data }: EventHeroProps) {
               FLUX
             </span>
           </h1>
-          <div className="mt-6">
+          <div className="mt-6" style={{ marginLeft: '4px' }}>
             <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground/70 mb-1">
               Future · LLMs · UX
             </p>
@@ -135,8 +135,8 @@ export function EventHero({ data }: EventHeroProps) {
             </p>
           </div>
           
-          {/* Early Bird & CTA moved here */}
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+          {/* Early Bird & CTA */}
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8" style={{ marginLeft: '4px' }}>
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 {heroData.earlyBirdLabel || "Early Bird Tickets"}
@@ -166,28 +166,26 @@ export function EventHero({ data }: EventHeroProps) {
         </div>
       </div>
 
-      {/* Event Details Footer - Left aligned to match content */}
+      {/* Event Details Footer */}
       <div className="relative z-10 pb-8">
-        <div className="pl-6 md:pl-12 lg:pl-[15%]">
-          <div className="flex flex-col gap-4 md:flex-row md:gap-16">
-            <div>
+        <div className="flex flex-col gap-4 md:flex-row md:gap-16">
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              {heroData.location}
+            </p>
+            {heroData.locationSubtext && (
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                {heroData.location}
+                {heroData.locationSubtext}
               </p>
-              {heroData.locationSubtext && (
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  {heroData.locationSubtext}
-                </p>
-              )}
-            </div>
-            <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                {heroData.eventDate}
-              </p>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                {heroData.venue}
-              </p>
-            </div>
+            )}
+          </div>
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              {heroData.eventDate}
+            </p>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              {heroData.venue}
+            </p>
           </div>
         </div>
       </div>
