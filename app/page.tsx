@@ -52,6 +52,7 @@ export default async function Home() {
         earlyBirdPrice: heroEntry.fields.earlyBirdPrice as string,
         ctaButtonText: heroEntry.fields.ctaButtonText as string,
         ctaButtonLink: heroEntry.fields.ctaButtonLink as string | undefined,
+        backgroundImageUrl: activeTheme?.scheduleHeaderImageUrl || undefined,
       }
     : null;
 

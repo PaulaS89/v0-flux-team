@@ -18,6 +18,7 @@ interface HeroData {
   earlyBirdPrice: string;
   ctaButtonText: string;
   ctaButtonLink?: string;
+  backgroundImageUrl?: string;
 }
 
 // Default fallback content
@@ -48,26 +49,22 @@ export function EventHero({ data }: EventHeroProps) {
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden px-6 pt-14">
-      {/* Green Swirling Sphere Background - masked to hide outer circle */}
-      <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
-        <div 
-          className="relative h-[420px] w-[420px] md:h-[540px] md:w-[540px] lg:h-[660px] lg:w-[660px] mx-auto overflow-hidden"
-          style={{
-            maskImage: 'radial-gradient(circle at center, black 35%, transparent 45%)',
-            WebkitMaskImage: 'radial-gradient(circle at center, black 35%, transparent 45%)',
-          }}
-        >
-          <Image
-            src="/images/schedule-header-green.jpg"
-            alt=""
-            fill
-            className="object-contain scale-110"
-            priority
-            quality={100}
-            sizes="(max-width: 768px) 420px, (max-width: 1024px) 540px, 660px"
-          />
+      {/* Background Image from Contentful */}
+      {heroData.backgroundImageUrl && (
+        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
+          <div className="relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mx-auto">
+            <Image
+              src={heroData.backgroundImageUrl}
+              alt=""
+              fill
+              className="object-contain"
+              priority
+              quality={100}
+              sizes="(max-width: 768px) 500px, (max-width: 1024px) 650px, 800px"
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Hero Content */}
       <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh]">
