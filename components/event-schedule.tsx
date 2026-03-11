@@ -9,14 +9,8 @@ interface ScheduleItem {
   type: "keynote" | "talk" | "break";
 }
 
-// Default fallback schedule (using Contentful speaker names)
+// Default fallback schedule (condensed version)
 const defaultSchedule: ScheduleItem[] = [
-  {
-    time: "08:30",
-    title: "Registration & Networking Breakfast",
-    speaker: "",
-    type: "break",
-  },
   {
     time: "09:00",
     title: "Welcome & Opening Remarks",
@@ -31,26 +25,14 @@ const defaultSchedule: ScheduleItem[] = [
   },
   {
     time: "10:00",
-    title: "Panel Discussion: AI, Personalization & Trust",
+    title: "Panel: AI, Personalization & Trust",
     speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
   {
-    time: "10:45",
-    title: "Coffee Break",
-    speaker: "",
-    type: "break",
-  },
-  {
     time: "11:00",
-    title: "Deep Dive: Designing Human-Centered Digital Journeys",
+    title: "Deep Dive: Human-Centered Digital Journeys",
     speaker: "Elena Rodriguez",
-    type: "talk",
-  },
-  {
-    time: "11:45",
-    title: "Case Studies: Transformations Across Industries",
-    speaker: "James Liu",
     type: "talk",
   },
   {
@@ -60,33 +42,15 @@ const defaultSchedule: ScheduleItem[] = [
     type: "break",
   },
   {
-    time: "13:30",
-    title: "Breakout Sessions",
-    speaker: "Experience Platforms / AR & VR / Responsible AI",
-    type: "talk",
-  },
-  {
-    time: "14:15",
-    title: "Closing Insights & Q&A",
+    time: "14:00",
+    title: "Closing Keynote & Q&A",
     speaker: "Sarah Chen",
     type: "keynote",
   },
-  {
-    time: "15:00",
-    title: "Informal Networking",
-    speaker: "",
-    type: "break",
-  },
 ];
 
-// Ocean theme schedule content
+// Ocean theme schedule content (condensed version)
 const oceanSchedule: ScheduleItem[] = [
-  {
-    time: "08:30",
-    title: "Welcome Reception & Blue Ocean Breakfast",
-    speaker: "",
-    type: "break",
-  },
   {
     time: "09:00",
     title: "Opening Ceremony: Navigating Digital Waters",
@@ -106,21 +70,9 @@ const oceanSchedule: ScheduleItem[] = [
     type: "talk",
   },
   {
-    time: "10:45",
-    title: "Refreshment Break: Ocean Breeze",
-    speaker: "",
-    type: "break",
-  },
-  {
     time: "11:00",
     title: "Exploring Uncharted Waters: New Market Strategies",
     speaker: "Elena Rodriguez",
-    type: "talk",
-  },
-  {
-    time: "11:45",
-    title: "Case Studies: Sailing Through Industry Disruption",
-    speaker: "James Liu",
     type: "talk",
   },
   {
@@ -130,22 +82,10 @@ const oceanSchedule: ScheduleItem[] = [
     type: "break",
   },
   {
-    time: "13:30",
-    title: "Breakout Sessions: Currents of Innovation",
-    speaker: "Cloud Computing / Data Streams / Sustainable Tech",
-    type: "talk",
-  },
-  {
-    time: "14:15",
+    time: "14:00",
     title: "Closing Keynote: Charting the Course Ahead",
     speaker: "Sarah Chen",
     type: "keynote",
-  },
-  {
-    time: "15:00",
-    title: "Sunset Networking & Farewell",
-    speaker: "",
-    type: "break",
   },
 ];
 
@@ -222,7 +162,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-foreground/20 md:-translate-x-px" />
 
           {/* Schedule Items */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             {schedule.map((item, index) => {
               const isEven = index % 2 === 0;
               
@@ -234,8 +174,8 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
                   }`}
                 >
                   {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10 top-4">
-                    <div className="w-2 h-2 rounded-full bg-muted-foreground/50" />
+                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10 top-5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/50" />
                   </div>
 
                   {/* Spacer for mobile */}
@@ -244,37 +184,35 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
                   {/* Card */}
                   <div
                     className={`flex-1 md:w-[calc(50%-2rem)] ${
-                      isEven ? "md:pr-6" : "md:pl-6"
+                      isEven ? "md:pr-8" : "md:pl-8"
                     }`}
                   >
-                    <div className="relative rounded-lg border border-muted-foreground/20 bg-card/40 backdrop-blur-md px-4 py-3 transition-all duration-300 hover:border-muted-foreground/40">
-                      <div className="flex items-center gap-4">
-                        {/* Time */}
-                        <span className="font-mono text-xs text-primary shrink-0">
+                    <div className="relative rounded-xl border border-muted-foreground/20 bg-card/40 backdrop-blur-md p-4 transition-all duration-300 hover:border-muted-foreground/40">
+                      {/* Time & Type */}
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-sm text-primary">
                           {item.time}
                         </span>
-                        
-                        {/* Title & Speaker */}
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-sm font-medium text-foreground truncate">
-                            {item.title}
-                          </h3>
-                          {item.speaker && (
-                            <p className="text-xs text-muted-foreground truncate">
-                              {item.speaker}
-                            </p>
-                          )}
-                        </div>
-                        
-                        {/* Type tag */}
                         <span
-                          className={`rounded-full border px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider shrink-0 ${getTagStyle(
+                          className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ${getTagStyle(
                             item.type
                           )}`}
                         >
                           {getTagLabel(item.type)}
                         </span>
                       </div>
+                      
+                      {/* Title */}
+                      <h3 className="text-base font-medium text-foreground mb-1">
+                        {item.title}
+                      </h3>
+                      
+                      {/* Speaker */}
+                      {item.speaker && (
+                        <p className="text-sm text-muted-foreground">
+                          {item.speaker}
+                        </p>
+                      )}
                     </div>
                   </div>
 
