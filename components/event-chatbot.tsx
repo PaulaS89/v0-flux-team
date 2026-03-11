@@ -1,59 +1,41 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { useChat } from '@ai-sdk/react'
-import { DefaultChatTransport } from 'ai'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
+interface Message {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+}
+
 export function EventChatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState('')
+  const [messages, setMessages] = useState<Message[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
-
-  const [error, setError] = useState<string | null>(null)
-
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: '/api/chat' }),
-    onError: (err) => {
-      console.error('[v0] Chat error:', err)
-      setError('Unable to connect to the assistant. Please try again later.')
-    },
-  })
-
-  const isLoading = status === 'streaming' || status === 'submitted'
-
-  // Clear error when new message is sent
-  useEffect(() => {
-    if (status === 'submitted') {
-      setError(null)
-    }
-  }, [status])
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  // Handle theme switching from tool calls
-  useEffect(() => {
-    const lastMessage = messages[messages.length - 1]
-    if (lastMessage?.role === 'assistant') {
-      for (const part of lastMessage.parts || []) {
-        if (part.type === 'tool-invocation' && part.toolInvocation.toolName === 'switchTheme') {
-          const state = part.toolInvocation.state
-          if (state === 'output-available') {
-            const output = part.toolInvocation.output as { action: string; themeName: string }
-            if (output?.action === 'switch_theme') {
-              handleThemeSwitch(output.themeName)
-            }
-          }
-        }
-      }
+  // Check for theme switch commands in assistant messages
+  const checkForThemeSwitch = useCallback((text: string) => {
+    const match = text.match(/\[SWITCH_THEME:(\w+)\]/i)
+    if (match) {
+      const themeName = match[1]
+      handleThemeSwitch(themeName)
+      // Return text without the command
+      return text.replace(/\[SWITCH_THEME:\w+\]/gi, '').trim()
     }
-  }, [messages])
+    return text
+  }, [])
 
   const handleThemeSwitch = async (themeName: string) => {
     try {
@@ -83,11 +65,86 @@ export function EventChatbot() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || isLoading) return
-    sendMessage({ text: input })
+    
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: input.trim(),
+    }
+    
+    setMessages((prev) => [...prev, userMessage])
     setInput('')
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [...messages, userMessage].map((m) => ({
+            id: m.id,
+            role: m.role,
+            parts: [{ type: 'text', text: m.content }],
+          })),
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to get response')
+      }
+
+      const reader = response.body?.getReader()
+      if (!reader) throw new Error('No response body')
+
+      const decoder = new TextDecoder()
+      let assistantContent = ''
+      const assistantId = (Date.now() + 1).toString()
+
+      // Add empty assistant message that we'll update
+      setMessages((prev) => [...prev, { id: assistantId, role: 'assistant', content: '' }])
+
+      let buffer = ''
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() || ''
+
+        for (const line of lines) {
+          const trimmed = line.trim()
+          if (trimmed.startsWith('data:')) {
+            const data = trimmed.slice(5).trim()
+            if (data === '[DONE]') continue
+            try {
+              const parsed = JSON.parse(data)
+              if (parsed.type === 'text-delta' && parsed.delta) {
+                assistantContent += parsed.delta
+                // Check for theme switch and clean the content
+                const cleanedContent = checkForThemeSwitch(assistantContent)
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === assistantId ? { ...m, content: cleanedContent } : m
+                  )
+                )
+              }
+            } catch {
+              // Skip invalid JSON
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.error('[v0] Chat error:', err)
+      setError('Unable to connect to the assistant. Please try again later.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -147,34 +204,9 @@ export function EventChatbot() {
                       : 'bg-muted text-foreground'
                   }`}
                 >
-                  {message.parts?.map((part, index) => {
-                    if (part.type === 'text') {
-                      return (
-                        <p key={index} className="text-sm whitespace-pre-wrap">
-                          {part.text}
-                        </p>
-                      )
-                    }
-                    if (part.type === 'tool-invocation') {
-                      const state = part.toolInvocation.state
-                      if (state === 'output-available') {
-                        const output = part.toolInvocation.output as { message?: string }
-                        return (
-                          <p key={index} className="text-sm italic text-primary">
-                            {output?.message || 'Theme changed!'}
-                          </p>
-                        )
-                      }
-                      if (state === 'input-available' || state === 'input-streaming') {
-                        return (
-                          <p key={index} className="text-sm italic text-muted-foreground">
-                            Changing theme...
-                          </p>
-                        )
-                      }
-                    }
-                    return null
-                  })}
+                  <p className="text-sm whitespace-pre-wrap">
+                    {message.content || (message.role === 'assistant' && isLoading ? '' : '')}
+                  </p>
                 </div>
               </div>
             ))}
