@@ -2,6 +2,8 @@ import { EventHeader } from "@/components/event-header";
 import { EventHero } from "@/components/event-hero";
 import { EventSpeakers } from "@/components/event-speakers";
 import { EventSchedule } from "@/components/event-schedule";
+import { EventPricing } from "@/components/event-pricing";
+import { EventLocation } from "@/components/event-location";
 import { EventFAQ } from "@/components/event-faq";
 import { EventFooter } from "@/components/event-footer";
 import { EventsSlider } from "@/components/events-slider";
@@ -11,6 +13,8 @@ import {
   getScheduleItems,
   getFaqItems,
   getSiteSettings,
+  getPricingTiers,
+  getLocation,
   getAssetUrl,
 } from "@/lib/contentful";
 
@@ -19,13 +23,15 @@ export const dynamic = "force-dynamic"; // Force dynamic rendering to avoid stal
 
 export default async function Home() {
   // Fetch all content from Contentful in parallel
-  const [heroEntry, speakersEntries, scheduleEntries, faqEntries, siteSettingsEntry] =
+  const [heroEntry, speakersEntries, scheduleEntries, faqEntries, siteSettingsEntry, pricingTiers, locationData] =
     await Promise.all([
       getHeroContent(),
       getSpeakers(),
       getScheduleItems(),
       getFaqItems(),
       getSiteSettings(),
+      getPricingTiers(),
+      getLocation(),
     ]);
 
   // Transform hero content
@@ -90,6 +96,8 @@ export default async function Home() {
         <EventsSlider />
         <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
+        <EventPricing pricing={pricingTiers} />
+        <EventLocation location={locationData} />
         <EventFAQ items={faqData} />
       </main>
       <EventFooter siteSettings={siteSettings} />

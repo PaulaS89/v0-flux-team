@@ -57,7 +57,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
   return (
     <section id="speakers" className="bg-card px-6 py-24">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-16 text-4xl md:text-5xl font-normal tracking-tight">
+        <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
           Speakers
         </h2>
         <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">

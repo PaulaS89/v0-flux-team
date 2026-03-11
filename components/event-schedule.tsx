@@ -12,70 +12,70 @@ interface ScheduleItem {
 // Default fallback schedule
 const defaultSchedule: ScheduleItem[] = [
   {
-    time: "9:00 AM - 10:30 AM",
-    title: "Arrival, Breakfast, and Preshow",
+    time: "08:30",
+    title: "Registration & Networking Breakfast",
     speaker: "",
     type: "break",
   },
   {
-    time: "10:30 AM - 11:30 AM",
-    title: "Opening Keynote",
-    speaker: "Sarah Chen, FLUX",
+    time: "09:00",
+    title: "Welcome & Opening Remarks",
+    speaker: "",
+    type: "break",
+  },
+  {
+    time: "09:15",
+    title: "Keynote: The Future of Digital Experiences",
+    speaker: "Dr. Lena Hoffmann",
     type: "keynote",
   },
   {
-    time: "11:30 AM - 12:00 PM",
-    title: "Customer Panel",
-    speaker: "Michael Torres, FLUX",
+    time: "10:00",
+    title: "Panel Discussion: AI, Personalization & Trust",
+    speaker: "Markus Stein, Sofia Alvarez, Prof. Dr. Adrian Keller",
     type: "talk",
   },
   {
-    time: "12:00 PM - 1:15 PM",
-    title: "Lunch",
+    time: "10:45",
+    title: "Coffee Break",
     speaker: "",
     type: "break",
   },
   {
-    time: "1:15 PM - 1:35 PM",
-    title: "Customer Session I",
-    speaker: "TBA",
+    time: "11:00",
+    title: "Deep Dive: Designing Human-Centered Digital Journeys",
+    speaker: "Sofia Alvarez",
     type: "talk",
   },
   {
-    time: "1:35 PM - 1:55 PM",
-    title: "Dynamic Content at Scale",
-    speaker: "James Wilson, HelloFresh",
+    time: "11:45",
+    title: "Case Studies: Transformations Across Industries",
+    speaker: "Julia Brandt",
     type: "talk",
   },
   {
-    time: "1:55 PM - 2:15 PM",
-    title: "The SRE's Case for Modern Infrastructure",
-    speaker: "Priya Sharma, Cisco",
-    type: "talk",
-  },
-  {
-    time: "2:35 PM - 3:05 PM",
-    title: "Break",
+    time: "12:30",
+    title: "Networking Lunch",
     speaker: "",
     type: "break",
   },
   {
-    time: "3:05 PM - 3:25 PM",
-    title: "Understanding ISR",
-    speaker: "David Kim, FLUX",
+    time: "13:30",
+    title: "Breakout Sessions",
+    speaker: "Experience Platforms / AR & VR / Responsible AI",
     type: "talk",
   },
   {
-    time: "3:25 PM - 4:05 PM",
-    title: "Customer Session II",
-    speaker: "TBA",
-    type: "talk",
+    time: "14:15",
+    title: "Closing Insights & Q&A",
+    speaker: "Dr. Lena Hoffmann",
+    type: "keynote",
   },
   {
-    time: "4:05 PM - 4:25 PM",
-    title: "Rebuilding an E-commerce Site",
-    speaker: "Emma Johnson, Retail Co",
-    type: "talk",
+    time: "15:00",
+    title: "Informal Networking",
+    speaker: "",
+    type: "break",
   },
 ];
 
@@ -90,8 +90,8 @@ export function EventSchedule({ items }: EventScheduleProps) {
   return (
     <section id="schedule" className="bg-background px-6 py-24">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-12 text-4xl md:text-5xl font-normal tracking-tight">
-          Schedule
+        <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
+          Agenda
         </h2>
         
         {/* Tabs */}

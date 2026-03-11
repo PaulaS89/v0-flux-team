@@ -11,39 +11,34 @@ interface FaqItem {
 // Default fallback FAQs
 const defaultFaqs: FaqItem[] = [
   {
-    question: "What is FLUX?",
+    question: "Who should attend?",
     answer:
-      "FLUX brings together developers, community members, business leaders, and partners for a day of learning, connection, and inspiration. Hear what's new at FLUX, learn from real-world customer stories, and explore the latest innovations shaping the web.",
+      "Executives, digital leaders, product owners, CX/UX professionals, and transformation managers.",
   },
   {
-    question: "What's the difference between the in-person and virtual experience?",
+    question: "Is the event in English or German?",
     answer:
-      "The in-person experience includes access to all talks, networking events, lunch, and exclusive swag. Virtual attendees can watch all sessions live, participate in Q&A, and access recordings afterward.",
+      "The main sessions are in English; breakout sessions offer English and German options.",
   },
   {
-    question: "When will the full agenda be announced?",
+    question: "Will materials be shared afterward?",
     answer:
-      "The full agenda will be announced approximately 4 weeks before the event. Early bird ticket holders will receive early access to the schedule.",
+      "Yes, all registered participants receive slides, summaries, and session recordings.",
   },
   {
-    question: "Can I participate as a sponsor of the event?",
+    question: "Is there a dress code?",
     answer:
-      "Yes! We offer various sponsorship packages. Please reach out to our partnerships team at sponsors@flux.dev for more information.",
+      "Business casual.",
   },
   {
-    question: "What's the refund and cancellation policy?",
+    question: "Can I transfer my ticket?",
     answer:
-      "Full refunds are available up to 14 days before the event. After that, tickets can be transferred to another attendee. Contact support@flux.dev for assistance.",
+      "Yes, tickets are transferable up to 48 hours before the event.",
   },
   {
-    question: "Can I request an accommodation to attend the event?",
+    question: "What is included in the ticket price?",
     answer:
-      "Absolutely. We're committed to making FLUX accessible to everyone. Please reach out to accessibility@flux.dev with your specific needs and we'll work with you.",
-  },
-  {
-    question: "I have additional questions that weren't covered here, who can I contact?",
-    answer:
-      "For any other questions, please email hello@flux.dev and our team will get back to you within 24-48 hours.",
+      "Price includes breakfast, lunch, materials, and access to session recordings.",
   },
 ];
 

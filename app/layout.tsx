@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ContentfulThemeProvider } from '@/components/contentful-theme-provider'
+import { getActiveTheme } from '@/lib/contentful'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'FLUX 26 | The Conference for Developers and Business Leaders',
-  description: 'The one-day event for developers and business leaders. New York City, June 25, 2026.',
+  title: 'Future of Digital Experiences | Deloitte Executive Briefing',
+  description: 'A Deloitte Executive Briefing exploring hyper-personalization, AI-driven interfaces, and connected ecosystems. Frankfurt, 16 April 2026.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -29,11 +31,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const theme = await getActiveTheme();
+
   return (
     <html lang="en">
       <body className="font-sans antialiased">

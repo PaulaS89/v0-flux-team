@@ -69,7 +69,7 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
             href="#schedule"
             className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
           >
-            Schedule
+            Agenda
           </Link>
           <Link
             href="#speakers"
