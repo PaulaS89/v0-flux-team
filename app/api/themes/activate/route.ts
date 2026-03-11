@@ -12,7 +12,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 async function withRateLimitRetry<T>(
   fn: () => Promise<T>,
   maxRetries = 3,
-  baseDelay = 2000
+  baseDelay = 1000
 ): Promise<T> {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     const result = await fn();
@@ -119,14 +119,14 @@ export async function POST(request: NextRequest) {
         };
 
         // Small delay before update to avoid rate limits
-        await delay(300);
+        await delay(100);
         
         const updated = await withRateLimitRetry(() => 
           updateEntry(theme.sys.id, freshEntry.sys.version, updatedFields)
         );
         
         if (updated.sys?.version) {
-          await delay(300);
+          await delay(100);
           await withRateLimitRetry(() => publishEntry(theme.sys.id, updated.sys.version));
         }
       }
