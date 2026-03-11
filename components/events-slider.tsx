@@ -183,7 +183,7 @@ export function EventsSlider() {
                     From {formatPrice(event.ticket_price)}
                   </span>
                   <Link
-                    href={`/tickets?event=${encodeURIComponent(event.name)}`}
+                    href={`/tickets?event=${event.id}`}
                     className="text-xs font-medium uppercase tracking-wider text-foreground hover:text-foreground/70 transition-colors inline-flex items-center gap-1"
                   >
                     Get Tickets

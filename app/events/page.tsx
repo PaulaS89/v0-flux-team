@@ -153,7 +153,7 @@ export default function EventsPage() {
                       From {formatPrice(event.ticket_price)}
                     </span>
                     <Button asChild size="sm">
-                      <Link href={`/tickets?event=${encodeURIComponent(event.name)}`}>
+                      <Link href={`/tickets?event=${event.id}`}>
                         <Ticket className="h-4 w-4 mr-2" />
                         Get Tickets
                       </Link>

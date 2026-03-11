@@ -5,12 +5,12 @@ import { getSession } from "@/lib/auth"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, ticketType, dietaryRequirements, eventName, company, jobTitle } = body
+    const { eventId, name, email, ticketType, dietaryRequirements } = body
 
     // Validate required fields
-    if (!name || !email || !ticketType || !eventName) {
+    if (!eventId || !name || !email || !ticketType) {
       return NextResponse.json(
-        { error: "Name, email, ticket type, and event name are required" },
+        { error: "Event, name, email, and ticket type are required" },
         { status: 400 }
       )
     }
@@ -24,18 +24,29 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Fetch event details
+    const events = await sql`
+      SELECT id, name, event_date FROM events WHERE id = ${eventId}
+    `
+
+    if (events.length === 0) {
+      return NextResponse.json(
+        { error: "Event not found" },
+        { status: 404 }
+      )
+    }
+
+    const event = events[0]
+
     // Check if user is logged in
     const session = await getSession()
     const userId = session?.userId || null
 
-    // Create event date (use current date as default)
-    const eventDate = new Date().toISOString().split('T')[0]
-
-    // Create the ticket using correct column names from database schema
+    // Create the ticket linked to the event
     const result = await sql`
-      INSERT INTO tickets (user_id, attendee_name, attendee_email, ticket_type, dietary_requirements, event_name, event_date, company, job_title)
-      VALUES (${userId}, ${name}, ${email}, ${ticketType}, ${dietaryRequirements || null}, ${eventName}, ${eventDate}, ${company || null}, ${jobTitle || null})
-      RETURNING id, attendee_name, attendee_email, ticket_type, event_name, event_date, created_at
+      INSERT INTO tickets (user_id, event_id, attendee_name, attendee_email, ticket_type, dietary_requirements, event_name, event_date)
+      VALUES (${userId}, ${eventId}, ${name}, ${email}, ${ticketType}, ${dietaryRequirements || null}, ${event.name}, ${event.event_date})
+      RETURNING id, event_id, attendee_name, attendee_email, ticket_type, event_name, event_date, created_at
     `
 
     return NextResponse.json({
@@ -64,10 +75,10 @@ export async function GET() {
     }
 
     const tickets = await sql`
-      SELECT id, attendee_name, attendee_email, ticket_type, event_name, event_date, created_at
+      SELECT id, event_id, attendee_name, attendee_email, ticket_type, event_name, event_date, created_at
       FROM tickets
       WHERE user_id = ${session.userId}
-      ORDER BY created_at DESC
+      ORDER BY event_date DESC
     `
 
     return NextResponse.json({ tickets })
