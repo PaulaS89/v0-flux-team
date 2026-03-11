@@ -83,6 +83,31 @@ export interface SiteSettingsFields {
 
 export type SiteSettingsEntry = Entry<SiteSettingsFields, undefined, string>;
 
+// Theme
+export interface ThemeFields {
+  name: EntryFieldTypes.Text;
+  backgroundColor: EntryFieldTypes.Text;
+  primaryColor: EntryFieldTypes.Text;
+  accentColor?: EntryFieldTypes.Text;
+  foregroundColor?: EntryFieldTypes.Text;
+  borderColor?: EntryFieldTypes.Text;
+  isActive?: EntryFieldTypes.Boolean;
+}
+
+export type ThemeEntry = Entry<ThemeFields, undefined, string>;
+
+// Simplified Theme object for use in the app
+export interface Theme {
+  id: string;
+  name: string;
+  backgroundColor: string;
+  primaryColor: string;
+  accentColor?: string;
+  foregroundColor?: string;
+  borderColor?: string;
+  isActive?: boolean;
+}
+
 // ===================
 // Data Fetching Functions
 // ===================
@@ -159,4 +184,55 @@ export function getAssetUrl(asset: Asset | undefined): string | null {
   if (!asset?.fields?.file?.url) return null;
   const url = asset.fields.file.url;
   return url.startsWith("//") ? `https:${url}` : url;
+}
+
+// ===================
+// Theme Functions
+// ===================
+
+export async function getThemes(preview = false): Promise<Theme[]> {
+  const client = getClient(preview);
+  try {
+    const entries = await client.getEntries<ThemeFields>({
+      content_type: "theme",
+    });
+    return entries.items.map((entry) => ({
+      id: entry.sys.id,
+      name: entry.fields.name as string,
+      backgroundColor: entry.fields.backgroundColor as string,
+      primaryColor: entry.fields.primaryColor as string,
+      accentColor: entry.fields.accentColor as string | undefined,
+      foregroundColor: entry.fields.foregroundColor as string | undefined,
+      borderColor: entry.fields.borderColor as string | undefined,
+      isActive: entry.fields.isActive as boolean | undefined,
+    }));
+  } catch (error) {
+    console.error("Error fetching themes:", error);
+    return [];
+  }
+}
+
+export async function getActiveTheme(preview = false): Promise<Theme | null> {
+  const themes = await getThemes(preview);
+  return themes.find((theme) => theme.isActive) || themes[0] || null;
+}
+
+export async function getThemeById(id: string, preview = false): Promise<Theme | null> {
+  const client = getClient(preview);
+  try {
+    const entry = await client.getEntry<ThemeFields>(id);
+    return {
+      id: entry.sys.id,
+      name: entry.fields.name as string,
+      backgroundColor: entry.fields.backgroundColor as string,
+      primaryColor: entry.fields.primaryColor as string,
+      accentColor: entry.fields.accentColor as string | undefined,
+      foregroundColor: entry.fields.foregroundColor as string | undefined,
+      borderColor: entry.fields.borderColor as string | undefined,
+      isActive: entry.fields.isActive as boolean | undefined,
+    };
+  } catch (error) {
+    console.error("Error fetching theme by ID:", error);
+    return null;
+  }
 }
