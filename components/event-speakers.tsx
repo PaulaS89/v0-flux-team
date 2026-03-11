@@ -79,7 +79,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
 
   return (
     <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-5xl">
         {/* Header matching agenda style */}
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
@@ -90,41 +90,34 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
           </p>
         </div>
         
-        {/* Speakers list - matching schedule card style */}
-        <div className="space-y-3">
+        {/* Speakers grid with larger circular images */}
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {speakersList.map((speaker, index) => {
             const speakerImage = getSpeakerImage(speaker.name, index, speaker.photo || speaker.image);
             
             return (
               <div
                 key={speaker.id || `${speaker.name}-${index}`}
-                className="group relative rounded-xl border border-muted-foreground/20 bg-card/40 backdrop-blur-md p-4 transition-all duration-300 hover:border-muted-foreground/40 hover:bg-card/60"
+                className="group text-center"
               >
-                <div className="flex items-center gap-4">
-                  {/* Small circular image */}
-                  <div className="w-12 h-12 relative overflow-hidden rounded-full bg-muted/30 border border-muted-foreground/20 shrink-0">
-                    <Image
-                      src={speakerImage}
-                      alt={speaker.name}
-                      fill
-                      className="object-cover grayscale contrast-110 transition-all duration-500 group-hover:grayscale-0 group-hover:contrast-100"
-                    />
-                  </div>
-                  
-                  {/* Speaker info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-0.5">
-                      <h3 className="text-sm font-medium text-foreground">{speaker.name}</h3>
-                      <span className="text-xs text-muted-foreground">·</span>
-                      <p className="text-xs text-muted-foreground">
-                        {speaker.role}
-                      </p>
-                    </div>
-                    {(speaker.topic || speaker.bio) && (
-                      <p className="text-xs text-muted-foreground/70">{speaker.topic || speaker.bio}</p>
-                    )}
-                  </div>
+                {/* Larger circular image */}
+                <div className="mx-auto mb-4 w-28 h-28 relative overflow-hidden rounded-full bg-muted/30 border border-muted-foreground/20">
+                  <Image
+                    src={speakerImage}
+                    alt={speaker.name}
+                    fill
+                    className="object-cover grayscale contrast-110 transition-all duration-500 group-hover:grayscale-0 group-hover:contrast-100"
+                  />
                 </div>
+                
+                {/* Speaker info */}
+                <h3 className="text-sm font-medium text-foreground mb-0.5">{speaker.name}</h3>
+                <p className="text-xs text-muted-foreground mb-2">
+                  {speaker.role}
+                </p>
+                {(speaker.topic || speaker.bio) && (
+                  <p className="text-xs text-muted-foreground/70 leading-relaxed">{speaker.topic || speaker.bio}</p>
+                )}
               </div>
             );
           })}
