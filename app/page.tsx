@@ -76,6 +76,8 @@ export default async function Home() {
     speaker: (entry.fields.speaker as string) || "",
     type: entry.fields.type as "keynote" | "talk" | "break",
   }));
+  
+  console.log("[v0] Schedule data from Contentful:", scheduleData.length, "items");
 
   // Transform FAQ content
   const faqData = faqEntries.map((entry) => ({
