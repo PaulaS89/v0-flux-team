@@ -59,7 +59,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
       
       <div className="relative mx-auto max-w-7xl">
         {/* Header */}
-        <div className="mb-16">
+        <div className="mb-16 ml-6">
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
             Tickets
           </p>
