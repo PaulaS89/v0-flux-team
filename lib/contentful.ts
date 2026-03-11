@@ -226,6 +226,41 @@ export async function getSiteSettings(preview = false): Promise<SiteSettingsEntr
   }
 }
 
+export async function getDesignSystem(preview = false): Promise<DesignSystemEntry | null> {
+  const client = getClient(preview);
+  try {
+    const entries = await client.getEntries<DesignSystemFields>({
+      content_type: "designSystem",
+      limit: 1,
+    });
+    return entries.items[0] || null;
+  } catch (error) {
+    console.error("Error fetching design system:", error);
+    return null;
+  }
+}
+
+// Helper to convert design system entry to CSS variables
+export function designSystemToCssVars(designSystem: DesignSystemEntry | null): Record<string, string> {
+  if (!designSystem) return {};
+  
+  const fields = designSystem.fields;
+  const vars: Record<string, string> = {};
+  
+  if (fields.primaryColor) vars['--primary'] = fields.primaryColor as string;
+  if (fields.backgroundColor) vars['--background'] = fields.backgroundColor as string;
+  if (fields.foregroundColor) vars['--foreground'] = fields.foregroundColor as string;
+  if (fields.accentColor) vars['--accent'] = fields.accentColor as string;
+  if (fields.mutedColor) vars['--muted'] = fields.mutedColor as string;
+  if (fields.mutedForegroundColor) vars['--muted-foreground'] = fields.mutedForegroundColor as string;
+  if (fields.borderColor) vars['--border'] = fields.borderColor as string;
+  if (fields.cardColor) vars['--card'] = fields.cardColor as string;
+  if (fields.destructiveColor) vars['--destructive'] = fields.destructiveColor as string;
+  if (fields.borderRadius) vars['--radius'] = fields.borderRadius as string;
+  
+  return vars;
+}
+
 // Helper to get image URL from Contentful Asset
 export function getAssetUrl(asset: Asset | undefined): string | null {
   if (!asset?.fields?.file?.url) return null;

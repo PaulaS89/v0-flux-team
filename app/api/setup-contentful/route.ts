@@ -193,6 +193,32 @@ export async function POST() {
       results.push(`Site Settings: ${error.message}`);
     }
 
+    // Create Design System entry
+    try {
+      const designSystem = await environment.createEntry("designSystem", {
+        fields: {
+          name: { "en-US": "FLUX Dark Theme" },
+          primaryColor: { "en-US": "oklch(0.98 0 0)" },
+          backgroundColor: { "en-US": "oklch(0.03 0 0)" },
+          foregroundColor: { "en-US": "oklch(0.98 0 0)" },
+          accentColor: { "en-US": "oklch(0.15 0 0)" },
+          mutedColor: { "en-US": "oklch(0.12 0 0)" },
+          mutedForegroundColor: { "en-US": "oklch(0.55 0 0)" },
+          borderColor: { "en-US": "oklch(0.20 0 0)" },
+          cardColor: { "en-US": "oklch(0.06 0 0)" },
+          destructiveColor: { "en-US": "oklch(0.577 0.245 27.325)" },
+          headingFont: { "en-US": "Geist" },
+          bodyFont: { "en-US": "Geist" },
+          borderRadius: { "en-US": "0rem" },
+          isDarkMode: { "en-US": true },
+        },
+      });
+      await designSystem.publish();
+      results.push("Design System created and published");
+    } catch (error: any) {
+      results.push(`Design System: ${error.message}`);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Contentful population complete!",
