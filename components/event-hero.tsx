@@ -71,24 +71,36 @@ export function EventHero({ data }: EventHeroProps) {
       <style jsx>{`
         @keyframes morph {
           0%, 100% {
-            transform: scale(1) rotate(0deg);
-            filter: hue-rotate(0deg) brightness(1);
+            filter: hue-rotate(0deg) saturate(1) brightness(1) contrast(1);
+            transform: rotate(0deg);
           }
-          25% {
-            transform: scale(1.03) rotate(2deg);
-            filter: hue-rotate(5deg) brightness(1.05);
+          15% {
+            filter: hue-rotate(15deg) saturate(1.2) brightness(1.1) contrast(1.05);
+            transform: rotate(3deg);
           }
-          50% {
-            transform: scale(0.98) rotate(-1deg);
-            filter: hue-rotate(-5deg) brightness(0.98);
+          30% {
+            filter: hue-rotate(-10deg) saturate(0.9) brightness(0.95) contrast(1.1);
+            transform: rotate(-2deg);
+          }
+          45% {
+            filter: hue-rotate(20deg) saturate(1.3) brightness(1.05) contrast(0.95);
+            transform: rotate(4deg);
+          }
+          60% {
+            filter: hue-rotate(-15deg) saturate(1.1) brightness(1.15) contrast(1.05);
+            transform: rotate(-3deg);
           }
           75% {
-            transform: scale(1.02) rotate(-2deg);
-            filter: hue-rotate(3deg) brightness(1.02);
+            filter: hue-rotate(10deg) saturate(0.95) brightness(0.9) contrast(1.1);
+            transform: rotate(2deg);
+          }
+          90% {
+            filter: hue-rotate(-5deg) saturate(1.15) brightness(1.08) contrast(1);
+            transform: rotate(-1deg);
           }
         }
         .animate-morph {
-          animation: morph 12s ease-in-out infinite;
+          animation: morph 15s ease-in-out infinite;
         }
       `}</style>
 
