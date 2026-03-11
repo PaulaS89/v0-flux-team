@@ -83,7 +83,7 @@ export function LearningsChart() {
             </svg>
           </div>
           {/* Y-Axis Label */}
-          <div className="absolute -top-10 left-1/2 -translate-x-1/2 -rotate-90 whitespace-nowrap origin-center">
+          <div className="absolute top-6 left-4 -rotate-90 whitespace-nowrap origin-top-left">
             <span className="text-xs md:text-sm font-semibold text-foreground">
               Complexity
             </span>
@@ -116,7 +116,7 @@ export function LearningsChart() {
             </svg>
           </div>
           {/* X-Axis Label */}
-          <div className="absolute top-1/2 -translate-y-1/2 -right-12 md:-right-14 whitespace-nowrap">
+          <div className="absolute top-3 right-6 whitespace-nowrap">
             <span className="text-xs md:text-sm font-semibold text-foreground">
               Time
             </span>
