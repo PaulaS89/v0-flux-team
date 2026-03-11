@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 interface ScheduleItem {
   time: string;
@@ -153,6 +154,94 @@ function getTagLabel(type: ScheduleItem["type"]) {
   }
 }
 
+function ScheduleCard({ item, index, isEven }: { item: ScheduleItem; index: number; isEven: boolean }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Add a staggered delay based on index
+          setTimeout(() => {
+            setIsVisible(true);
+          }, index * 100);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [index]);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`relative flex items-start gap-6 transition-all duration-700 ease-out ${
+        isEven ? "md:flex-row" : "md:flex-row-reverse"
+      } ${
+        isVisible 
+          ? "opacity-100 translate-y-0" 
+          : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: `${index * 50}ms` }}
+    >
+      {/* Timeline dot */}
+      <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10 top-5">
+        <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
+          isVisible ? "bg-primary scale-100" : "bg-muted-foreground/50 scale-0"
+        }`} />
+      </div>
+
+      {/* Spacer for mobile */}
+      <div className="w-6 md:hidden shrink-0" />
+
+      {/* Card */}
+      <div
+        className={`flex-1 md:w-[calc(50%-2rem)] ${
+          isEven ? "md:pr-8" : "md:pl-8"
+        }`}
+      >
+        <div className="relative rounded-xl border border-muted-foreground/20 bg-card/40 backdrop-blur-md p-4 transition-all duration-300 hover:border-muted-foreground/40 hover:bg-card/60">
+          {/* Time & Type */}
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-mono text-sm text-primary">
+              {item.time}
+            </span>
+            <span
+              className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ${getTagStyle(
+                item.type
+              )}`}
+            >
+              {getTagLabel(item.type)}
+            </span>
+          </div>
+          
+          {/* Title */}
+          <h3 className="text-base font-medium text-foreground mb-1" style={{ fontFamily: 'var(--font-display)' }}>
+            {item.title}
+          </h3>
+          
+          {/* Speaker */}
+          {item.speaker && (
+            <p className="text-sm text-muted-foreground">
+              {item.speaker}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Empty space for alternating layout on desktop */}
+      <div className="hidden md:block flex-1 md:w-[calc(50%-2rem)]" />
+    </div>
+  );
+}
+
 export function EventSchedule({ items, headerImageUrl, themeName }: EventScheduleProps) {
   // Use ocean schedule when ocean theme is active (and no Contentful items provided)
   const isOceanTheme = themeName?.toLowerCase().includes("ocean");
@@ -180,10 +269,10 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
               </div>
             </div>
           )}
-          <h2 className="mb-4 text-4xl font-light tracking-tight md:text-5xl text-foreground">
+          <h2 className="mb-4 text-4xl md:text-6xl font-medium tracking-tight text-foreground" style={{ fontFamily: 'var(--font-display)' }}>
             Agenda
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg italic">
             One day. Big ideas. The future of human-AI interaction.
           </p>
         </div>
@@ -199,58 +288,12 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
               const isEven = index % 2 === 0;
               
               return (
-                <div
-                  key={index}
-                  className={`relative flex items-start gap-6 ${
-                    isEven ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
-                >
-                  {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10 top-5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/50" />
-                  </div>
-
-                  {/* Spacer for mobile */}
-                  <div className="w-6 md:hidden shrink-0" />
-
-                  {/* Card */}
-                  <div
-                    className={`flex-1 md:w-[calc(50%-2rem)] ${
-                      isEven ? "md:pr-8" : "md:pl-8"
-                    }`}
-                  >
-                    <div className="relative rounded-xl border border-muted-foreground/20 bg-card/40 backdrop-blur-md p-4 transition-all duration-300 hover:border-muted-foreground/40">
-                      {/* Time & Type */}
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono text-sm text-primary">
-                          {item.time}
-                        </span>
-                        <span
-                          className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ${getTagStyle(
-                            item.type
-                          )}`}
-                        >
-                          {getTagLabel(item.type)}
-                        </span>
-                      </div>
-                      
-                      {/* Title */}
-                      <h3 className="text-base font-medium text-foreground mb-1">
-                        {item.title}
-                      </h3>
-                      
-                      {/* Speaker */}
-                      {item.speaker && (
-                        <p className="text-sm text-muted-foreground">
-                          {item.speaker}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Empty space for alternating layout on desktop */}
-                  <div className="hidden md:block flex-1 md:w-[calc(50%-2rem)]" />
-                </div>
+                <ScheduleCard 
+                  key={index} 
+                  item={item} 
+                  index={index} 
+                  isEven={isEven} 
+                />
               );
             })}
           </div>
