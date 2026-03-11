@@ -1,24 +1,22 @@
 import contentful from "contentful-management";
-import * as fs from "fs";
-import * as path from "path";
 
-const spaceId = process.env.CONTENTFUL_SPACE_ID!;
-const accessToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN!;
+const spaceId = process.env.CONTENTFUL_SPACE_ID;
+const accessToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
+
+// Using a public circle motif image URL
+const IMAGE_URL = "https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=400&h=400&fit=crop&q=80";
 
 async function uploadDeloitteScheduleImage() {
+  if (!spaceId || !accessToken) {
+    throw new Error("Missing CONTENTFUL_SPACE_ID or CONTENTFUL_MANAGEMENT_TOKEN");
+  }
+  
   const client = contentful.createClient({ accessToken });
   const space = await client.getSpace(spaceId);
   const environment = await space.getEnvironment("master");
 
-  // Read the image file
-  const imagePath = path.join(process.cwd(), "public/images/deloitte-circle-motif.jpg");
-  const imageBuffer = fs.readFileSync(imagePath);
-
-  // Upload the image as an asset
-  console.log("Uploading image to Contentful...");
-  const upload = await environment.createUpload({ file: imageBuffer });
-
-  // Create the asset
+  // Create the asset from URL
+  console.log("Creating asset in Contentful...");
   const asset = await environment.createAsset({
     fields: {
       title: { "en-US": "Deloitte Schedule Circle Motif" },
@@ -27,18 +25,19 @@ async function uploadDeloitteScheduleImage() {
         "en-US": {
           contentType: "image/jpeg",
           fileName: "deloitte-circle-motif.jpg",
-          uploadFrom: {
-            sys: { type: "Link", linkType: "Upload", id: upload.sys.id },
-          },
+          upload: IMAGE_URL,
         },
       },
     },
   });
 
   // Process and publish the asset
+  console.log("Processing asset...");
   const processedAsset = await asset.processForAllLocales();
-  await new Promise((resolve) => setTimeout(resolve, 3000)); // Wait for processing
-  const publishedAsset = await (await environment.getAsset(processedAsset.sys.id)).publish();
+  await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait for processing
+  
+  const fetchedAsset = await environment.getAsset(processedAsset.sys.id);
+  const publishedAsset = await fetchedAsset.publish();
   console.log("Asset uploaded and published:", publishedAsset.sys.id);
 
   // Find the Deloitte theme entry
