@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,8 +25,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user is logged in
-    const currentUser = await getCurrentUser();
-    const userId = currentUser?.id || null;
+    const session = await getSession();
+    const userId = session?.userId || null;
 
     // Create the ticket
     const result = await sql`
@@ -51,9 +51,9 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const currentUser = await getCurrentUser();
+    const session = await getSession();
     
-    if (!currentUser) {
+    if (!session) {
       return NextResponse.json(
         { error: "You must be logged in to view your tickets" },
         { status: 401 }
@@ -63,7 +63,7 @@ export async function GET() {
     const tickets = await sql`
       SELECT id, name, email, ticket_type, event_name, event_year, created_at
       FROM tickets
-      WHERE user_id = ${currentUser.id}
+      WHERE user_id = ${session.userId}
       ORDER BY created_at DESC
     `;
 
