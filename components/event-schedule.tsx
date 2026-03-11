@@ -9,7 +9,7 @@ interface ScheduleItem {
   type: "keynote" | "talk" | "break";
 }
 
-// Default fallback schedule (condensed version)
+// Default fallback schedule
 const defaultSchedule: ScheduleItem[] = [
   {
     time: "09:00",
@@ -18,38 +18,50 @@ const defaultSchedule: ScheduleItem[] = [
     type: "break",
   },
   {
-    time: "09:15",
+    time: "09:30",
     title: "Keynote: The Future of Digital Experiences",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
-    time: "10:00",
+    time: "10:30",
     title: "Panel: AI, Personalization & Trust",
     speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
   {
-    time: "11:00",
-    title: "Deep Dive: Human-Centered Digital Journeys",
-    speaker: "Elena Rodriguez",
-    type: "talk",
-  },
-  {
-    time: "12:30",
+    time: "12:00",
     title: "Networking Lunch",
     speaker: "",
     type: "break",
   },
   {
-    time: "14:00",
+    time: "13:30",
+    title: "Deep Dive: Human-Centered Digital Journeys",
+    speaker: "Elena Rodriguez",
+    type: "talk",
+  },
+  {
+    time: "14:30",
+    title: "Workshop: Designing with LLMs",
+    speaker: "Marcus Weber",
+    type: "talk",
+  },
+  {
+    time: "16:00",
     title: "Closing Keynote & Q&A",
     speaker: "Sarah Chen",
     type: "keynote",
   },
+  {
+    time: "17:00",
+    title: "Drinks & Afterparty",
+    speaker: "",
+    type: "break",
+  },
 ];
 
-// Ocean theme schedule content (condensed version)
+// Ocean theme schedule content
 const oceanSchedule: ScheduleItem[] = [
   {
     time: "09:00",
@@ -58,34 +70,46 @@ const oceanSchedule: ScheduleItem[] = [
     type: "break",
   },
   {
-    time: "09:15",
+    time: "09:30",
     title: "Keynote: Riding the Wave of Digital Transformation",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
-    time: "10:00",
+    time: "10:30",
     title: "Panel: Deep Dive into AI & Machine Learning",
     speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
   {
-    time: "11:00",
-    title: "Exploring Uncharted Waters: New Market Strategies",
-    speaker: "Elena Rodriguez",
-    type: "talk",
-  },
-  {
-    time: "12:30",
+    time: "12:00",
     title: "Seaside Networking Lunch",
     speaker: "",
     type: "break",
   },
   {
-    time: "14:00",
+    time: "13:30",
+    title: "Exploring Uncharted Waters: New Market Strategies",
+    speaker: "Elena Rodriguez",
+    type: "talk",
+  },
+  {
+    time: "14:30",
+    title: "Workshop: Building AI-Powered Experiences",
+    speaker: "Marcus Weber",
+    type: "talk",
+  },
+  {
+    time: "16:00",
     title: "Closing Keynote: Charting the Course Ahead",
     speaker: "Sarah Chen",
     type: "keynote",
+  },
+  {
+    time: "17:00",
+    title: "Sunset Drinks & Afterparty",
+    speaker: "",
+    type: "break",
   },
 ];
 
