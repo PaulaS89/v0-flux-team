@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, AlertCircle, XCircle } from "lucide-react"
 
 export default function SignupPage() {
   const router = useRouter()
@@ -15,11 +15,13 @@ export default function SignupPage() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
+  const [showErrorPage, setShowErrorPage] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError("")
+    setShowErrorPage(false)
 
     if (password !== confirmPassword) {
       setError("Passwords do not match")
@@ -43,17 +45,68 @@ export default function SignupPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.error || "An error occurred during signup")
+        const errorMessage = data.error || "An error occurred during signup"
+        setError(errorMessage)
+        if (response.status >= 500) {
+          setShowErrorPage(true)
+        }
         return
       }
 
       router.push("/")
       router.refresh()
     } catch {
-      setError("An error occurred during signup")
+      setError("Unable to connect to the server. Please try again later.")
+      setShowErrorPage(true)
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // Error page view
+  if (showErrorPage) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <div className="p-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Home
+          </Link>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center px-6 pb-20">
+          <div className="w-full max-w-md text-center">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10">
+              <XCircle className="h-8 w-8 text-destructive" />
+            </div>
+            <h1 className="text-2xl font-semibold tracking-tight mb-2">
+              Sign Up Failed
+            </h1>
+            <p className="text-muted-foreground mb-6">
+              {error}
+            </p>
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={() => setShowErrorPage(false)}
+                className="w-full bg-foreground text-background hover:bg-foreground/90"
+              >
+                Try Again
+              </Button>
+              <Button
+                variant="outline"
+                asChild
+                className="w-full"
+              >
+                <Link href="/login">Log In Instead</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -80,9 +133,10 @@ export default function SignupPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
-                {error}
+            {error && !showErrorPage && (
+              <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md flex items-start gap-2">
+                <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+                <span>{error}</span>
               </div>
             )}
 
