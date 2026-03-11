@@ -174,7 +174,7 @@ export function EventHero({ data }: EventHeroProps) {
               className="group flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-background hover:bg-transparent hover:text-foreground transition-all"
               asChild
             >
-              <a href={heroData.ctaButtonLink || "/tickets"}>
+              <a href={heroData.ctaButtonLink && heroData.ctaButtonLink.trim() !== "" ? heroData.ctaButtonLink : "/tickets"}>
                 <span className="text-xs font-medium uppercase tracking-[0.15em]">
                   {heroData.ctaButtonText}
                 </span>
