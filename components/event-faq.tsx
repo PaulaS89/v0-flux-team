@@ -15,34 +15,34 @@ interface FaqItem {
 // Default fallback FAQs
 const defaultFaqs: FaqItem[] = [
   {
-    question: "Wo findet das Event statt?",
+    question: "Who should attend?",
     answer:
-      "FLUX 26 findet in der Kulturbrauerei in Berlin statt. Die genaue Adresse ist Schoenhauser Allee 36, 10435 Berlin. Es gibt auch eine Online-Teilnahmemoeglichkeit.",
+      "Executives, digital leaders, product owners, CX/UX professionals, and transformation managers.",
   },
   {
-    question: "Gibt es eine Moeglichkeit online teilzunehmen?",
+    question: "Is the event in English or German?",
     answer:
-      "Ja! Wir bieten einen kostenlosen Online-Stream an. Sie koennen alle Vortraege live verfolgen und an Q&A-Sessions teilnehmen.",
+      "The main sessions are in English; breakout sessions offer English and German options.",
   },
   {
-    question: "Was ist im Ticketpreis enthalten?",
+    question: "Will materials be shared afterward?",
     answer:
-      "Das Ticket beinhaltet Zugang zu allen Vortraegen, Mittagessen, Kaffeepausen, Networking-Events und Zugang zu den Aufzeichnungen nach dem Event.",
+      "Yes, all registered participants receive slides, summaries, and session recordings.",
   },
   {
-    question: "Kann ich mein Ticket stornieren?",
+    question: "Is there a dress code?",
     answer:
-      "Tickets koennen bis 14 Tage vor dem Event vollstaendig erstattet werden. Danach ist eine Uebertragung auf eine andere Person moeglich.",
+      "Business casual.",
   },
   {
-    question: "Gibt es einen Dresscode?",
+    question: "Can I transfer my ticket?",
     answer:
-      "Nein, es gibt keinen Dresscode. Kommen Sie so, wie Sie sich wohlfuehlen - ob casual oder business.",
+      "Yes, tickets are transferable up to 48 hours before the event.",
   },
   {
-    question: "Werden die Vortraege aufgezeichnet?",
+    question: "What is included in the ticket price?",
     answer:
-      "Ja, alle Vortraege werden aufgezeichnet und sind nach dem Event fuer Ticketinhaber 12 Monate lang verfuegbar.",
+      "Price includes breakfast, lunch, materials, and access to session recordings.",
   },
 ];
 
@@ -57,7 +57,7 @@ export function EventFAQ({ items }: EventFAQProps) {
     <section id="faq" className="bg-background px-6 py-24">
       <div className="mx-auto max-w-3xl">
         <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
-          Haeufig gestellte Fragen
+          Frequently Asked Questions
         </h2>
         <Accordion type="single" collapsible className="w-full">
           {faqs.map((faq, index) => (

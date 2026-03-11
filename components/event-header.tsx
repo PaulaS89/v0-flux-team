@@ -24,13 +24,25 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
             href="#programm"
             className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
           >
-            Programm
+            Agenda
           </Link>
           <Link
             href="#speaker"
             className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
           >
-            Speaker
+            Speakers
+          </Link>
+          <Link
+            href="#pricing"
+            className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Pricing
+          </Link>
+          <Link
+            href="#location"
+            className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Location
           </Link>
           <Link
             href="#faq"
@@ -51,16 +63,10 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
 
         <div className="flex items-center gap-4">
           <Link
-            href="#anmelden"
+            href="#pricing"
             className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
           >
-            Anmelden
-          </Link>
-          <Link
-            href="#login"
-            className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Login
+            Register
           </Link>
         </div>
       </div>

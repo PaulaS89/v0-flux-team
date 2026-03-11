@@ -11,67 +11,67 @@ interface ScheduleItem {
 const defaultSchedule: ScheduleItem[] = [
   {
     time: "08:30",
-    title: "Registrierung & Kaffee",
+    title: "Registration & Networking Breakfast",
     speaker: "",
     type: "break",
   },
   {
     time: "09:00",
-    title: "Keynote: Die Zukunft der Technologie",
-    speaker: "Dr. Anna Weber",
+    title: "Welcome & Opening Remarks",
+    speaker: "",
+    type: "break",
+  },
+  {
+    time: "09:15",
+    title: "Keynote: The Future of Digital Experiences",
+    speaker: "Dr. Lena Hoffmann",
     type: "keynote",
   },
   {
     time: "10:00",
-    title: "Skalierbare Architekturen fur moderne Apps",
-    speaker: "Marcus Schmidt",
+    title: "Panel Discussion: AI, Personalization & Trust",
+    speaker: "Markus Stein, Sofia Alvarez, Prof. Dr. Adrian Keller",
     type: "talk",
   },
   {
-    time: "11:00",
-    title: "Kaffeepause & Networking",
+    time: "10:45",
+    title: "Coffee Break",
     speaker: "",
     type: "break",
   },
   {
-    time: "11:30",
-    title: "Von 0 auf 1 Million Nutzer",
-    speaker: "Lisa Hoffmann",
+    time: "11:00",
+    title: "Deep Dive: Designing Human-Centered Digital Journeys",
+    speaker: "Sofia Alvarez",
+    type: "talk",
+  },
+  {
+    time: "11:45",
+    title: "Case Studies: Transformations Across Industries",
+    speaker: "Julia Brandt",
     type: "talk",
   },
   {
     time: "12:30",
-    title: "Mittagspause",
+    title: "Networking Lunch",
     speaker: "",
     type: "break",
   },
   {
-    time: "14:00",
-    title: "Datengetriebene Entscheidungen treffen",
-    speaker: "Thomas Mueller",
+    time: "13:30",
+    title: "Breakout Sessions",
+    speaker: "Experience Platforms / AR & VR / Responsible AI",
     type: "talk",
+  },
+  {
+    time: "14:15",
+    title: "Closing Insights & Q&A",
+    speaker: "Dr. Lena Hoffmann",
+    type: "keynote",
   },
   {
     time: "15:00",
-    title: "CI/CD Best Practices",
-    speaker: "Sarah Klein",
-    type: "talk",
-  },
-  {
-    time: "16:00",
-    title: "Kaffeepause",
-    speaker: "",
-    type: "break",
-  },
-  {
-    time: "16:30",
-    title: "Microservices in der Praxis",
-    speaker: "Michael Braun",
-    type: "talk",
-  },
-  {
-    time: "17:30",
-    title: "Closing & Networking",
+    title: "Informal Networking",
     speaker: "",
     type: "break",
   },
@@ -88,7 +88,7 @@ export function EventSchedule({ items }: EventScheduleProps) {
     <section id="programm" className="bg-background px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
-          Programm
+          Agenda
         </h2>
         <div className="space-y-0">
           {schedule.map((item, index) => (

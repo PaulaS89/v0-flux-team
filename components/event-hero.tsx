@@ -21,17 +21,18 @@ interface HeroData {
 
 // Default fallback content
 const defaultHeroData: HeroData = {
-  title: "Die eintaegige Konferenz\nfur Entwickler\nund Business-Leader",
-  location: "Berlin",
-  locationSubtext: "und Online",
-  eventDate: "15. Mai 2026",
-  venue: "Kulturbrauerei",
-  onlineLabel: "Online",
-  onlinePrice: "Kostenlos",
-  earlyBirdLabel: "Early Bird Tickets",
-  earlyBirdOriginalPrice: "€600",
-  earlyBirdPrice: "€350",
-  ctaButtonText: "Tickets kaufen",
+  title: "Future of Digital\nExperiences",
+  subtitle: "A Deloitte Executive Briefing",
+  location: "Frankfurt",
+  locationSubtext: "In Person",
+  eventDate: "16 April 2026",
+  venue: "Deloitte Frankfurt Office",
+  onlineLabel: "Deloitte Clients",
+  onlinePrice: "€149",
+  earlyBirdLabel: "Standard Admission",
+  earlyBirdOriginalPrice: "",
+  earlyBirdPrice: "€249",
+  ctaButtonText: "Register Now",
 };
 
 interface EventHeroProps {
