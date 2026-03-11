@@ -141,13 +141,20 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
             return (
               <div
                 key={speaker.id || `${speaker.name}-${index}`}
-                className="group relative h-[380px] perspective-1000"
+                className="group relative h-[380px]"
+                style={{ perspective: '1000px' }}
               >
                 {/* Card container with flip animation */}
-                <div className="relative w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+                <div 
+                  className="relative w-full h-full transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                  style={{ transformStyle: 'preserve-3d' }}
+                >
                   
                   {/* Front of card */}
-                  <div className="absolute inset-0 backface-hidden rounded-2xl border border-muted-foreground/20 p-6 text-center bg-background">
+                  <div 
+                    className="absolute inset-0 rounded-2xl border border-muted-foreground/20 p-6 text-center bg-background"
+                    style={{ backfaceVisibility: 'hidden' }}
+                  >
                     {/* Square image with colored background */}
                     <div className={`mx-auto mb-5 w-28 h-28 relative overflow-hidden rounded-xl ${bgColor}`}>
                       <Image
@@ -167,7 +174,10 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                   </div>
                   
                   {/* Back of card - shows talk details */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl border border-muted-foreground/20 p-4 bg-background flex flex-col overflow-hidden">
+                  <div 
+                    className="absolute inset-0 rounded-2xl border border-muted-foreground/20 p-4 bg-background flex flex-col overflow-hidden"
+                    style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                  >
                     {/* Talk time badge */}
                     {speaker.talkTime && (
                       <span className="inline-block self-start font-mono text-[10px] text-primary mb-1.5 shrink-0">
