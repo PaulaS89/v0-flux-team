@@ -1,7 +1,7 @@
 import { EventHeader } from "@/components/event-header";
 import { EventHero } from "@/components/event-hero";
 import { EventSpeakers } from "@/components/event-speakers";
-import { EventSchedule } from "@/components/event-schedule";
+
 import { EventPricing } from "@/components/event-pricing";
 import { EventLocation } from "@/components/event-location";
 import { EventFAQ } from "@/components/event-faq";
@@ -10,7 +10,7 @@ import { EventsSlider } from "@/components/events-slider";
 import {
   getHeroContent,
   getSpeakers,
-  getScheduleItems,
+  
   getFaqItems,
   getSiteSettings,
   getPricingTiers,
@@ -23,11 +23,10 @@ export const dynamic = "force-dynamic"; // Force dynamic rendering to avoid stal
 
 export default async function Home() {
   // Fetch all content from Contentful in parallel
-  const [heroEntry, speakersEntries, scheduleEntries, faqEntries, siteSettingsEntry, pricingTiers, locationData] =
+  const [heroEntry, speakersEntries, faqEntries, siteSettingsEntry, pricingTiers, locationData] =
     await Promise.all([
       getHeroContent(),
       getSpeakers(),
-      getScheduleItems(),
       getFaqItems(),
       getSiteSettings(),
       getPricingTiers(),
@@ -65,14 +64,6 @@ export default async function Home() {
     image: (entry.fields.image as string) || null,
   }));
 
-  // Transform schedule content
-  const scheduleData = scheduleEntries.map((entry) => ({
-    time: entry.fields.time as string,
-    title: entry.fields.title as string,
-    speaker: (entry.fields.speaker as string) || "",
-    type: entry.fields.type as "keynote" | "talk" | "break",
-  }));
-
   // Transform FAQ content
   const faqData = faqEntries.map((entry) => ({
     question: entry.fields.question as string,
@@ -93,7 +84,6 @@ export default async function Home() {
       <EventHeader siteSettings={siteSettings} />
       <main>
         <EventHero data={heroData} />
-        <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
         <EventPricing pricing={pricingTiers} />
         <EventLocation location={locationData} />
