@@ -175,15 +175,6 @@ export function LearningsChart() {
                   ${hoveredTask === task.id ? "scale-110 z-20" : "scale-100"}
                 `}
               >
-                {/* Dot */}
-                <div
-                  className={`
-                    w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${categoryColors[task.category]}
-                    shadow-lg shadow-current/30
-                    ring-1 ring-background
-                  `}
-                />
-
                 {/* Title Box */}
                 <div
                   className={`
