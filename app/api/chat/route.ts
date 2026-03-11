@@ -11,6 +11,7 @@ export const maxDuration = 30
 
 const groq = createGroq({
   apiKey: process.env.GROQ_API_KEY,
+  baseURL: 'https://api.groq.com/openai/v1',
 })
 
 // Event information for context
