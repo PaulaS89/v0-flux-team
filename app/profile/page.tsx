@@ -14,11 +14,11 @@ interface UserData {
 
 interface TicketData {
   id: number;
-  name: string;
-  email: string;
+  attendee_name: string;
+  attendee_email: string;
   ticket_type: string;
   event_name: string;
-  event_year: string;
+  event_date: string;
   created_at: string;
 }
 
@@ -161,14 +161,14 @@ export default function ProfilePage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="text-lg font-semibold">
-                          {ticket.event_name} {ticket.event_year}
+                          {ticket.event_name}
                         </h3>
                         <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
                           {getTicketTypeLabel(ticket.ticket_type)}
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Registered as {ticket.name}
+                        Registered as {ticket.attendee_name}
                       </p>
                     </div>
                     <div className="text-right">
