@@ -133,18 +133,15 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
               </Link>
             </>
           )}
-          <Button
-            asChild
-            size="sm"
-            className="group hidden lg:flex items-center gap-2 bg-foreground px-4 text-background hover:bg-foreground/90"
+          <Link
+            href="/tickets"
+            className="group hidden lg:flex items-center gap-2 rounded-md bg-foreground px-4 py-2 text-background hover:bg-foreground/90"
           >
-            <Link href="/tickets">
-              <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                Get Tickets
-              </span>
-              <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </Button>
+            <span className="text-xs font-medium uppercase tracking-[0.15em]">
+              Get Tickets
+            </span>
+            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
       </div>
     </header>
