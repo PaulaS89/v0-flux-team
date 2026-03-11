@@ -155,8 +155,8 @@ export function EventHero({ data }: EventHeroProps) {
                   {heroData.onlinePrice}
                 </p>
               </div>
-              <a href="/tickets" className="group/early cursor-pointer hover:opacity-80 transition-opacity">
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground group-hover/early:text-foreground transition-colors">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                   {heroData.earlyBirdLabel || "Early Bird Tickets"}
                 </p>
                 <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-foreground">
@@ -167,7 +167,7 @@ export function EventHero({ data }: EventHeroProps) {
                   )}
                   {heroData.earlyBirdPrice}
                 </p>
-              </a>
+              </div>
             </div>
             <Button
               size="lg"
