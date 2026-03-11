@@ -138,7 +138,7 @@ export function EventHero({ data }: EventHeroProps) {
       </div>
 
       {/* Event Details Footer */}
-      <div className="relative z-10 pb-8 border-b border-foreground/20">
+      <div className="relative z-10 pb-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           {/* Left side: Location & Date info */}
           <div className="flex flex-col gap-4 md:flex-row md:gap-16">
@@ -192,6 +192,9 @@ export function EventHero({ data }: EventHeroProps) {
           </div>
         </div>
       </div>
+      
+      {/* Full-width separator line */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-foreground/20" />
     </section>
   );
 }
