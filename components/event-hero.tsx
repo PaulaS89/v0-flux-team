@@ -171,24 +171,15 @@ export function EventHero({ data }: EventHeroProps) {
             </div>
             <Button
               size="lg"
-              className="group flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-background hover:bg-transparent hover:text-foreground transition-all"
-              asChild={!!heroData.ctaButtonLink}
+              className="group relative z-20 flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-background hover:bg-transparent hover:text-foreground transition-all cursor-pointer"
+              asChild
             >
-              {heroData.ctaButtonLink ? (
-                <a href={heroData.ctaButtonLink}>
-                  <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                    {heroData.ctaButtonText}
-                  </span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              ) : (
-                <>
-                  <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                    {heroData.ctaButtonText}
-                  </span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </>
-              )}
+              <a href="/tickets">
+                <span className="text-xs font-medium uppercase tracking-[0.15em]">
+                  {heroData.ctaButtonText}
+                </span>
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
             </Button>
           </div>
         </div>
