@@ -63,7 +63,7 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
-      <div className="flex h-14 items-center justify-between pl-6 pr-6 md:pl-12 md:pr-12">
+      <div className="flex h-14 items-center justify-between px-8 md:px-16 lg:px-24">
         <nav className="flex items-center gap-8">
           <Link
             href="#schedule"
