@@ -78,7 +78,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
   const speakersList = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
 
   return (
-    <section id="speakers" className="bg-card px-6 py-24">
+    <section id="speakers" className="bg-card px-6 py-16">
       {/* SVG filter for halftone effect */}
       <svg className="absolute w-0 h-0" aria-hidden="true">
         <defs>

@@ -51,7 +51,7 @@ export function EventFAQ({ items }: EventFAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-card px-6 py-24">
+    <section id="faq" className="bg-card px-6 py-16">
       <div className="mx-auto max-w-7xl">
         {/* Title - aligned with speakers/pricing */}
         <h2 className="mb-8 ml-6 text-3xl font-light tracking-tight md:text-4xl">
