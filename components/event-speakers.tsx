@@ -67,19 +67,21 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
               className="group cursor-pointer border-0 bg-transparent transition-all hover:bg-secondary/50"
             >
               <CardContent className="p-6">
-                <div className="mb-6 aspect-[4/3] w-full bg-muted/50 relative overflow-hidden">
+                <div className="mb-6 aspect-[4/3] w-full bg-muted/50 relative overflow-hidden rounded-lg">
                   {(speaker.photo || speaker.image) ? (
                     <Image
                       src={speaker.photo || speaker.image || ""}
                       alt={speaker.name}
                       fill
-                      className="object-cover grayscale transition-all group-hover:grayscale-0"
+                      className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0 group-hover:scale-110"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
                       <div className="h-20 w-20 rounded-full bg-muted" />
                     </div>
                   )}
+                  {/* Overlay that fades out on hover */}
+                  <div className="absolute inset-0 bg-background/20 transition-opacity duration-500 group-hover:opacity-0" />
                 </div>
                 <h3 className="mb-1 text-lg font-medium tracking-tight">{speaker.name}</h3>
                 <p className="mb-3 text-sm text-muted-foreground">
