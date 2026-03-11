@@ -4,13 +4,13 @@ import { Location } from "@/lib/contentful";
 
 const defaultLocation: Location = {
   id: "default",
-  venueName: "Deloitte Frankfurt Office",
-  address: "Europa-Allee 91",
-  city: "60486 Frankfurt am Main, Germany",
-  mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2557.8927682775256!2d8.630611076891024!3d50.11181087152296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bd0ea72eb9c3b5%3A0x5d8f1bb0f3d3c3c0!2sEuropa-Allee%2091%2C%2060486%20Frankfurt%20am%20Main!5e0!3m2!1sen!2sde!4v1699999999999!5m2!1sen!2sde",
-  directionsTrain: "From Frankfurt Hauptbahnhof, take tram line 17 toward Rebstockbad. Exit at Europaviertel West. Walk 3 minutes to Europa-Allee 91.",
-  directionsCar: "Follow A648 toward Frankfurt Messe. Take the exit Frankfurt-Rebstock. Underground parking is available in the Deloitte building (entrance via Emser Bruecke).",
-  directionsPlane: "Frankfurt Airport (FRA) is approximately 15 minutes by taxi or 25 minutes via S-Bahn (S8/S9 to Hauptbahnhof, then tram 17).",
+  venueName: "Deloitte Düsseldorf Office",
+  address: "Schwannstraße 6",
+  city: "40476 Düsseldorf, Germany",
+  mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2498.5876543210987!2d6.7876543210987!3d51.2345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b8ca1234567890%3A0x1234567890abcdef!2sSchwannstra%C3%9Fe%206%2C%2040476%20D%C3%BCsseldorf!5e0!3m2!1sen!2sde!4v1699999999999!5m2!1sen!2sde",
+  directionsTrain: "From Düsseldorf Hauptbahnhof, take U-Bahn U78 or U79 toward Messe/Nord. Exit at Victoriaplatz/Klever Straße. Walk 5 minutes to Schwannstraße 6.",
+  directionsCar: "Follow A44 toward Düsseldorf-Stockum. Take the exit Düsseldorf-Golzheim. Underground parking is available nearby at Parkhaus Derendorf.",
+  directionsPlane: "Düsseldorf Airport (DUS) is approximately 15 minutes by taxi or 20 minutes via S-Bahn (S11 to Hauptbahnhof, then U78/U79).",
 };
 
 interface EventLocationProps {
