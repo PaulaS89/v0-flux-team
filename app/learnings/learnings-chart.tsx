@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useCallback } from "react"
 
 interface Task {
   id: string
@@ -11,7 +11,7 @@ interface Task {
   category: "v0" | "contentful" | "figma" | "github"
 }
 
-const tasks: Task[] = [
+const initialTasks: Task[] = [
   {
     id: "1",
     title: "Integration Figma Designsystem",
@@ -61,13 +61,89 @@ const categoryBorderColors: Record<Task["category"], string> = {
   github: "border-chart-4",
 }
 
+interface LabelPosition {
+  x: number
+  y: number
+}
+
 export function LearningsChart() {
   const [hoveredTask, setHoveredTask] = useState<string | null>(null)
+  const [tasks, setTasks] = useState<Task[]>(initialTasks)
+  const [draggingTask, setDraggingTask] = useState<string | null>(null)
+  const [draggingLabel, setDraggingLabel] = useState<string | null>(null)
+  
+  const [complexityLabelPos, setComplexityLabelPos] = useState<LabelPosition>({ x: 0, y: 0 })
+  const [timeLabelPos, setTimeLabelPos] = useState<LabelPosition>({ x: 0, y: 0 })
+  
+  const chartRef = useRef<HTMLDivElement>(null)
+
+  const handleTaskDragStart = useCallback((e: React.MouseEvent | React.TouchEvent, taskId: string) => {
+    e.preventDefault()
+    setDraggingTask(taskId)
+    setHoveredTask(null)
+  }, [])
+
+  const handleTaskDrag = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    if (!draggingTask || !chartRef.current) return
+
+    const rect = chartRef.current.getBoundingClientRect()
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
+    
+    const x = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100))
+    const y = Math.max(0, Math.min(100, ((rect.bottom - clientY) / rect.height) * 100))
+
+    setTasks(prev => prev.map(task => 
+      task.id === draggingTask 
+        ? { ...task, time: x, difficulty: y }
+        : task
+    ))
+  }, [draggingTask])
+
+  const handleDragEnd = useCallback(() => {
+    setDraggingTask(null)
+    setDraggingLabel(null)
+  }, [])
+
+  const handleLabelDragStart = useCallback((e: React.MouseEvent | React.TouchEvent, label: string) => {
+    e.preventDefault()
+    setDraggingLabel(label)
+  }, [])
+
+  const handleLabelDrag = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    if (!draggingLabel) return
+
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
+
+    if (draggingLabel === 'complexity') {
+      setComplexityLabelPos(prev => ({
+        x: prev.x + (clientX - (window.innerWidth / 2)),
+        y: clientY
+      }))
+    } else if (draggingLabel === 'time') {
+      setTimeLabelPos(prev => ({
+        x: clientX,
+        y: prev.y + (clientY - (window.innerHeight / 2))
+      }))
+    }
+  }, [draggingLabel])
 
   return (
-    <div className="relative w-full h-[calc(100vh-120px)] min-h-[500px]">
-      {/* Origin point is at bottom-left with small margin */}
-      
+    <div 
+      className="relative w-full h-[calc(100vh-120px)] min-h-[500px]"
+      onMouseMove={(e) => {
+        handleTaskDrag(e)
+        handleLabelDrag(e)
+      }}
+      onMouseUp={handleDragEnd}
+      onMouseLeave={handleDragEnd}
+      onTouchMove={(e) => {
+        handleTaskDrag(e)
+        handleLabelDrag(e)
+      }}
+      onTouchEnd={handleDragEnd}
+    >
       {/* Y-Axis - Vertical line from origin going up */}
       <div className="absolute left-8 md:left-12 bottom-12 md:bottom-16 h-[calc(100%-80px)] md:h-[calc(100%-100px)]">
         <div className="relative h-full flex flex-col items-center">
@@ -82,8 +158,15 @@ export function LearningsChart() {
               <path d="M6 0L12 8H0L6 0Z" />
             </svg>
           </div>
-          {/* Y-Axis Label */}
-          <div className="absolute -top-6 left-1/2 -translate-x-1/2 -rotate-90 whitespace-nowrap origin-center">
+          {/* Y-Axis Label - Draggable */}
+          <div 
+            className="absolute -top-6 left-1/2 -translate-x-1/2 -rotate-90 whitespace-nowrap origin-center cursor-grab active:cursor-grabbing select-none"
+            style={{ 
+              transform: `translate(calc(-50% + ${complexityLabelPos.x}px), ${complexityLabelPos.y}px) rotate(-90deg)` 
+            }}
+            onMouseDown={(e) => handleLabelDragStart(e, 'complexity')}
+            onTouchStart={(e) => handleLabelDragStart(e, 'complexity')}
+          >
             <span className="text-xs md:text-sm font-semibold text-foreground">
               Complexity
             </span>
@@ -115,8 +198,15 @@ export function LearningsChart() {
               <path d="M6 0L12 8H0L6 0Z" />
             </svg>
           </div>
-          {/* X-Axis Label */}
-          <div className="absolute top-3 right-6 whitespace-nowrap">
+          {/* X-Axis Label - Draggable */}
+          <div 
+            className="absolute top-3 right-6 whitespace-nowrap cursor-grab active:cursor-grabbing select-none"
+            style={{ 
+              transform: `translate(${timeLabelPos.x}px, ${timeLabelPos.y}px)` 
+            }}
+            onMouseDown={(e) => handleLabelDragStart(e, 'time')}
+            onTouchStart={(e) => handleLabelDragStart(e, 'time')}
+          >
             <span className="text-xs md:text-sm font-semibold text-foreground">
               Time
             </span>
@@ -131,12 +221,12 @@ export function LearningsChart() {
               {value === 100 ? "Ende" : `${value}%`}
             </div>
           ))}
-
         </div>
       </div>
 
       {/* Chart Area */}
       <div 
+        ref={chartRef}
         className="absolute left-8 md:left-12 bottom-12 md:bottom-16 right-4 top-4"
         style={{ paddingLeft: '0px' }}
       >
@@ -165,19 +255,22 @@ export function LearningsChart() {
           {tasks.map((task) => (
             <div
               key={task.id}
-              className="absolute transform -translate-x-1/2 translate-y-1/2 z-10"
+              className={`absolute transform -translate-x-1/2 translate-y-1/2 z-10 ${draggingTask === task.id ? 'cursor-grabbing' : 'cursor-grab'}`}
               style={{
                 left: `${task.time}%`,
                 bottom: `${task.difficulty}%`,
               }}
-              onMouseEnter={() => setHoveredTask(task.id)}
+              onMouseEnter={() => !draggingTask && setHoveredTask(task.id)}
               onMouseLeave={() => setHoveredTask(null)}
+              onMouseDown={(e) => handleTaskDragStart(e, task.id)}
+              onTouchStart={(e) => handleTaskDragStart(e, task.id)}
             >
               {/* Task Card */}
               <div
                 className={`
-                  relative cursor-pointer transition-all duration-200
+                  relative transition-all duration-200
                   ${hoveredTask === task.id ? "scale-110 z-20" : "scale-100"}
+                  ${draggingTask === task.id ? "scale-110 z-30 opacity-80" : ""}
                 `}
               >
                 {/* Title Box */}
@@ -189,6 +282,7 @@ export function LearningsChart() {
                     shadow-xl
                     whitespace-nowrap
                     transition-all duration-200
+                    select-none
                     ${hoveredTask === task.id ? "opacity-100" : "opacity-90"}
                   `}
                 >
@@ -198,7 +292,7 @@ export function LearningsChart() {
                 </div>
 
                 {/* Expanded Description on Hover */}
-                {hoveredTask === task.id && (
+                {hoveredTask === task.id && !draggingTask && (
                   <div
                     className={`
                       absolute left-1/2 -translate-x-1/2 top-full mt-3
@@ -213,8 +307,8 @@ export function LearningsChart() {
                       {task.description}
                     </p>
                     <div className="mt-3 flex items-center justify-between text-xs md:text-sm text-muted-foreground">
-                      <span>Zeit: {task.time}%</span>
-                      <span>Schwierigkeit: {task.difficulty}%</span>
+                      <span>Zeit: {Math.round(task.time)}%</span>
+                      <span>Schwierigkeit: {Math.round(task.difficulty)}%</span>
                     </div>
                   </div>
                 )}
