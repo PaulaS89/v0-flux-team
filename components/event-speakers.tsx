@@ -185,9 +185,15 @@ const talkDetailsByName: Record<string, { talkTitle: string; talkTime: string; t
   },
 };
 
+// Create a normalized lookup map for case-insensitive matching
+const normalizedTalkDetails = Object.fromEntries(
+  Object.entries(talkDetailsByName).map(([name, details]) => [name.toLowerCase().trim(), details])
+);
+
 // Function to enrich a speaker with talk details
 function enrichSpeakerWithTalkDetails(speaker: Speaker): Speaker {
-  const talkDetails = talkDetailsByName[speaker.name];
+  const normalizedName = speaker.name.toLowerCase().trim();
+  const talkDetails = normalizedTalkDetails[normalizedName];
   if (talkDetails) {
     return {
       ...speaker,
@@ -204,9 +210,6 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
   const baseSpeakers = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
   // Enrich all speakers with detailed talk info
   const speakersList = baseSpeakers.map(enrichSpeakerWithTalkDetails);
-  
-  // Debug: Log speaker names to see what's coming from Contentful
-  console.log("[v0] Speaker names from Contentful:", baseSpeakers.map(s => s.name));
 
   return (
     <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
