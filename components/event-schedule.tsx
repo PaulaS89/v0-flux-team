@@ -219,7 +219,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
         {/* Timeline */}
         <div className="relative">
           {/* Vertical timeline line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-muted-foreground/40 to-transparent md:-translate-x-px" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-foreground/20 md:-translate-x-px" />
 
           {/* Schedule Items */}
           <div className="space-y-8">
