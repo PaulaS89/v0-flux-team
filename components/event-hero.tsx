@@ -19,6 +19,7 @@ interface HeroData {
   ctaButtonText: string;
   ctaButtonLink?: string;
   backgroundImageUrl?: string;
+  themeName?: string;
 }
 
 // Default fallback content
@@ -69,6 +70,11 @@ export function EventHero({ data }: EventHeroProps) {
       {/* Hero Content */}
       <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh]">
         <div className="max-w-3xl md:ml-[5%] lg:ml-[8%]">
+          {heroData.themeName && (
+            <p className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-4 opacity-80">
+              {heroData.themeName}
+            </p>
+          )}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal leading-[1.1] tracking-tight text-foreground">
             {titleLines.map((line, index) => (
               <span key={index} className="block">
