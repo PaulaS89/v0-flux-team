@@ -4,6 +4,7 @@ import { EventSpeakers } from "@/components/event-speakers";
 import { EventSchedule } from "@/components/event-schedule";
 import { EventFAQ } from "@/components/event-faq";
 import { EventFooter } from "@/components/event-footer";
+import { EventsSlider } from "@/components/events-slider";
 import {
   getHeroContent,
   getSpeakers,
@@ -86,6 +87,7 @@ export default async function Home() {
       <EventHeader siteSettings={siteSettings} />
       <main>
         <EventHero data={heroData} />
+        <EventsSlider />
         <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
         <EventFAQ items={faqData} />

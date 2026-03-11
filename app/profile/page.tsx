@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, User, Ticket, Calendar, LogOut } from "lucide-react";
+import { ArrowLeft, Ticket, Calendar, LogOut } from "lucide-react";
 
 interface UserData {
   id: number;
@@ -47,6 +47,11 @@ export default function ProfilePage() {
         const ticketsData = await ticketsResponse.json();
 
         if (ticketsData.tickets) {
+          // If no tickets, redirect to events page
+          if (ticketsData.tickets.length === 0) {
+            router.push("/events");
+            return;
+          }
           setTickets(ticketsData.tickets);
         }
       } catch (error) {
@@ -107,18 +112,15 @@ export default function ProfilePage() {
           Back to home
         </Link>
 
-        <div className="mb-12">
+        <div className="mb-8">
           <div className="flex items-start justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-                <User className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-semibold tracking-tight">
-                  {user.name}
-                </h1>
-                <p className="text-muted-foreground">{user.email}</p>
-              </div>
+            <div>
+              <h1 className="text-2xl font-semibold tracking-tight mb-1">
+                My Tickets
+              </h1>
+              <p className="text-muted-foreground">
+                Welcome back, {user.name}
+              </p>
             </div>
             <Button variant="outline" onClick={handleLogout}>
               <LogOut className="h-4 w-4 mr-2" />
@@ -128,60 +130,45 @@ export default function ProfilePage() {
         </div>
 
         <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold">My Events</h2>
-            <Button asChild>
-              <Link href="/tickets">
-                <Ticket className="h-4 w-4 mr-2" />
-                Get More Tickets
-              </Link>
-            </Button>
-          </div>
-
-          {tickets.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-border p-12 text-center">
-              <Ticket className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2">No events yet</h3>
-              <p className="text-muted-foreground mb-6">
-                You haven&apos;t registered for any events yet. Get your first
-                ticket now!
-              </p>
-              <Button asChild>
-                <Link href="/tickets">Browse Events</Link>
-              </Button>
-            </div>
-          ) : (
-            <div className="grid gap-4">
-              {tickets.map((ticket) => (
-                <div
-                  key={ticket.id}
-                  className="rounded-lg border border-border p-6 hover:border-muted-foreground transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="text-lg font-semibold">
-                          {ticket.event_name}
-                        </h3>
-                        <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
-                          {getTicketTypeLabel(ticket.ticket_type)}
-                        </span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Registered as {ticket.attendee_name}
-                      </p>
+          <div className="grid gap-4">
+            {tickets.map((ticket) => (
+              <div
+                key={ticket.id}
+                className="rounded-lg border border-border p-6 hover:border-muted-foreground transition-colors"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-lg font-semibold">
+                        {ticket.event_name}
+                      </h3>
+                      <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
+                        {getTicketTypeLabel(ticket.ticket_type)}
+                      </span>
                     </div>
-                    <div className="text-right">
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4" />
-                        {formatDate(ticket.created_at)}
-                      </div>
+                    <p className="text-sm text-muted-foreground">
+                      Registered as {ticket.attendee_name}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4" />
+                      {formatDate(ticket.event_date)}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Button asChild variant="outline">
+              <Link href="/events">
+                <Ticket className="h-4 w-4 mr-2" />
+                Browse More Events
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </div>
