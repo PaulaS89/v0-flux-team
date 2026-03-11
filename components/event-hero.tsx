@@ -160,10 +160,6 @@ export function EventHero({ data }: EventHeroProps) {
                 {heroData.venue}
               </p>
             </div>
-          </div>
-          
-          {/* Right side: Early Bird & Get Tickets (chatbot icon will be to the right via fixed positioning) */}
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-8 md:mr-16">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 {heroData.earlyBirdLabel || "Early Bird Tickets"}
