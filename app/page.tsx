@@ -93,12 +93,12 @@ export default async function Home() {
       <EventHeader siteSettings={siteSettings} />
       <main>
         <EventHero data={heroData} />
-        <EventsSlider />
         <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
         <EventPricing pricing={pricingTiers} />
         <EventLocation location={locationData} />
         <EventFAQ items={faqData} />
+        <EventsSlider />
       </main>
       <EventFooter siteSettings={siteSettings} />
     </div>
