@@ -20,6 +20,11 @@ const speakerImagesByName: Record<string, string> = {
   "James Lui": "/speakers/james-lui.jpg",
 };
 
+// Name overrides for speakers (to correct Contentful data)
+const speakerNameOverrides: Record<string, string> = {
+  "Nora Jones": "Nathan Jones",
+};
+
 // Fallback images for speakers (3 women, 3 men - used when Contentful doesn't provide unique images)
 const fallbackImages = [
   "/speakers/speaker-woman-1.jpg",
@@ -181,7 +186,12 @@ const talkDetailsByName: Record<string, { talkTitle: string; talkTime: string; t
   "Nora Jones": {
     talkTitle: "Voice Interfaces and the Future of Accessibility",
     talkTime: "16:00 · Talk",
-    talkDescription: "Voice is the most natural interface, yet most AI voice experiences fall short. Nora shares insights on designing accessible voice interfaces that work for everyone, from multimodal fallbacks to inclusive conversation design patterns.",
+    talkDescription: "Voice is the most natural interface, yet most AI voice experiences fall short. Nathan shares insights on designing accessible voice interfaces that work for everyone, from multimodal fallbacks to inclusive conversation design patterns.",
+  },
+  "Nathan Jones": {
+    talkTitle: "Voice Interfaces and the Future of Accessibility",
+    talkTime: "16:00 · Talk",
+    talkDescription: "Voice is the most natural interface, yet most AI voice experiences fall short. Nathan shares insights on designing accessible voice interfaces that work for everyone, from multimodal fallbacks to inclusive conversation design patterns.",
   },
 };
 
@@ -190,19 +200,27 @@ const normalizedTalkDetails = Object.fromEntries(
   Object.entries(talkDetailsByName).map(([name, details]) => [name.toLowerCase().trim(), details])
 );
 
-// Function to enrich a speaker with talk details
+// Function to enrich a speaker with talk details and apply name overrides
 function enrichSpeakerWithTalkDetails(speaker: Speaker): Speaker {
-  const normalizedName = speaker.name.toLowerCase().trim();
+  // Apply name override if exists
+  const displayName = speakerNameOverrides[speaker.name] || speaker.name;
+  const normalizedName = displayName.toLowerCase().trim();
   const talkDetails = normalizedTalkDetails[normalizedName];
+  
+  const enrichedSpeaker = {
+    ...speaker,
+    name: displayName, // Use overridden name
+  };
+  
   if (talkDetails) {
     return {
-      ...speaker,
+      ...enrichedSpeaker,
       talkTitle: speaker.talkTitle || talkDetails.talkTitle,
       talkTime: speaker.talkTime || talkDetails.talkTime,
       bio: talkDetails.talkDescription, // Always use the detailed description
     };
   }
-  return speaker;
+  return enrichedSpeaker;
 }
 
 // Extract time from talkTime string (e.g., "09:30 · Keynote" -> 930)
