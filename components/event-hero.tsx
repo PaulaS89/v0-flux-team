@@ -134,6 +134,20 @@ export function EventHero({ data }: EventHeroProps) {
               Designing for the Age of AI
             </p>
           </div>
+          <div className="mt-8" style={{ marginLeft: '4px' }}>
+            <Button
+              size="lg"
+              className="group relative z-20 flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-background hover:bg-transparent hover:text-foreground transition-all cursor-pointer"
+              asChild
+            >
+              <a href="/tickets">
+                <span className="text-xs font-medium uppercase tracking-[0.15em]">
+                  {heroData.ctaButtonText}
+                </span>
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -185,18 +199,6 @@ export function EventHero({ data }: EventHeroProps) {
                 </p>
               </div>
             </div>
-            <Button
-              size="lg"
-              className="group relative z-20 flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-background hover:bg-transparent hover:text-foreground transition-all cursor-pointer"
-              asChild
-            >
-              <a href="/tickets">
-                <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                  {heroData.ctaButtonText}
-                </span>
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
-            </Button>
           </div>
         </div>
       </div>
