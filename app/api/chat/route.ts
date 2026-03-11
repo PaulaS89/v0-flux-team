@@ -4,12 +4,13 @@ import {
   UIMessage,
   tool,
 } from 'ai'
-import { createGroq } from '@ai-sdk/groq'
+import { createOpenAI } from '@ai-sdk/openai'
 import { z } from 'zod'
 
 export const maxDuration = 30
 
-const groq = createGroq({
+// Use OpenAI-compatible client to connect directly to Groq (bypassing AI Gateway)
+const groq = createOpenAI({
   apiKey: process.env.GROQ_API_KEY,
   baseURL: 'https://api.groq.com/openai/v1',
 })
@@ -60,7 +61,7 @@ export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json()
 
   const result = streamText({
-    model: groq('llama-3.3-70b-versatile'),
+    model: groq.chat('llama-3.3-70b-versatile'),
     system: `You are a helpful assistant for FLUX 2026, Deloitte's premier digital experience conference. 
 You help attendees and interested visitors learn about the event, answer questions about the schedule, speakers, pricing, and venue.
 You can also help users switch the website theme when they ask.
