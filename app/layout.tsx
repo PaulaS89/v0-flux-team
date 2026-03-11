@@ -7,8 +7,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'FLUX 26 | Die Konferenz fur Entwickler und Unternehmer',
-  description: 'Die eintaegige Konferenz fur Entwickler und Business-Leader. Berlin, 15. Mai 2026.',
+  title: 'FLUX 26 | The Conference for Developers and Business Leaders',
+  description: 'The one-day event for developers and business leaders. New York City, June 25, 2026.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="font-sans antialiased bg-background text-foreground">
+    <html lang="en">
+      <body className="font-sans antialiased">
         {children}
         <Analytics />
       </body>

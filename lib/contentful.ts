@@ -1,6 +1,7 @@
 import { createClient, Entry, Asset, EntryFieldTypes } from "contentful";
 
-// Create the Contentful client
+// Contentful CMS Integration
+// Queries do not use order field as it's not defined in the content types
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID!,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
@@ -42,11 +43,10 @@ export type HeroEntry = Entry<HeroFields, undefined, string>;
 export interface SpeakerFields {
   name: EntryFieldTypes.Text;
   role: EntryFieldTypes.Text;
-  image?: EntryFieldTypes.Text; // URL string in existing structure
+  image?: EntryFieldTypes.Text;
   bio?: EntryFieldTypes.Text;
   topic?: EntryFieldTypes.Text;
   photo?: EntryFieldTypes.AssetLink;
-  order?: EntryFieldTypes.Integer;
 }
 
 export type SpeakerEntry = Entry<SpeakerFields, undefined, string>;
@@ -56,8 +56,7 @@ export interface ScheduleItemFields {
   time: EntryFieldTypes.Text;
   title: EntryFieldTypes.Text;
   speaker?: EntryFieldTypes.Text;
-  type: EntryFieldTypes.Text; // 'keynote' | 'talk' | 'break'
-  order: EntryFieldTypes.Integer;
+  type: EntryFieldTypes.Text;
 }
 
 export type ScheduleItemEntry = Entry<ScheduleItemFields, undefined, string>;
@@ -66,7 +65,6 @@ export type ScheduleItemEntry = Entry<ScheduleItemFields, undefined, string>;
 export interface FaqItemFields {
   question: EntryFieldTypes.Text;
   answer: EntryFieldTypes.Text;
-  order?: EntryFieldTypes.Integer;
 }
 
 export type FaqItemEntry = Entry<FaqItemFields, undefined, string>;

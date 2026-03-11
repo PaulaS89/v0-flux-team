@@ -4,36 +4,36 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
 interface Speaker {
-  id?: string; // Unique identifier from Contentful
+  id?: string;
   name: string;
   role: string;
   topic?: string;
   bio?: string;
   photo?: string | null;
-  image?: string | null; // Alternative field name from Contentful
+  image?: string | null;
 }
 
 // Default fallback speakers
 const defaultSpeakers: Speaker[] = [
   {
-    name: "Dr. Anna Weber",
-    role: "CEO, TechVision GmbH",
-    topic: "Die Zukunft der KI im Unternehmen",
+    name: "Sarah Chen",
+    role: "CEO, TechVision Inc",
+    topic: "The Future of AI in Enterprise",
   },
   {
-    name: "Marcus Schmidt",
+    name: "Marcus Johnson",
     role: "Lead Developer, CloudScale",
-    topic: "Skalierbare Architekturen",
+    topic: "Scalable Architectures",
   },
   {
-    name: "Lisa Hoffmann",
+    name: "Lisa Park",
     role: "CTO, StartupLab",
-    topic: "Von 0 auf 1 Million Nutzer",
+    topic: "From 0 to 1 Million Users",
   },
   {
-    name: "Thomas Mueller",
+    name: "Thomas Miller",
     role: "VP Engineering, DataFlow",
-    topic: "Datengetriebene Entscheidungen",
+    topic: "Data-Driven Decisions",
   },
   {
     name: "Sarah Klein",
@@ -41,9 +41,9 @@ const defaultSpeakers: Speaker[] = [
     topic: "CI/CD Best Practices",
   },
   {
-    name: "Michael Braun",
+    name: "Michael Brown",
     role: "Principal Architect, Enterprise Co",
-    topic: "Microservices in der Praxis",
+    topic: "Microservices in Practice",
   },
 ];
 
@@ -55,34 +55,38 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
   const speakersList = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
 
   return (
-    <section id="speaker" className="bg-background px-6 py-24">
+    <section id="speakers" className="bg-card px-6 py-24">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
-          Speaker
+        <h2 className="mb-16 text-4xl md:text-5xl font-normal tracking-tight">
+          Speakers
         </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
           {speakersList.map((speaker, index) => (
             <Card
               key={speaker.id || `${speaker.name}-${index}`}
-              className="group cursor-pointer border-border bg-secondary transition-colors hover:border-foreground/50"
+              className="group cursor-pointer border-0 bg-transparent transition-all hover:bg-secondary/50"
             >
               <CardContent className="p-6">
-                <div className="mb-8 h-48 w-full bg-muted relative overflow-hidden">
+                <div className="mb-6 aspect-[4/3] w-full bg-muted/50 relative overflow-hidden">
                   {(speaker.photo || speaker.image) ? (
                     <Image
                       src={speaker.photo || speaker.image || ""}
                       alt={speaker.name}
                       fill
-                      className="object-cover"
+                      className="object-cover grayscale transition-all group-hover:grayscale-0"
                     />
-                  ) : null}
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="h-20 w-20 rounded-full bg-muted" />
+                    </div>
+                  )}
                 </div>
-                <h3 className="mb-1 text-lg font-medium">{speaker.name}</h3>
+                <h3 className="mb-1 text-lg font-medium tracking-tight">{speaker.name}</h3>
                 <p className="mb-3 text-sm text-muted-foreground">
                   {speaker.role}
                 </p>
                 {(speaker.topic || speaker.bio) && (
-                  <p className="text-sm text-foreground/80">{speaker.topic || speaker.bio}</p>
+                  <p className="text-sm text-muted-foreground/80">{speaker.topic || speaker.bio}</p>
                 )}
               </CardContent>
             </Card>
