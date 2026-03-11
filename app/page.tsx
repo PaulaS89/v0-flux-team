@@ -16,6 +16,7 @@ import {
   getPricingTiers,
   getLocation,
   getAssetUrl,
+  getActiveTheme,
 } from "@/lib/contentful";
 
 export const revalidate = 60; // Revalidate content every 60 seconds
@@ -23,7 +24,7 @@ export const dynamic = "force-dynamic"; // Force dynamic rendering to avoid stal
 
 export default async function Home() {
   // Fetch all content from Contentful in parallel
-  const [heroEntry, speakersEntries, scheduleEntries, faqEntries, siteSettingsEntry, pricingTiers, locationData] =
+  const [heroEntry, speakersEntries, scheduleEntries, faqEntries, siteSettingsEntry, pricingTiers, locationData, activeTheme] =
     await Promise.all([
       getHeroContent(),
       getSpeakers(),
@@ -32,6 +33,7 @@ export default async function Home() {
       getSiteSettings(),
       getPricingTiers(),
       getLocation(),
+      getActiveTheme(),
     ]);
 
   // Transform hero content
@@ -93,7 +95,7 @@ export default async function Home() {
       <EventHeader siteSettings={siteSettings} />
       <main>
         <EventHero data={heroData} />
-        <EventSchedule items={scheduleData} />
+        <EventSchedule items={scheduleData} headerImageUrl={activeTheme?.scheduleHeaderImageUrl} />
         <EventSpeakers speakers={speakersData} />
         <EventPricing pricing={pricingTiers} />
         <EventLocation location={locationData} />

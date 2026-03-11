@@ -91,6 +91,7 @@ export interface ThemeFields {
   foregroundColor?: EntryFieldTypes.Text;
   borderColor?: EntryFieldTypes.Text;
   isActive?: EntryFieldTypes.Boolean;
+  scheduleHeaderImage?: EntryFieldTypes.AssetLink;
 }
 
 export type ThemeEntry = Entry<ThemeFields, undefined, string>;
@@ -105,6 +106,7 @@ export interface Theme {
   foregroundColor?: string;
   borderColor?: string;
   isActive?: boolean;
+  scheduleHeaderImageUrl?: string;
 }
 
 // Pricing Tier
@@ -333,17 +335,22 @@ async function fetchThemes(preview = false): Promise<Theme[]> {
   try {
     const entries = await contentfulClient.getEntries<ThemeFields>({
       content_type: "theme",
+      include: 2,
     });
-    return entries.items.map((entry) => ({
-      id: entry.sys.id,
-      name: entry.fields.name as string,
-      backgroundColor: entry.fields.backgroundColor as string,
-      primaryColor: entry.fields.primaryColor as string,
-      accentColor: entry.fields.accentColor as string | undefined,
-      foregroundColor: entry.fields.foregroundColor as string | undefined,
-      borderColor: entry.fields.borderColor as string | undefined,
-      isActive: entry.fields.isActive as boolean | undefined,
-    }));
+    return entries.items.map((entry) => {
+      const imageAsset = entry.fields.scheduleHeaderImage as Asset | undefined;
+      return {
+        id: entry.sys.id,
+        name: entry.fields.name as string,
+        backgroundColor: entry.fields.backgroundColor as string,
+        primaryColor: entry.fields.primaryColor as string,
+        accentColor: entry.fields.accentColor as string | undefined,
+        foregroundColor: entry.fields.foregroundColor as string | undefined,
+        borderColor: entry.fields.borderColor as string | undefined,
+        isActive: entry.fields.isActive as boolean | undefined,
+        scheduleHeaderImageUrl: getAssetUrl(imageAsset) || undefined,
+      };
+    });
   } catch (error) {
     console.error("Error fetching themes:", error);
     return [];

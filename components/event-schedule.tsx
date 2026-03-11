@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface ScheduleItem {
   time: string;
   title: string;
@@ -79,6 +81,7 @@ const defaultSchedule: ScheduleItem[] = [
 
 interface EventScheduleProps {
   items?: ScheduleItem[];
+  headerImageUrl?: string;
 }
 
 function getTagStyle(type: ScheduleItem["type"]) {
@@ -107,17 +110,30 @@ function getTagLabel(type: ScheduleItem["type"]) {
   }
 }
 
-export function EventSchedule({ items }: EventScheduleProps) {
+export function EventSchedule({ items, headerImageUrl }: EventScheduleProps) {
   const schedule = items && items.length > 0 ? items : defaultSchedule;
 
   return (
     <section id="schedule" className="relative bg-background px-6 py-24 overflow-hidden">
       {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       
       <div className="relative mx-auto max-w-4xl">
-        {/* Header */}
+        {/* Header with optional circle motif image */}
         <div className="mb-16 text-center">
+          {headerImageUrl && (
+            <div className="relative mx-auto mb-8 w-32 h-32 md:w-40 md:h-40">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent blur-xl" />
+              <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-primary/30 shadow-lg shadow-primary/10">
+                <Image
+                  src={headerImageUrl}
+                  alt="Schedule section motif"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          )}
           <h2 className="mb-4 text-4xl font-light tracking-tight md:text-5xl text-foreground">
             Agenda
           </h2>
