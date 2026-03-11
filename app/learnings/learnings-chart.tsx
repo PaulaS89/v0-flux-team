@@ -54,13 +54,6 @@ const tasks: Task[] = [
   },
 ]
 
-const categoryColors: Record<Task["category"], string> = {
-  v0: "bg-chart-1",
-  contentful: "bg-chart-2",
-  figma: "bg-chart-3",
-  github: "bg-chart-4",
-}
-
 const categoryBorderColors: Record<Task["category"], string> = {
   v0: "border-chart-1",
   contentful: "border-chart-2",
@@ -72,16 +65,14 @@ export function LearningsChart() {
   const [hoveredTask, setHoveredTask] = useState<string | null>(null)
 
   return (
-    <div className="relative w-full h-[calc(100vh-200px)] min-h-[500px]">
-      {/* Y-Axis - Sticky Left */}
-      <div className="fixed left-2 md:left-4 top-1/2 -translate-y-1/2 z-20">
-        <div className="flex flex-col items-center gap-4">
-          <div className="-rotate-90 whitespace-nowrap">
-            <span className="text-sm md:text-base font-semibold text-foreground">
-              Schwierigkeit
-            </span>
-          </div>
-          <div className="h-[60vh] w-0.5 bg-foreground relative">
+    <div className="relative w-full h-[calc(100vh-120px)] min-h-[500px]">
+      {/* Origin point is at bottom-left with small margin */}
+      
+      {/* Y-Axis - Vertical line from origin going up */}
+      <div className="absolute left-8 md:left-12 bottom-12 md:bottom-16 h-[calc(100%-80px)] md:h-[calc(100%-100px)]">
+        <div className="relative h-full flex flex-col items-center">
+          {/* Y-Axis Line */}
+          <div className="w-0.5 h-full bg-foreground relative">
             {/* Arrow at top */}
             <svg
               className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 text-foreground"
@@ -90,24 +81,31 @@ export function LearningsChart() {
             >
               <path d="M6 0L12 8H0L6 0Z" />
             </svg>
-            {/* Y-Axis Labels */}
-            {[100, 75, 50, 25, 0].map((value, index) => (
-              <div
-                key={value}
-                className="absolute left-4 text-xs md:text-sm text-muted-foreground"
-                style={{ top: `${index * 25}%`, transform: "translateY(-50%)" }}
-              >
-                {value}%
-              </div>
-            ))}
           </div>
+          {/* Y-Axis Label */}
+          <div className="absolute -left-6 top-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap">
+            <span className="text-xs md:text-sm font-semibold text-foreground">
+              Schwierigkeit
+            </span>
+          </div>
+          {/* Y-Axis Values */}
+          {[100, 75, 50, 25].map((value) => (
+            <div
+              key={value}
+              className="absolute -left-2 text-[10px] md:text-xs text-muted-foreground -translate-x-full"
+              style={{ bottom: `${value}%`, transform: "translateY(50%) translateX(-8px)" }}
+            >
+              {value}%
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* X-Axis - Sticky Bottom */}
-      <div className="fixed bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-20">
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-[80vw] h-0.5 bg-foreground relative">
+      {/* X-Axis - Horizontal line from origin going right */}
+      <div className="absolute left-8 md:left-12 bottom-12 md:bottom-16 w-[calc(100%-48px)] md:w-[calc(100%-64px)]">
+        <div className="relative w-full flex items-center">
+          {/* X-Axis Line */}
+          <div className="h-0.5 w-full bg-foreground relative">
             {/* Arrow at right */}
             <svg
               className="absolute -right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-foreground rotate-90"
@@ -116,41 +114,51 @@ export function LearningsChart() {
             >
               <path d="M6 0L12 8H0L6 0Z" />
             </svg>
-            {/* X-Axis Labels */}
-            {[0, 25, 50, 75, 100].map((value) => (
-              <div
-                key={value}
-                className="absolute top-4 text-xs md:text-sm text-muted-foreground"
-                style={{ left: `${value}%`, transform: "translateX(-50%)" }}
-              >
-                {value === 0 ? "Start" : value === 100 ? "Ende" : `${value}%`}
-              </div>
-            ))}
           </div>
-          <span className="text-sm md:text-base font-semibold text-foreground mt-6">
-            Zeit
-          </span>
+          {/* X-Axis Label */}
+          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap">
+            <span className="text-xs md:text-sm font-semibold text-foreground">
+              Zeit
+            </span>
+          </div>
+          {/* X-Axis Values */}
+          {[25, 50, 75, 100].map((value) => (
+            <div
+              key={value}
+              className="absolute top-3 text-[10px] md:text-xs text-muted-foreground -translate-x-1/2"
+              style={{ left: `${value}%` }}
+            >
+              {value === 100 ? "Ende" : `${value}%`}
+            </div>
+          ))}
+          {/* Start label at origin */}
+          <div className="absolute top-3 -left-2 text-[10px] md:text-xs text-muted-foreground">
+            Start
+          </div>
         </div>
       </div>
 
-      {/* Chart Area - Scrollable Content */}
-      <div className="absolute left-16 md:left-24 right-4 top-0 bottom-16 md:bottom-20">
+      {/* Chart Area */}
+      <div 
+        className="absolute left-8 md:left-12 bottom-12 md:bottom-16 right-4 top-4"
+        style={{ paddingLeft: '0px' }}
+      >
         <div className="relative w-full h-full">
           {/* Grid Lines */}
           <div className="absolute inset-0">
             {/* Horizontal Grid Lines */}
-            {[0, 25, 50, 75, 100].map((value) => (
+            {[25, 50, 75, 100].map((value) => (
               <div
                 key={`h-${value}`}
-                className="absolute left-0 right-0 border-t border-border/30"
+                className="absolute left-0 right-0 border-t border-border/20"
                 style={{ bottom: `${value}%` }}
               />
             ))}
             {/* Vertical Grid Lines */}
-            {[0, 25, 50, 75, 100].map((value) => (
+            {[25, 50, 75, 100].map((value) => (
               <div
                 key={`v-${value}`}
-                className="absolute top-0 bottom-0 border-l border-border/30"
+                className="absolute top-0 bottom-0 border-l border-border/20"
                 style={{ left: `${value}%` }}
               />
             ))}
@@ -178,7 +186,7 @@ export function LearningsChart() {
                 {/* Title Box */}
                 <div
                   className={`
-                    absolute left-1/2 -translate-x-1/2 bottom-full mb-3
+                    absolute left-1/2 -translate-x-1/2 bottom-full mb-1
                     px-4 py-2 md:px-5 md:py-2.5 rounded-lg
                     bg-card border-2 ${categoryBorderColors[task.category]}
                     shadow-xl
