@@ -11,9 +11,9 @@ interface EventFooterProps {
 }
 
 export function EventFooter({ siteSettings }: EventFooterProps) {
-  const eventName = siteSettings?.eventName || "FLUX";
+  const eventName = siteSettings?.eventName || "Deloitte";
   const eventYear = siteSettings?.eventYear || "26";
-  const tagline = siteSettings?.tagline || "The conference for developers and business leaders";
+  const tagline = siteSettings?.tagline || "Future of Digital Experiences - Executive Briefing";
 
   return (
     <footer className="border-t border-border bg-background px-6 py-16">

@@ -21,17 +21,18 @@ interface HeroData {
 
 // Default fallback content
 const defaultHeroData: HeroData = {
-  title: "The one-day\nevent for developers\nand business leaders",
-  location: "New York City",
-  locationSubtext: "and Online",
-  eventDate: "June 25, 2026",
-  venue: "The Glasshouse",
-  onlineLabel: "Online",
-  onlinePrice: "Free",
-  earlyBirdLabel: "Early Bird Tickets",
-  earlyBirdOriginalPrice: "$600",
-  earlyBirdPrice: "$350",
-  ctaButtonText: "Get Tickets",
+  title: "Future of Digital\nExperiences",
+  subtitle: "A Deloitte Executive Briefing",
+  location: "Frankfurt",
+  locationSubtext: "In Person",
+  eventDate: "16 April 2026",
+  venue: "Deloitte Frankfurt Office",
+  onlineLabel: "Deloitte Clients",
+  onlinePrice: "€149",
+  earlyBirdLabel: "Standard Admission",
+  earlyBirdOriginalPrice: "",
+  earlyBirdPrice: "€249",
+  ctaButtonText: "Register Now",
 };
 
 interface EventHeroProps {
