@@ -94,8 +94,7 @@ function generateThemeStyles(theme: Theme): string {
     styles.push(`--primary-foreground: ${theme.backgroundColor || '#0A0A0A'}`);
     styles.push(`--secondary-foreground: ${theme.foregroundColor}`);
     // For dark backgrounds, muted text should still be light enough for accessibility (WCAG AA)
-    // Using a medium gray that provides good contrast on dark backgrounds
-    styles.push(`--muted-foreground: #A1A1AA`);
+    styles.push(`--muted-foreground: #D4D4D4`);
     styles.push(`--accent-foreground: ${theme.foregroundColor}`);
     styles.push(`--sidebar-accent-foreground: ${theme.foregroundColor}`);
   }
