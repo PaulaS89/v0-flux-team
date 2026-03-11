@@ -13,13 +13,14 @@ interface Speaker {
   image?: string | null;
 }
 
-// Fallback images for speakers (used when Contentful doesn't provide unique images)
+// Fallback images for speakers (3 women, 3 men - used when Contentful doesn't provide unique images)
 const fallbackImages = [
-  "/speakers/sarah-chen.jpg",
-  "/speakers/marcus-johnson.jpg",
-  "/speakers/lisa-park.jpg",
-  "/speakers/thomas-miller.jpg",
-  "/speakers/sarah-klein.jpg",
+  "/speakers/speaker-woman-1.jpg",
+  "/speakers/speaker-man-1.jpg",
+  "/speakers/speaker-woman-2.jpg",
+  "/speakers/speaker-man-2.jpg",
+  "/speakers/speaker-woman-3.jpg",
+  "/speakers/speaker-man-3.jpg",
 ];
 
 // Get a fallback image based on speaker index
@@ -27,37 +28,43 @@ function getFallbackImage(index: number): string {
   return fallbackImages[index % fallbackImages.length];
 }
 
-// Default fallback speakers
+// Default fallback speakers (3 women, 3 men)
 const defaultSpeakers: Speaker[] = [
   {
     name: "Sarah Chen",
     role: "CEO, TechVision Inc",
     topic: "The Future of AI in Enterprise",
-    image: "/speakers/sarah-chen.jpg",
+    image: "/speakers/speaker-woman-1.jpg",
   },
   {
     name: "Marcus Johnson",
     role: "Lead Developer, CloudScale",
     topic: "Scalable Architectures",
-    image: "/speakers/marcus-johnson.jpg",
+    image: "/speakers/speaker-man-1.jpg",
   },
   {
-    name: "Lisa Park",
+    name: "Amara Williams",
     role: "CTO, StartupLab",
     topic: "From 0 to 1 Million Users",
-    image: "/speakers/lisa-park.jpg",
+    image: "/speakers/speaker-woman-2.jpg",
   },
   {
-    name: "Thomas Miller",
+    name: "Raj Patel",
     role: "VP Engineering, DataFlow",
     topic: "Data-Driven Decisions",
-    image: "/speakers/thomas-miller.jpg",
+    image: "/speakers/speaker-man-2.jpg",
   },
   {
-    name: "Sarah Klein",
+    name: "Christine Weber",
     role: "Founder, DevOps Academy",
     topic: "CI/CD Best Practices",
-    image: "/speakers/sarah-klein.jpg",
+    image: "/speakers/speaker-woman-3.jpg",
+  },
+  {
+    name: "David Thompson",
+    role: "Principal Architect, Enterprise Co",
+    topic: "Microservices in Practice",
+    image: "/speakers/speaker-man-3.jpg",
   },
 ];
 
