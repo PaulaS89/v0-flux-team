@@ -52,7 +52,7 @@ export function EventHero({ data }: EventHeroProps) {
   const titleLines = heroData.title.split("\n");
 
   return (
-    <section className="relative flex min-h-screen flex-col overflow-hidden pl-6 pr-6 md:pl-12 md:pr-12 pt-14">
+    <section className="relative flex min-h-screen flex-col overflow-hidden px-8 md:px-16 lg:px-24 pt-14">
       {/* Background Image from Contentful - centered with morphing animation for Deloitte theme */}
       {heroData.backgroundImageUrl && (
         <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
