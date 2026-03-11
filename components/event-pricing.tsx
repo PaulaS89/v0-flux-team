@@ -53,7 +53,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
   const pricingTiers = pricing && pricing.length > 0 ? pricing : defaultPricing;
 
   return (
-    <section id="pricing" className="relative bg-card px-6 py-24 overflow-hidden">
+    <section id="pricing" className="relative bg-card px-6 pt-12 pb-24 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       
@@ -72,7 +72,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ml-6">
           {pricingTiers.map((tier) => (
             <div
               key={tier.id}
