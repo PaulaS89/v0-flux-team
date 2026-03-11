@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { sql } from "@/lib/db";
-import { getSession } from "@/lib/auth";
+import { NextRequest, NextResponse } from "next/server"
+import { sql } from "@/lib/db"
+import { getSession } from "@/lib/auth"
 
 export async function POST(request: NextRequest) {
   try {
