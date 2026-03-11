@@ -79,9 +79,80 @@ const defaultSchedule: ScheduleItem[] = [
   },
 ];
 
+// Ocean theme schedule content
+const oceanSchedule: ScheduleItem[] = [
+  {
+    time: "08:30",
+    title: "Welcome Reception & Blue Ocean Breakfast",
+    speaker: "",
+    type: "break",
+  },
+  {
+    time: "09:00",
+    title: "Opening Ceremony: Navigating Digital Waters",
+    speaker: "",
+    type: "break",
+  },
+  {
+    time: "09:15",
+    title: "Keynote: Riding the Wave of Digital Transformation",
+    speaker: "Sarah Chen",
+    type: "keynote",
+  },
+  {
+    time: "10:00",
+    title: "Panel: Deep Dive into AI & Machine Learning",
+    speaker: "James Liu, Elena Rodriguez, Marcus Weber",
+    type: "talk",
+  },
+  {
+    time: "10:45",
+    title: "Refreshment Break: Ocean Breeze",
+    speaker: "",
+    type: "break",
+  },
+  {
+    time: "11:00",
+    title: "Exploring Uncharted Waters: New Market Strategies",
+    speaker: "Elena Rodriguez",
+    type: "talk",
+  },
+  {
+    time: "11:45",
+    title: "Case Studies: Sailing Through Industry Disruption",
+    speaker: "James Liu",
+    type: "talk",
+  },
+  {
+    time: "12:30",
+    title: "Seaside Networking Lunch",
+    speaker: "",
+    type: "break",
+  },
+  {
+    time: "13:30",
+    title: "Breakout Sessions: Currents of Innovation",
+    speaker: "Cloud Computing / Data Streams / Sustainable Tech",
+    type: "talk",
+  },
+  {
+    time: "14:15",
+    title: "Closing Keynote: Charting the Course Ahead",
+    speaker: "Sarah Chen",
+    type: "keynote",
+  },
+  {
+    time: "15:00",
+    title: "Sunset Networking & Farewell",
+    speaker: "",
+    type: "break",
+  },
+];
+
 interface EventScheduleProps {
   items?: ScheduleItem[];
   headerImageUrl?: string;
+  themeName?: string;
 }
 
 function getTagStyle(type: ScheduleItem["type"]) {
@@ -110,8 +181,11 @@ function getTagLabel(type: ScheduleItem["type"]) {
   }
 }
 
-export function EventSchedule({ items, headerImageUrl }: EventScheduleProps) {
-  const schedule = items && items.length > 0 ? items : defaultSchedule;
+export function EventSchedule({ items, headerImageUrl, themeName }: EventScheduleProps) {
+  // Use ocean schedule when ocean theme is active (and no Contentful items provided)
+  const isOceanTheme = themeName?.toLowerCase().includes("ocean");
+  const fallbackSchedule = isOceanTheme ? oceanSchedule : defaultSchedule;
+  const schedule = items && items.length > 0 ? items : fallbackSchedule;
 
   return (
     <section id="schedule" className="relative bg-background px-6 py-24 overflow-hidden">

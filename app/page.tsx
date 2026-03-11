@@ -97,7 +97,7 @@ export default async function Home() {
       <EventHeader siteSettings={siteSettings} />
       <main>
         <EventHero data={heroData} />
-        <EventSchedule items={scheduleData} />
+        <EventSchedule items={scheduleData} themeName={activeTheme?.name} />
         <EventSpeakers speakers={speakersData} />
         <EventPricing pricing={pricingTiers} />
         <EventLocation location={locationData} />
