@@ -62,9 +62,11 @@ async function getAllThemes() {
 
 async function updateAndPublishEntry(entryId: string, newIsActive: boolean, maxRetries = 5) {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
-    // Add delay between retries (exponential backoff)
+    // Add delay between retries (exponential backoff) - wait longer for rate limits
     if (attempt > 0) {
-      await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+      const delayMs = 2000 * attempt; // 2s, 4s, 6s, 8s
+      console.log(`Retry ${attempt + 1}, waiting ${delayMs}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delayMs));
     }
     
     // Always fetch the latest version before updating
@@ -73,6 +75,9 @@ async function updateAndPublishEntry(entryId: string, newIsActive: boolean, maxR
     // Check for rate limiting or other errors
     if (latestEntry.sys?.type === "Error") {
       console.log(`Error fetching entry on attempt ${attempt + 1}:`, latestEntry.sys.id);
+      if (latestEntry.sys.id === "RateLimitExceeded") {
+        await new Promise(resolve => setTimeout(resolve, 3000)); // Extra wait for rate limit
+      }
       continue;
     }
     
@@ -86,25 +91,31 @@ async function updateAndPublishEntry(entryId: string, newIsActive: boolean, maxR
       isActive: { "en-US": newIsActive },
     };
 
-    // Small delay before update
-    await new Promise(resolve => setTimeout(resolve, 200));
+    // Delay before update
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     const updated = await updateEntry(entryId, latestEntry.sys.version, updatedFields);
     
     // Check for errors
     if (updated.sys?.type === "Error") {
       console.log(`Update error on attempt ${attempt + 1}:`, updated.sys.id);
+      if (updated.sys.id === "RateLimitExceeded") {
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
       continue;
     }
     
     // Check if update was successful
     if (updated.sys?.version) {
-      // Small delay before publish
-      await new Promise(resolve => setTimeout(resolve, 200));
+      // Delay before publish
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       const published = await publishEntry(entryId, updated.sys.version);
       if (published.sys?.type === "Error") {
         console.log(`Publish error on attempt ${attempt + 1}:`, published.sys.id);
+        if (published.sys.id === "RateLimitExceeded") {
+          await new Promise(resolve => setTimeout(resolve, 3000));
+        }
         continue;
       }
       return true;
@@ -137,7 +148,7 @@ export async function POST(request: NextRequest) {
       if ((isTarget && !currentIsActive) || (!isTarget && currentIsActive)) {
         // Add delay between theme updates to avoid rate limiting
         if (!isFirst) {
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise(resolve => setTimeout(resolve, 2000));
         }
         isFirst = false;
         await updateAndPublishEntry(theme.sys.id, isTarget);
