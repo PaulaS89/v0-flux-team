@@ -58,7 +58,7 @@ export function EventFAQ({ items }: EventFAQProps) {
         {/* Header - matching site style */}
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
-            FREQUENTLY ASKED QUESTIONS
+            FAQs
           </h2>
           <p className="text-muted-foreground text-sm md:text-base tracking-wide">
             Everything you need to know about attending FLUX.
