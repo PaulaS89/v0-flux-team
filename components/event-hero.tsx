@@ -193,8 +193,8 @@ export function EventHero({ data }: EventHeroProps) {
         </div>
       </div>
       
-      {/* Full-width separator line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-foreground/20" />
+      {/* Full-width separator line - positioned below the section */}
+      <div className="absolute -bottom-8 left-0 right-0 h-px bg-foreground/20" />
     </section>
   );
 }
