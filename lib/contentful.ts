@@ -178,6 +178,7 @@ export async function getSpeakers(preview = false): Promise<SpeakerEntry[]> {
   try {
     const entries = await client.getEntries<SpeakerFields>({
       content_type: "speaker",
+      include: 2, // Include linked assets (like photos)
     });
     return entries.items;
   } catch (error) {
