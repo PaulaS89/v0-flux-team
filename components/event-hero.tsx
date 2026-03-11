@@ -111,7 +111,7 @@ export function EventHero({ data }: EventHeroProps) {
       <div className="relative z-10 flex-1 flex items-center w-full md:pl-[5%] lg:pl-[8%]">
         <div className="max-w-xl">
           {heroData.themeName && (
-            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3 ml-[5px]">
+            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3" style={{ marginLeft: '4px' }}>
               {heroData.themeName}
             </p>
           )}
@@ -126,11 +126,11 @@ export function EventHero({ data }: EventHeroProps) {
               FLUX
             </span>
           </h1>
-          <div className="mt-6 ml-[3px]">
+          <div className="mt-6" style={{ marginLeft: '4px' }}>
             <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground/70 mb-1">
               Future · LLMs · UX
             </p>
-            <p className="text-sm md:text-base font-light tracking-wide text-muted-foreground ml-[-1px]">
+            <p className="text-sm md:text-base font-light tracking-wide text-muted-foreground">
               Designing for the Age of AI
             </p>
           </div>
