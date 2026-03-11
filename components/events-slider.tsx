@@ -150,7 +150,7 @@ export function EventsSlider() {
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
-                    <span className="text-3xl font-bold text-muted-foreground/30">
+                    <span className="text-3xl font-bold text-muted-foreground">
                       {event.name.charAt(0)}
                     </span>
                   </div>
