@@ -105,6 +105,12 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">
+                    <User className="mr-2 h-4 w-4" />
+                    My Profile
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
@@ -128,13 +134,16 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
             </>
           )}
           <Button
+            asChild
             size="sm"
             className="group hidden lg:flex items-center gap-2 bg-foreground px-4 text-background hover:bg-foreground/90"
           >
-            <span className="text-xs font-medium uppercase tracking-[0.15em]">
-              Get Tickets
-            </span>
-            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+            <Link href="/tickets">
+              <span className="text-xs font-medium uppercase tracking-[0.15em]">
+                Get Tickets
+              </span>
+              <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </Button>
         </div>
       </div>
