@@ -45,15 +45,18 @@ interface EventHeroProps {
 export function EventHero({ data }: EventHeroProps) {
   const heroData = data || defaultHeroData;
   
+  // Check if Deloitte theme is active
+  const isDeloitteTheme = heroData.themeName?.toLowerCase().includes('deloitte');
+  
   // Parse title for line breaks (from Contentful or fallback)
   const titleLines = heroData.title.split("\n");
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden pl-6 pr-6 md:pl-12 md:pr-12 pt-14">
-      {/* Background Image from Contentful - with morphing animation */}
+      {/* Background Image from Contentful - with morphing animation only for Deloitte theme */}
       {heroData.backgroundImageUrl && (
         <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
-          <div className="relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mx-auto animate-morph">
+          <div className={`relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mx-auto ${isDeloitteTheme ? 'animate-morph' : ''}`}>
             <Image
               src={heroData.backgroundImageUrl}
               alt=""
@@ -67,42 +70,44 @@ export function EventHero({ data }: EventHeroProps) {
         </div>
       )}
 
-      {/* Morphing animation styles */}
-      <style jsx>{`
-        @keyframes morph {
-          0%, 100% {
-            filter: hue-rotate(0deg) saturate(1) brightness(1) contrast(1);
-            transform: rotate(0deg);
+      {/* Morphing animation styles - only for Deloitte theme */}
+      {isDeloitteTheme && (
+        <style jsx>{`
+          @keyframes morph {
+            0%, 100% {
+              filter: hue-rotate(0deg) saturate(1) brightness(0.95) contrast(1);
+              transform: rotate(0deg);
+            }
+            15% {
+              filter: hue-rotate(12deg) saturate(1.15) brightness(0.92) contrast(1.02);
+              transform: rotate(2deg);
+            }
+            30% {
+              filter: hue-rotate(-8deg) saturate(0.95) brightness(0.88) contrast(1.05);
+              transform: rotate(-1.5deg);
+            }
+            45% {
+              filter: hue-rotate(15deg) saturate(1.2) brightness(0.9) contrast(0.98);
+              transform: rotate(3deg);
+            }
+            60% {
+              filter: hue-rotate(-12deg) saturate(1.1) brightness(0.85) contrast(1.03);
+              transform: rotate(-2deg);
+            }
+            75% {
+              filter: hue-rotate(8deg) saturate(0.98) brightness(0.92) contrast(1.05);
+              transform: rotate(1.5deg);
+            }
+            90% {
+              filter: hue-rotate(-5deg) saturate(1.1) brightness(0.9) contrast(1);
+              transform: rotate(-1deg);
+            }
           }
-          15% {
-            filter: hue-rotate(15deg) saturate(1.2) brightness(1.1) contrast(1.05);
-            transform: rotate(3deg);
+          .animate-morph {
+            animation: morph 15s ease-in-out infinite;
           }
-          30% {
-            filter: hue-rotate(-10deg) saturate(0.9) brightness(0.95) contrast(1.1);
-            transform: rotate(-2deg);
-          }
-          45% {
-            filter: hue-rotate(20deg) saturate(1.3) brightness(1.05) contrast(0.95);
-            transform: rotate(4deg);
-          }
-          60% {
-            filter: hue-rotate(-15deg) saturate(1.1) brightness(1.15) contrast(1.05);
-            transform: rotate(-3deg);
-          }
-          75% {
-            filter: hue-rotate(10deg) saturate(0.95) brightness(0.9) contrast(1.1);
-            transform: rotate(2deg);
-          }
-          90% {
-            filter: hue-rotate(-5deg) saturate(1.15) brightness(1.08) contrast(1);
-            transform: rotate(-1deg);
-          }
-        }
-        .animate-morph {
-          animation: morph 15s ease-in-out infinite;
-        }
-      `}</style>
+        `}</style>
+      )}
 
       {/* Hero Content */}
       <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh] w-full">
