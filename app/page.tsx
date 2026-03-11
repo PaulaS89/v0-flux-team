@@ -54,23 +54,16 @@ export default async function Home() {
     : null;
 
   // Transform speakers content - supports both field structures
-  const speakersData = speakersEntries.map((entry) => {
-    const photoUrl = entry.fields.photo ? getAssetUrl(entry.fields.photo as any) : null;
-    const imageUrl = (entry.fields.image as string) || null;
-    
-    console.log("[v0] Speaker:", entry.fields.name, "photo field:", entry.fields.photo, "photoUrl:", photoUrl, "imageUrl:", imageUrl);
-    
-    return {
-      id: entry.sys.id, // Unique Contentful entry ID
-      name: entry.fields.name as string,
-      role: entry.fields.role as string,
-      topic: (entry.fields.topic as string) || undefined,
-      bio: (entry.fields.bio as string) || undefined,
-      // Support both 'photo' (asset) and 'image' (string URL) fields
-      photo: photoUrl,
-      image: imageUrl,
-    };
-  });
+  const speakersData = speakersEntries.map((entry) => ({
+    id: entry.sys.id, // Unique Contentful entry ID
+    name: entry.fields.name as string,
+    role: entry.fields.role as string,
+    topic: (entry.fields.topic as string) || undefined,
+    bio: (entry.fields.bio as string) || undefined,
+    // Support both 'photo' (asset) and 'image' (string URL) fields
+    photo: entry.fields.photo ? getAssetUrl(entry.fields.photo as any) : null,
+    image: (entry.fields.image as string) || null,
+  }));
 
   // Transform schedule content
   const scheduleData = scheduleEntries.map((entry) => ({

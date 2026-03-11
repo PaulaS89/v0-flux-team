@@ -125,13 +125,13 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                     src={speakerImage}
                     alt={speaker.name}
                     fill
-                    className="object-cover transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:grayscale group-hover:contrast-125"
+                    className="object-cover grayscale contrast-125 transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100"
                   />
-                  {/* Halftone dot pattern overlay - gradual fade */}
+                  {/* Halftone dot pattern overlay - visible by default, fades on hover */}
                   <div 
-                    className="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-50 pointer-events-none"
+                    className="absolute inset-0 opacity-50 transition-opacity duration-700 ease-in-out group-hover:opacity-0 pointer-events-none"
                     style={{
-                      backgroundImage: `radial-gradient(circle at center, #000 0.5px, transparent 0.5px)`,
+                      backgroundImage: `radial-gradient(circle at center, #888 0.5px, transparent 0.5px)`,
                       backgroundSize: '3px 3px',
                       mixBlendMode: 'multiply',
                     }}
