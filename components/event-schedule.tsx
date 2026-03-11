@@ -6,7 +6,7 @@ interface ScheduleItem {
   time: string;
   title: string;
   speaker: string;
-  type: "keynote" | "talk" | "break";
+  type: "keynote" | "talk" | "break" | "intro" | "afterparty";
 }
 
 // Default fallback schedule
@@ -15,7 +15,7 @@ const defaultSchedule: ScheduleItem[] = [
     time: "09:00",
     title: "Welcome & Opening Remarks",
     speaker: "",
-    type: "break",
+    type: "intro",
   },
   {
     time: "09:30",
@@ -57,7 +57,7 @@ const defaultSchedule: ScheduleItem[] = [
     time: "17:00",
     title: "Drinks & Afterparty",
     speaker: "",
-    type: "break",
+    type: "afterparty",
   },
 ];
 
@@ -67,7 +67,7 @@ const oceanSchedule: ScheduleItem[] = [
     time: "09:00",
     title: "Opening Ceremony: Navigating Digital Waters",
     speaker: "",
-    type: "break",
+    type: "intro",
   },
   {
     time: "09:30",
@@ -109,7 +109,7 @@ const oceanSchedule: ScheduleItem[] = [
     time: "17:00",
     title: "Sunset Drinks & Afterparty",
     speaker: "",
-    type: "break",
+    type: "afterparty",
   },
 ];
 
@@ -127,6 +127,10 @@ function getTagStyle(type: ScheduleItem["type"]) {
       return "bg-cyan-500/20 text-cyan-300 border-cyan-500/30";
     case "break":
       return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+    case "intro":
+      return "bg-violet-500/20 text-violet-300 border-violet-500/30";
+    case "afterparty":
+      return "bg-pink-500/20 text-pink-300 border-pink-500/30";
     default:
       return "bg-muted text-muted-foreground border-border";
   }
@@ -140,6 +144,10 @@ function getTagLabel(type: ScheduleItem["type"]) {
       return "Talk";
     case "break":
       return "Break";
+    case "intro":
+      return "Intro";
+    case "afterparty":
+      return "Afterparty";
     default:
       return type;
   }
