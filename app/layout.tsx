@@ -119,11 +119,9 @@ export default async function RootLayout({
   const themeStyles = theme ? generateThemeStyles(theme) : '';
 
   return (
-    <html lang="en" style={themeStyles ? { cssText: themeStyles } as React.CSSProperties : undefined}>
+    <html lang="en">
       <head>
-        {themeStyles && (
-          <style dangerouslySetInnerHTML={{ __html: `:root { ${themeStyles} }` }} />
-        )}
+        <style dangerouslySetInnerHTML={{ __html: `:root { --muted-foreground: #D4D4D4; ${themeStyles} }` }} />
       </head>
       <body className="font-sans antialiased">
         <ContentfulThemeProvider theme={theme}>
