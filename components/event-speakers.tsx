@@ -51,8 +51,8 @@ const defaultSpeakers: Speaker[] = [
     role: "AI Research Lead",
     topic: "OpenAI",
     talkTitle: "When Machines Dream: Reimagining UX for the AI Era",
-    talkTime: "09:30",
-    bio: "What happens when AI systems start anticipating our needs before we express them? Sarah explores the paradigm shift in UX design as we move from reactive to predictive interfaces.",
+    talkTime: "09:30 · Keynote",
+    bio: "As AI systems evolve from tools to collaborators, how do we design experiences that feel less like commanding a machine and more like thinking alongside one? Sarah will explore the shift from prompt-based interfaces to ambient AI - systems that understand context, anticipate needs, and adapt in real-time. Drawing from her work at OpenAI, she'll share research on multimodal interactions and the emerging patterns that will define the next decade of human-computer interaction.",
     image: "/speakers/speaker-woman-1.jpg",
   },
   {
@@ -60,8 +60,8 @@ const defaultSpeakers: Speaker[] = [
     role: "Principal Designer",
     topic: "Vercel",
     talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
-    talkTime: "10:30",
-    bio: "The text box is just the beginning. James reveals design patterns for LLM interactions that feel natural, forgiving, and surprisingly delightful.",
+    talkTime: "10:30 · Panel",
+    bio: "The humble text input is holding back AI's potential. In this session, James will break down why prompt-based interfaces often fail users and introduce alternative interaction patterns: inline suggestions, contextual AI assists, and progressive disclosure of AI capabilities. He'll share real examples from Vercel's v0 and demonstrate how small UX decisions dramatically impact user confidence and success rates with AI tools.",
     image: "/speakers/speaker-man-1.jpg",
   },
   {
@@ -69,8 +69,8 @@ const defaultSpeakers: Speaker[] = [
     role: "UX Director",
     topic: "Figma",
     talkTitle: "The Empathy Algorithm: Human-Centered AI Design",
-    talkTime: "13:30",
-    bio: "How do we design AI that truly understands human context and emotion? Elena shares frameworks for building empathetic AI experiences at scale.",
+    talkTime: "13:30 · Talk",
+    bio: "AI doesn't understand humans - yet. Elena will present Figma's framework for designing AI features that respect human emotion, context, and cognitive load. Learn how to conduct AI-specific user research, identify where AI creates anxiety vs. delight, and design feedback loops that build trust over time. She'll share case studies from Figma AI's development, including the failures that taught her team the most.",
     image: "/speakers/speaker-woman-2.jpg",
   },
   {
@@ -78,8 +78,8 @@ const defaultSpeakers: Speaker[] = [
     role: "Design Systems Lead",
     topic: "Stripe",
     talkTitle: "Hands-On: Prototyping Conversational Experiences",
-    talkTime: "14:30",
-    bio: "A practical workshop on rapid prototyping techniques for conversational UIs - from quick paper sketches to functional AI-powered prototypes.",
+    talkTime: "14:30 · Workshop",
+    bio: "Stop wireframing chatbots - start prototyping conversations. This interactive workshop will walk you through Stripe's rapid prototyping toolkit for conversational AI. You'll learn techniques for scripting realistic dialogue flows, testing edge cases before writing code, and using AI itself to stress-test your designs. Bring your laptop and leave with a functional prototype of your own conversational interface.",
     image: "/speakers/speaker-man-2.jpg",
   },
   {
@@ -87,8 +87,8 @@ const defaultSpeakers: Speaker[] = [
     role: "Product Design Manager",
     topic: "Anthropic",
     talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
-    talkTime: "10:30",
-    bio: "Nina brings the safety perspective to LLM interface design - how do we build trust through transparency and give users meaningful control?",
+    talkTime: "10:30 · Panel",
+    bio: "How do you design trust into AI systems? Nina will share Anthropic's approach to 'Constitutional AI' from a UX perspective - creating interfaces that are transparent about limitations, give users meaningful control, and gracefully handle uncertainty. She'll cover practical patterns for communicating AI confidence levels, designing for AI errors, and building user mental models that set appropriate expectations.",
     image: "/speakers/speaker-woman-3.jpg",
   },
   {
@@ -96,8 +96,8 @@ const defaultSpeakers: Speaker[] = [
     role: "Creative Director",
     topic: "Linear",
     talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
-    talkTime: "10:30",
-    bio: "David shares how Linear is rethinking issue tracking with AI - creating interfaces that predict what you need before you ask.",
+    talkTime: "10:30 · Panel",
+    bio: "Linear is embedding AI throughout the product - not as a chatbot, but as an invisible collaborator. David will reveal the design philosophy behind Linear's AI features: predicting issue priority, auto-generating project updates, and drafting responses. Learn why they chose subtle AI integration over flashy features, and how this approach has shaped user adoption and workflow improvements.",
     image: "/speakers/speaker-man-3.jpg",
   },
 ];
@@ -141,7 +141,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
             return (
               <div
                 key={speaker.id || `${speaker.name}-${index}`}
-                className="group relative h-[280px] perspective-1000"
+                className="group relative h-[340px] perspective-1000"
               >
                 {/* Card container with flip animation */}
                 <div className="relative w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
@@ -180,8 +180,8 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                       {speaker.talkTitle || speaker.topic}
                     </h4>
                     
-                    {/* Talk description */}
-                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                    {/* Talk description - scrollable if needed */}
+                    <p className="text-xs text-muted-foreground leading-relaxed flex-1 overflow-y-auto">
                       {speaker.bio}
                     </p>
                     
