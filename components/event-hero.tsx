@@ -111,15 +111,21 @@ export function EventHero({ data }: EventHeroProps) {
       <div className="relative z-10 flex-1 flex items-center w-full">
         <div className="max-w-xl">
           {heroData.themeName && (
-            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/90 mb-3">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/80 mb-4">
               {heroData.themeName}
             </p>
           )}
-          <h1 className="leading-none flex items-baseline gap-3 md:gap-4">
-            <span className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold tracking-[-0.01em] text-foreground">
-              FLUX
+          <h1 className="leading-none">
+            <span 
+              className="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
+              style={{
+                backgroundSize: '200% 100%',
+                backgroundPosition: '0% 0%',
+              }}
+            >
+              flux
             </span>
-            <span className="text-lg md:text-xl lg:text-2xl font-normal tracking-[0.25em] text-primary">
+            <span className="block text-xs md:text-sm font-medium tracking-[0.4em] text-primary/70 mt-2 ml-1">
               2026
             </span>
           </h1>
