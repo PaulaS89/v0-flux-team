@@ -105,8 +105,8 @@ export function EventHero({ data }: EventHeroProps) {
       `}</style>
 
       {/* Hero Content */}
-      <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh]">
-        <div className="max-w-3xl md:ml-[5%] lg:ml-[8%]">
+      <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh] mx-auto max-w-7xl w-full">
+        <div className="max-w-3xl ml-6">
           {heroData.themeName && (
             <p className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-4 opacity-80">
               {heroData.themeName}
@@ -124,7 +124,7 @@ export function EventHero({ data }: EventHeroProps) {
 
       {/* Event Details Footer */}
       <div className="relative z-10 pb-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-end md:justify-between px-6">
           <div className="flex flex-col gap-4 md:flex-row md:gap-16">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
