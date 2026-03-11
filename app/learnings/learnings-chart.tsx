@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
 
 interface Task {
   id: string
@@ -73,147 +72,161 @@ export function LearningsChart() {
   const [hoveredTask, setHoveredTask] = useState<string | null>(null)
 
   return (
-    <Card className="bg-card border-none shadow-none">
-      <CardContent className="p-2 md:p-4">
-        {/* Chart Container */}
-        <div className="relative w-full aspect-[16/10] md:aspect-[2/1]">
-          {/* Y-Axis Label */}
-          <div className="absolute -left-2 md:left-0 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
-            <span className="text-xs md:text-sm font-medium text-muted-foreground whitespace-nowrap">
+    <div className="relative w-full h-[calc(100vh-200px)] min-h-[500px]">
+      {/* Y-Axis - Sticky Left */}
+      <div className="fixed left-2 md:left-4 top-1/2 -translate-y-1/2 z-20">
+        <div className="flex flex-col items-center gap-4">
+          <div className="-rotate-90 whitespace-nowrap">
+            <span className="text-sm md:text-base font-semibold text-foreground">
               Schwierigkeit
             </span>
           </div>
-
-          {/* X-Axis Label */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-8">
-            <span className="text-xs md:text-sm font-medium text-muted-foreground">
-              Zeit
-            </span>
-          </div>
-
-          {/* Chart Area */}
-          <div className="absolute inset-8 md:inset-12">
-            {/* Grid Background */}
-            <div className="absolute inset-0 border-l-2 border-b-2 border-border">
-              {/* Horizontal Grid Lines */}
-              {[0, 25, 50, 75, 100].map((value) => (
-                <div
-                  key={`h-${value}`}
-                  className="absolute left-0 right-0 border-t border-border/40"
-                  style={{ bottom: `${value}%` }}
-                >
-                  <span className="absolute -left-8 md:-left-10 -translate-y-1/2 text-[10px] md:text-xs text-muted-foreground">
-                    {value}%
-                  </span>
-                </div>
-              ))}
-
-              {/* Vertical Grid Lines */}
-              {[0, 25, 50, 75, 100].map((value) => (
-                <div
-                  key={`v-${value}`}
-                  className="absolute top-0 bottom-0 border-l border-border/40"
-                  style={{ left: `${value}%` }}
-                >
-                  <span className="absolute -bottom-6 -translate-x-1/2 text-[10px] md:text-xs text-muted-foreground">
-                    {value === 0 ? "Start" : value === 100 ? "Ende" : `${value}%`}
-                  </span>
-                </div>
-              ))}
-
-              {/* Task Points */}
-              {tasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="absolute transform -translate-x-1/2 translate-y-1/2 z-10"
-                  style={{
-                    left: `${task.time}%`,
-                    bottom: `${task.difficulty}%`,
-                  }}
-                  onMouseEnter={() => setHoveredTask(task.id)}
-                  onMouseLeave={() => setHoveredTask(null)}
-                >
-                  {/* Task Card */}
-                  <div
-                    className={`
-                      relative cursor-pointer transition-all duration-200
-                      ${hoveredTask === task.id ? "scale-110 z-20" : "scale-100"}
-                    `}
-                  >
-                    {/* Dot */}
-                    <div
-                      className={`
-                        w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${categoryColors[task.category]}
-                        shadow-lg shadow-current/30
-                        ring-1 ring-background
-                      `}
-                    />
-
-                    {/* Title Box */}
-                    <div
-                      className={`
-                        absolute left-1/2 -translate-x-1/2 bottom-full mb-3
-                        px-4 py-2 md:px-5 md:py-2.5 rounded-lg
-                        bg-card border-2 ${categoryBorderColors[task.category]}
-                        shadow-xl
-                        whitespace-nowrap
-                        transition-all duration-200
-                        ${hoveredTask === task.id ? "opacity-100" : "opacity-90"}
-                      `}
-                    >
-                      <span className="text-sm md:text-base font-semibold text-card-foreground">
-                        {task.title}
-                      </span>
-                    </div>
-
-                    {/* Expanded Description on Hover */}
-                    {hoveredTask === task.id && (
-                      <div
-                        className={`
-                          absolute left-1/2 -translate-x-1/2 top-full mt-3
-                          px-4 py-3 rounded-lg
-                          bg-popover border-2 ${categoryBorderColors[task.category]}
-                          shadow-xl
-                          w-56 md:w-72
-                          z-30
-                        `}
-                      >
-                        <p className="text-sm md:text-base text-popover-foreground leading-relaxed">
-                          {task.description}
-                        </p>
-                        <div className="mt-3 flex items-center justify-between text-xs md:text-sm text-muted-foreground">
-                          <span>Zeit: {task.time}%</span>
-                          <span>Schwierigkeit: {task.difficulty}%</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Axis Arrows */}
-          <div className="absolute left-8 md:left-12 top-8 md:top-12">
+          <div className="h-[60vh] w-0.5 bg-foreground relative">
+            {/* Arrow at top */}
             <svg
-              className="w-3 h-3 text-border -translate-x-1/2 -translate-y-full"
+              className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 text-foreground"
               viewBox="0 0 12 12"
               fill="currentColor"
             >
               <path d="M6 0L12 8H0L6 0Z" />
             </svg>
-          </div>
-          <div className="absolute right-0 bottom-8 md:bottom-12">
-            <svg
-              className="w-3 h-3 text-border translate-x-full translate-y-1/2 rotate-90"
-              viewBox="0 0 12 12"
-              fill="currentColor"
-            >
-              <path d="M6 0L12 8H0L6 0Z" />
-            </svg>
+            {/* Y-Axis Labels */}
+            {[100, 75, 50, 25, 0].map((value, index) => (
+              <div
+                key={value}
+                className="absolute left-4 text-xs md:text-sm text-muted-foreground"
+                style={{ top: `${index * 25}%`, transform: "translateY(-50%)" }}
+              >
+                {value}%
+              </div>
+            ))}
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* X-Axis - Sticky Bottom */}
+      <div className="fixed bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-20">
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-[80vw] h-0.5 bg-foreground relative">
+            {/* Arrow at right */}
+            <svg
+              className="absolute -right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-foreground rotate-90"
+              viewBox="0 0 12 12"
+              fill="currentColor"
+            >
+              <path d="M6 0L12 8H0L6 0Z" />
+            </svg>
+            {/* X-Axis Labels */}
+            {[0, 25, 50, 75, 100].map((value) => (
+              <div
+                key={value}
+                className="absolute top-4 text-xs md:text-sm text-muted-foreground"
+                style={{ left: `${value}%`, transform: "translateX(-50%)" }}
+              >
+                {value === 0 ? "Start" : value === 100 ? "Ende" : `${value}%`}
+              </div>
+            ))}
+          </div>
+          <span className="text-sm md:text-base font-semibold text-foreground mt-6">
+            Zeit
+          </span>
+        </div>
+      </div>
+
+      {/* Chart Area - Scrollable Content */}
+      <div className="absolute left-16 md:left-24 right-4 top-0 bottom-16 md:bottom-20">
+        <div className="relative w-full h-full">
+          {/* Grid Lines */}
+          <div className="absolute inset-0">
+            {/* Horizontal Grid Lines */}
+            {[0, 25, 50, 75, 100].map((value) => (
+              <div
+                key={`h-${value}`}
+                className="absolute left-0 right-0 border-t border-border/30"
+                style={{ bottom: `${value}%` }}
+              />
+            ))}
+            {/* Vertical Grid Lines */}
+            {[0, 25, 50, 75, 100].map((value) => (
+              <div
+                key={`v-${value}`}
+                className="absolute top-0 bottom-0 border-l border-border/30"
+                style={{ left: `${value}%` }}
+              />
+            ))}
+          </div>
+
+          {/* Task Points */}
+          {tasks.map((task) => (
+            <div
+              key={task.id}
+              className="absolute transform -translate-x-1/2 translate-y-1/2 z-10"
+              style={{
+                left: `${task.time}%`,
+                bottom: `${task.difficulty}%`,
+              }}
+              onMouseEnter={() => setHoveredTask(task.id)}
+              onMouseLeave={() => setHoveredTask(null)}
+            >
+              {/* Task Card */}
+              <div
+                className={`
+                  relative cursor-pointer transition-all duration-200
+                  ${hoveredTask === task.id ? "scale-110 z-20" : "scale-100"}
+                `}
+              >
+                {/* Dot */}
+                <div
+                  className={`
+                    w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${categoryColors[task.category]}
+                    shadow-lg shadow-current/30
+                    ring-1 ring-background
+                  `}
+                />
+
+                {/* Title Box */}
+                <div
+                  className={`
+                    absolute left-1/2 -translate-x-1/2 bottom-full mb-3
+                    px-4 py-2 md:px-5 md:py-2.5 rounded-lg
+                    bg-card border-2 ${categoryBorderColors[task.category]}
+                    shadow-xl
+                    whitespace-nowrap
+                    transition-all duration-200
+                    ${hoveredTask === task.id ? "opacity-100" : "opacity-90"}
+                  `}
+                >
+                  <span className="text-sm md:text-base font-semibold text-card-foreground">
+                    {task.title}
+                  </span>
+                </div>
+
+                {/* Expanded Description on Hover */}
+                {hoveredTask === task.id && (
+                  <div
+                    className={`
+                      absolute left-1/2 -translate-x-1/2 top-full mt-3
+                      px-4 py-3 rounded-lg
+                      bg-popover border-2 ${categoryBorderColors[task.category]}
+                      shadow-xl
+                      w-56 md:w-72
+                      z-30
+                    `}
+                  >
+                    <p className="text-sm md:text-base text-popover-foreground leading-relaxed">
+                      {task.description}
+                    </p>
+                    <div className="mt-3 flex items-center justify-between text-xs md:text-sm text-muted-foreground">
+                      <span>Zeit: {task.time}%</span>
+                      <span>Schwierigkeit: {task.difficulty}%</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
