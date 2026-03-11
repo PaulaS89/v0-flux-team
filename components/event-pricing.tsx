@@ -72,7 +72,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ml-6">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mx-6">
           {pricingTiers.map((tier) => (
             <div
               key={tier.id}
