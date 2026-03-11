@@ -4,13 +4,13 @@ import { Location } from "@/lib/contentful";
 
 const defaultLocation: Location = {
   id: "default",
-  venueName: "Deloitte Düsseldorf Office",
-  address: "Schwannstraße 6",
-  city: "40476 Düsseldorf, Germany",
-  mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2498.5876543210987!2d6.7876543210987!3d51.2345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b8ca1234567890%3A0x1234567890abcdef!2sSchwannstra%C3%9Fe%206%2C%2040476%20D%C3%BCsseldorf!5e0!3m2!1sen!2sde!4v1699999999999!5m2!1sen!2sde",
-  directionsTrain: "From Düsseldorf Hauptbahnhof, take U-Bahn U78 or U79 toward Messe/Nord. Exit at Victoriaplatz/Klever Straße. Walk 5 minutes to Schwannstraße 6.",
-  directionsCar: "Follow A44 toward Düsseldorf-Stockum. Take the exit Düsseldorf-Golzheim. Underground parking is available nearby at Parkhaus Derendorf.",
-  directionsPlane: "Düsseldorf Airport (DUS) is approximately 15 minutes by taxi or 20 minutes via S-Bahn (S11 to Hauptbahnhof, then U78/U79).",
+  venueName: "Deloitte Heinrich Campus",
+  address: "Toulouser Allee 25",
+  city: "40211 Düsseldorf, Germany",
+  mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2498.4567890123456!2d6.7891234567890!3d51.2345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b8ca0987654321%3A0xabcdef1234567890!2sToulouser%20Allee%2025%2C%2040211%20D%C3%BCsseldorf!5e0!3m2!1sen!2sde!4v1699999999999!5m2!1sen!2sde",
+  directionsTrain: "From Düsseldorf Hauptbahnhof, take U-Bahn U78 or U79 toward Messe/Nord. Exit at Derendorf S station. Walk 5 minutes to Toulouser Allee 25 (Deloitte Heinrich Campus).",
+  directionsCar: "Follow A44 toward Düsseldorf-Derendorf. Take the exit Düsseldorf-Derendorf. Parking is available at the Heinrich Campus underground parking.",
+  directionsPlane: "Düsseldorf Airport (DUS) is approximately 10 minutes by taxi or 20 minutes via S-Bahn (S11 to Düsseldorf-Derendorf, then 5-minute walk).",
 };
 
 interface EventLocationProps {
