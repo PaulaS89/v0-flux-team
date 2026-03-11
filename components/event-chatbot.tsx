@@ -13,11 +13,24 @@ export function EventChatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
+  const [error, setError] = useState<string | null>(null)
+
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: '/api/chat' }),
+    onError: (err) => {
+      console.error('[v0] Chat error:', err)
+      setError('Unable to connect to the assistant. Please try again later.')
+    },
   })
 
   const isLoading = status === 'streaming' || status === 'submitted'
+
+  // Clear error when new message is sent
+  useEffect(() => {
+    if (status === 'submitted') {
+      setError(null)
+    }
+  }, [status])
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -170,6 +183,14 @@ export function EventChatbot() {
               <div className="mb-4 flex justify-start">
                 <div className="rounded-2xl bg-muted px-4 py-2">
                   <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                </div>
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-4 flex justify-start">
+                <div className="max-w-[85%] rounded-2xl bg-destructive/10 px-4 py-2 text-sm text-destructive">
+                  {error}
                 </div>
               </div>
             )}
