@@ -8,6 +8,8 @@ interface Speaker {
   name: string;
   role: string;
   topic?: string;
+  talkTitle?: string;
+  talkTime?: string;
   bio?: string;
   photo?: string | null;
   image?: string | null;
@@ -42,48 +44,60 @@ function getSpeakerImage(name: string, index: number, contentfulImage?: string |
   return fallbackImages[index % fallbackImages.length];
 }
 
-// Default fallback speakers (6 total for 3x2 grid)
+// Default fallback speakers (6 total for 3x2 grid) - aligned with agenda
 const defaultSpeakers: Speaker[] = [
   {
     name: "Sarah Chen",
     role: "AI Research Lead",
     topic: "OpenAI",
-    bio: "Exploring how large language models can understand and generate more intuitive user interfaces.",
+    talkTitle: "When Machines Dream: Reimagining UX for the AI Era",
+    talkTime: "09:30",
+    bio: "What happens when AI systems start anticipating our needs before we express them? Sarah explores the paradigm shift in UX design as we move from reactive to predictive interfaces.",
     image: "/speakers/speaker-woman-1.jpg",
   },
   {
     name: "James Liu",
     role: "Principal Designer",
     topic: "Vercel",
-    bio: "Building design systems that scale with AI-powered tooling and real-time collaboration.",
+    talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
+    talkTime: "10:30",
+    bio: "The text box is just the beginning. James reveals design patterns for LLM interactions that feel natural, forgiving, and surprisingly delightful.",
     image: "/speakers/speaker-man-1.jpg",
   },
   {
     name: "Elena Rodriguez",
     role: "UX Director",
     topic: "Figma",
-    bio: "Creating human-centered experiences that bridge the gap between AI capabilities and user needs.",
+    talkTitle: "The Empathy Algorithm: Human-Centered AI Design",
+    talkTime: "13:30",
+    bio: "How do we design AI that truly understands human context and emotion? Elena shares frameworks for building empathetic AI experiences at scale.",
     image: "/speakers/speaker-woman-2.jpg",
   },
   {
     name: "Marcus Weber",
     role: "Design Systems Lead",
     topic: "Stripe",
-    bio: "Designing payment experiences that leverage machine learning for fraud detection and personalization.",
+    talkTitle: "Hands-On: Prototyping Conversational Experiences",
+    talkTime: "14:30",
+    bio: "A practical workshop on rapid prototyping techniques for conversational UIs - from quick paper sketches to functional AI-powered prototypes.",
     image: "/speakers/speaker-man-2.jpg",
   },
   {
     name: "Nina Patel",
     role: "Product Design Manager",
     topic: "Anthropic",
-    bio: "Crafting conversational interfaces that feel natural while maintaining safety and alignment.",
+    talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
+    talkTime: "10:30",
+    bio: "Nina brings the safety perspective to LLM interface design - how do we build trust through transparency and give users meaningful control?",
     image: "/speakers/speaker-woman-3.jpg",
   },
   {
     name: "David Kim",
     role: "Creative Director",
     topic: "Linear",
-    bio: "Reimagining productivity tools with AI-first workflows and predictive interactions.",
+    talkTitle: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
+    talkTime: "10:30",
+    bio: "David shares how Linear is rethinking issue tracking with AI - creating interfaces that predict what you need before you ask.",
     image: "/speakers/speaker-man-3.jpg",
   },
 ];
@@ -152,21 +166,40 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                     <p className="text-sm font-medium text-foreground">{speaker.topic}</p>
                   </div>
                   
-                  {/* Back of card */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl border border-muted-foreground/20 p-6 bg-background flex flex-col justify-center">
-                    <div className={`mx-auto mb-4 w-16 h-16 relative overflow-hidden rounded-lg ${bgColor}`}>
-                      <Image
-                        src={speakerImage}
-                        alt={speaker.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <h3 className="text-base font-semibold text-foreground mb-1 text-center">{speaker.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-3 text-center">{speaker.role} · {speaker.topic}</p>
-                    <p className="text-sm text-muted-foreground text-center leading-relaxed">
+                  {/* Back of card - shows talk details */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl border border-muted-foreground/20 p-5 bg-background flex flex-col">
+                    {/* Talk time badge */}
+                    {speaker.talkTime && (
+                      <span className="inline-block self-start font-mono text-xs text-primary mb-2">
+                        {speaker.talkTime}
+                      </span>
+                    )}
+                    
+                    {/* Talk title */}
+                    <h4 className="text-base font-semibold text-foreground mb-3 leading-tight">
+                      {speaker.talkTitle || speaker.topic}
+                    </h4>
+                    
+                    {/* Talk description */}
+                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
                       {speaker.bio}
                     </p>
+                    
+                    {/* Speaker attribution */}
+                    <div className="flex items-center gap-3 mt-4 pt-3 border-t border-muted-foreground/10">
+                      <div className={`w-8 h-8 relative overflow-hidden rounded-full ${bgColor}`}>
+                        <Image
+                          src={speakerImage}
+                          alt={speaker.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{speaker.name}</p>
+                        <p className="text-xs text-muted-foreground">{speaker.topic}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
