@@ -93,7 +93,9 @@ function generateThemeStyles(theme: Theme): string {
     styles.push(`--sidebar-foreground: ${theme.foregroundColor}`);
     styles.push(`--primary-foreground: ${theme.backgroundColor || '#0A0A0A'}`);
     styles.push(`--secondary-foreground: ${theme.foregroundColor}`);
-    styles.push(`--muted-foreground: ${adjustLightness(theme.foregroundColor, -0.4)}`);
+    // For dark backgrounds, muted text should still be light enough for accessibility (WCAG AA)
+    // Using a medium gray that provides good contrast on dark backgrounds
+    styles.push(`--muted-foreground: #A1A1AA`);
     styles.push(`--accent-foreground: ${theme.foregroundColor}`);
     styles.push(`--sidebar-accent-foreground: ${theme.foregroundColor}`);
   }
