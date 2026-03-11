@@ -13,6 +13,20 @@ interface Speaker {
   image?: string | null;
 }
 
+// Fallback images for speakers (used when Contentful doesn't provide unique images)
+const fallbackImages = [
+  "/speakers/sarah-chen.jpg",
+  "/speakers/marcus-johnson.jpg",
+  "/speakers/lisa-park.jpg",
+  "/speakers/thomas-miller.jpg",
+  "/speakers/sarah-klein.jpg",
+];
+
+// Get a fallback image based on speaker index
+function getFallbackImage(index: number): string {
+  return fallbackImages[index % fallbackImages.length];
+}
+
 // Default fallback speakers
 const defaultSpeakers: Speaker[] = [
   {
@@ -75,36 +89,32 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
           Speakers
         </h2>
         <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
-          {speakersList.map((speaker, index) => (
+          {speakersList.map((speaker, index) => {
+            // Use speaker's image/photo if available, otherwise use a fallback based on index
+            const speakerImage = speaker.photo || speaker.image || getFallbackImage(index);
+            
+            return (
             <Card
               key={speaker.id || `${speaker.name}-${index}`}
               className="group cursor-pointer border-0 bg-transparent"
             >
               <CardContent className="p-6">
                 <div className="mb-6 aspect-[4/3] w-full relative overflow-hidden rounded-lg bg-muted/50">
-                  {(speaker.photo || speaker.image) ? (
-                    <>
-                      <Image
-                        src={speaker.photo || speaker.image || ""}
-                        alt={speaker.name}
-                        fill
-                        className="object-cover transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:grayscale group-hover:contrast-125"
-                      />
-                      {/* Halftone dot pattern overlay - gradual fade */}
-                      <div 
-                        className="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-50 pointer-events-none"
-                        style={{
-                          backgroundImage: `radial-gradient(circle at center, #000 0.5px, transparent 0.5px)`,
-                          backgroundSize: '3px 3px',
-                          mixBlendMode: 'multiply',
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="h-20 w-20 rounded-full bg-muted" />
-                    </div>
-                  )}
+                  <Image
+                    src={speakerImage}
+                    alt={speaker.name}
+                    fill
+                    className="object-cover transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:grayscale group-hover:contrast-125"
+                  />
+                  {/* Halftone dot pattern overlay - gradual fade */}
+                  <div 
+                    className="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-50 pointer-events-none"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at center, #000 0.5px, transparent 0.5px)`,
+                      backgroundSize: '3px 3px',
+                      mixBlendMode: 'multiply',
+                    }}
+                  />
                 </div>
                 <h3 className="mb-1 text-lg font-medium tracking-tight">{speaker.name}</h3>
                 <p className="mb-3 text-sm text-muted-foreground">
@@ -115,7 +125,8 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                 )}
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
