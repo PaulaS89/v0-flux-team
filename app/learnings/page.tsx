@@ -16,25 +16,6 @@ export default function LearningsPage() {
         </header>
 
         <LearningsChart />
-
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-1" />
-            <span className="text-sm text-muted-foreground">v0</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-2" />
-            <span className="text-sm text-muted-foreground">Contentful</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-3" />
-            <span className="text-sm text-muted-foreground">Figma</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-4" />
-            <span className="text-sm text-muted-foreground">GitHub</span>
-          </div>
-        </div>
       </div>
     </main>
   )
