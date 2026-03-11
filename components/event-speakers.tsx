@@ -78,62 +78,47 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
   const speakersList = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
 
   return (
-    <section id="speakers" className="bg-card px-6 py-16">
-      {/* SVG filter for halftone effect */}
-      <svg className="absolute w-0 h-0" aria-hidden="true">
-        <defs>
-          <filter id="halftone" x="0" y="0" width="100%" height="100%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur" />
-            <feComponentTransfer in="blur" result="contrast">
-              <feFuncR type="linear" slope="1.5" intercept="-0.2" />
-              <feFuncG type="linear" slope="1.5" intercept="-0.2" />
-              <feFuncB type="linear" slope="1.5" intercept="-0.2" />
-            </feComponentTransfer>
-          </filter>
-        </defs>
-      </svg>
-      
+    <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-8 ml-6 text-3xl font-light tracking-tight md:text-4xl">
-          Speakers
-        </h2>
-        <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
+        {/* Header matching agenda style */}
+        <div className="mb-12">
+          <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
+            SPEAKERS
+          </h2>
+          <p className="text-muted-foreground text-sm md:text-base tracking-wide">
+            Industry leaders shaping the future of AI-driven design.
+          </p>
+        </div>
+        
+        {/* Speakers grid - smaller, more refined cards */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {speakersList.map((speaker, index) => {
-            // Get speaker image: prioritize Contentful image, then name-based, then index-based fallback
             const speakerImage = getSpeakerImage(speaker.name, index, speaker.photo || speaker.image);
             
             return (
-            <Card
-              key={speaker.id || `${speaker.name}-${index}`}
-              className="cursor-pointer border-0 bg-transparent"
-            >
-              <CardContent className="p-6 pt-0">
-                <div className="group mb-6 aspect-[4/3] w-full relative overflow-hidden rounded-lg bg-muted/50">
+              <div
+                key={speaker.id || `${speaker.name}-${index}`}
+                className="group"
+              >
+                {/* Smaller circular image */}
+                <div className="mb-4 w-20 h-20 relative overflow-hidden rounded-full bg-muted/30 border border-muted-foreground/20">
                   <Image
                     src={speakerImage}
                     alt={speaker.name}
                     fill
-                    className="object-cover grayscale contrast-125 transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100"
-                  />
-                  {/* Halftone dot pattern overlay - visible by default, fades on hover */}
-                  <div 
-                    className="absolute inset-0 opacity-50 transition-opacity duration-700 ease-in-out group-hover:opacity-0 pointer-events-none"
-                    style={{
-                      backgroundImage: `radial-gradient(circle at center, #888 0.5px, transparent 0.5px)`,
-                      backgroundSize: '3px 3px',
-                      mixBlendMode: 'multiply',
-                    }}
+                    className="object-cover grayscale contrast-110 transition-all duration-500 group-hover:grayscale-0 group-hover:contrast-100"
                   />
                 </div>
-                <h3 className="mb-1 text-lg font-medium tracking-tight">{speaker.name}</h3>
-                <p className="mb-3 text-sm text-muted-foreground">
+                
+                {/* Speaker info */}
+                <h3 className="text-sm font-medium text-foreground mb-0.5">{speaker.name}</h3>
+                <p className="text-xs text-muted-foreground mb-2">
                   {speaker.role}
                 </p>
                 {(speaker.topic || speaker.bio) && (
-                  <p className="text-sm text-muted-foreground">{speaker.topic || speaker.bio}</p>
+                  <p className="text-xs text-muted-foreground/70 leading-relaxed">{speaker.topic || speaker.bio}</p>
                 )}
-              </CardContent>
-            </Card>
+              </div>
             );
           })}
         </div>
