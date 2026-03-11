@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 interface HeroData {
   title: string;
@@ -47,6 +48,25 @@ export function EventHero({ data }: EventHeroProps) {
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden px-6 pt-14">
+      {/* Green Swirling Sphere Background - masked to hide outer circle */}
+      <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
+        <div 
+          className="relative h-[420px] w-[420px] md:h-[540px] md:w-[540px] lg:h-[660px] lg:w-[660px] mx-auto overflow-hidden"
+          style={{
+            maskImage: 'radial-gradient(circle at center, black 35%, transparent 45%)',
+            WebkitMaskImage: 'radial-gradient(circle at center, black 35%, transparent 45%)',
+          }}
+        >
+          <Image
+            src="/images/schedule-header-green.jpg"
+            alt=""
+            fill
+            className="object-contain scale-110"
+            priority
+          />
+        </div>
+      </div>
+
       {/* Hero Content */}
       <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh]">
         <div className="max-w-3xl md:ml-[5%] lg:ml-[8%]">
