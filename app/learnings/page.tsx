@@ -7,8 +7,8 @@ export const metadata = {
 
 export default function LearningsPage() {
   return (
-    <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12 md:py-16">
+    <main className="min-h-screen bg-background px-4 py-4 md:px-6 md:py-6">
+      <div className="w-full">
         <header className="mb-12 text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
             Project Learnings

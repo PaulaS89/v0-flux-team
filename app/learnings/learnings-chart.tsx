@@ -74,7 +74,7 @@ export function LearningsChart() {
 
   return (
     <Card className="bg-card border-none shadow-none">
-      <CardContent className="p-6 md:p-8">
+      <CardContent className="p-2 md:p-4">
         {/* Chart Container */}
         <div className="relative w-full aspect-[16/10] md:aspect-[2/1]">
           {/* Y-Axis Label */}
