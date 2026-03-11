@@ -1,46 +1,46 @@
 import { Button } from "@/components/ui/button";
 import { PricingTier } from "@/lib/contentful";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 
 const defaultPricing: PricingTier[] = [
   {
     id: "1",
-    name: "Standard Admission",
-    price: "€249",
-    description: "Full access to all sessions",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings", "Networking"],
-    isHighlighted: false,
-    ctaText: "Register",
+    name: "Early Bird",
+    price: "€149",
+    description: "Limited availability - Book now and save €100 on your ticket",
+    features: ["Full day conference access", "Breakfast & networking lunch", "All session recordings", "Conference materials", "Networking reception"],
+    isHighlighted: true,
+    ctaText: "Secure Your Spot",
     order: 1,
   },
   {
     id: "2",
     name: "Deloitte Clients",
-    price: "€149",
-    description: "Exclusive client pricing",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings", "Priority seating", "Executive networking"],
-    isHighlighted: true,
-    ctaText: "Register",
+    price: "€99",
+    description: "Exclusive pricing for current Deloitte clients and partners",
+    features: ["Full day conference access", "Breakfast & networking lunch", "All session recordings", "Conference materials", "Priority seating", "Executive networking lounge"],
+    isHighlighted: false,
+    ctaText: "Verify & Register",
     order: 2,
   },
   {
     id: "3",
-    name: "Startups & Scaleups",
-    price: "€99",
-    description: "Special rate for qualifying organizations",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings"],
+    name: "Regular",
+    price: "€249",
+    description: "Standard admission after Early Bird period ends",
+    features: ["Full day conference access", "Breakfast & networking lunch", "All session recordings", "Conference materials"],
     isHighlighted: false,
-    ctaText: "Apply",
+    ctaText: "Register",
     order: 3,
   },
   {
     id: "4",
-    name: "Deloitte Alumni",
-    price: "€179",
-    description: "Alumni network pricing",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings", "Alumni networking"],
+    name: "VIP Experience",
+    price: "€499",
+    description: "The ultimate FLUX experience with exclusive perks",
+    features: ["Full day conference access", "Breakfast & networking lunch", "All session recordings", "Conference materials", "Front row reserved seating", "Speaker meet & greet dinner", "1-on-1 consultation session", "Exclusive VIP gift bag"],
     isHighlighted: false,
-    ctaText: "Register",
+    ctaText: "Go VIP",
     order: 4,
   },
 ];
@@ -53,94 +53,111 @@ export function EventPricing({ pricing }: EventPricingProps) {
   const pricingTiers = pricing && pricing.length > 0 ? pricing : defaultPricing;
 
   return (
-    <section id="pricing" className="relative bg-background px-6 pt-4 pb-16 overflow-hidden">
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
-      
-      <div className="relative mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-16 ml-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            Tickets
-          </p>
-          <h2 className="text-4xl font-light tracking-tight md:text-5xl text-foreground mb-4">
-            Pricing
+    <section id="pricing" className="relative bg-background px-8 md:px-16 lg:px-24 py-16 overflow-hidden">
+      <div className="relative mx-auto max-w-6xl">
+        {/* Header - matching agenda/speakers style */}
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
+            TICKETS
           </h2>
-          <p className="text-muted-foreground max-w-xl">
-            Price includes breakfast, lunch, materials, and access to session recordings.
+          <p className="text-muted-foreground text-sm md:text-base tracking-wide">
+            Secure your spot at FLUX. All tickets include breakfast, lunch, and session recordings.
           </p>
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mx-6">
-          {pricingTiers.map((tier) => (
-            <div
-              key={tier.id}
-              className={`group relative flex flex-col h-full rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm p-6 transition-all duration-300 hover:border-border hover:shadow-lg ${
-                tier.isHighlighted ? "border-primary/50 bg-primary/5" : ""
-              }`}
-            >
-              {/* Highlighted badge */}
-              {tier.isHighlighted && (
-                <div className="absolute -top-3 left-6">
-                  <span className="rounded-full bg-primary px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-primary-foreground">
-                    Recommended
-                  </span>
-                </div>
-              )}
-
-              {/* Tier name */}
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
-                {tier.name}
-              </p>
-
-              {/* Price */}
-              <div className="mb-4">
-                <span className="text-4xl font-light text-foreground">{tier.price}</span>
-              </div>
-
-              {/* Description */}
-              {tier.description && (
-                <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">
-                  {tier.description}
-                </p>
-              )}
-
-              {/* Features */}
-              {tier.features && tier.features.length > 0 && (
-                <ul className="flex-grow space-y-2 mb-8">
-                  {tier.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* CTA Button - always at bottom */}
-              <div className="mt-auto">
-                <Button 
-                  className={`w-full group/btn flex items-center justify-center gap-2 border transition-all ${
-                    tier.isHighlighted 
-                      ? "border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground" 
-                      : "border-border bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
-                  }`}
-                  asChild
-                >
-                  <a href="/tickets">
-                    <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                      {tier.ctaText || "Register"}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {pricingTiers.map((tier, index) => {
+            const isVIP = tier.name.toLowerCase().includes("vip");
+            const isEarlyBird = tier.isHighlighted;
+            
+            return (
+              <div
+                key={tier.id}
+                className={`group relative flex flex-col h-full rounded-xl border p-5 transition-all duration-300 ${
+                  isEarlyBird 
+                    ? "border-primary/50 bg-primary/5 hover:border-primary" 
+                    : isVIP
+                    ? "border-amber-500/30 bg-amber-500/5 hover:border-amber-500/50"
+                    : "border-muted-foreground/20 bg-card/40 backdrop-blur-md hover:border-muted-foreground/40 hover:bg-card/60"
+                }`}
+              >
+                {/* Badge */}
+                {isEarlyBird && (
+                  <div className="absolute -top-3 left-4">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-primary-foreground">
+                      <Sparkles className="h-3 w-3" />
+                      Recommended
                     </span>
-                    <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
-                  </a>
-                </Button>
-              </div>
+                  </div>
+                )}
+                {isVIP && (
+                  <div className="absolute -top-3 left-4">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-background">
+                      <Sparkles className="h-3 w-3" />
+                      Premium
+                    </span>
+                  </div>
+                )}
 
-              {/* Subtle glow on hover */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
-            </div>
-          ))}
+                {/* Tier name */}
+                <h3 className={`text-sm font-medium uppercase tracking-wide mb-3 ${isEarlyBird ? "mt-2" : isVIP ? "mt-2" : ""} ${
+                  isEarlyBird ? "text-primary" : isVIP ? "text-amber-400" : "text-foreground"
+                }`}>
+                  {tier.name}
+                </h3>
+
+                {/* Price */}
+                <div className="mb-2">
+                  <span className={`text-3xl font-semibold ${
+                    isEarlyBird ? "text-primary" : isVIP ? "text-amber-400" : "text-foreground"
+                  }`}>{tier.price}</span>
+                </div>
+
+                {/* Description */}
+                {tier.description && (
+                  <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+                    {tier.description}
+                  </p>
+                )}
+
+                {/* Features */}
+                {tier.features && tier.features.length > 0 && (
+                  <ul className="flex-grow space-y-2 mb-5">
+                    {tier.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                        <Check className={`h-3.5 w-3.5 mt-0.5 shrink-0 ${
+                          isEarlyBird ? "text-primary" : isVIP ? "text-amber-400" : "text-primary"
+                        }`} />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* CTA Button */}
+                <div className="mt-auto">
+                  <Button 
+                    className={`w-full group/btn flex items-center justify-center gap-2 transition-all h-9 ${
+                      isEarlyBird 
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                        : isVIP
+                        ? "bg-amber-500 text-background hover:bg-amber-400 border-0"
+                        : "border border-muted-foreground/30 bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
+                    }`}
+                    asChild
+                  >
+                    <a href="/tickets">
+                      <span className="text-xs font-medium tracking-wide">
+                        {tier.ctaText || "Register"}
+                      </span>
+                      <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
