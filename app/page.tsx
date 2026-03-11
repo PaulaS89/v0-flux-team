@@ -12,6 +12,8 @@ import {
   getScheduleItems,
   getFaqItems,
   getSiteSettings,
+  getPricingTiers,
+  getLocation,
   getAssetUrl,
 } from "@/lib/contentful";
 
@@ -19,13 +21,15 @@ export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function Home() {
   // Fetch all content from Contentful in parallel
-  const [heroEntry, speakersEntries, scheduleEntries, faqEntries, siteSettingsEntry] =
+  const [heroEntry, speakersEntries, scheduleEntries, faqEntries, siteSettingsEntry, pricingTiers, locationData] =
     await Promise.all([
       getHeroContent(),
       getSpeakers(),
       getScheduleItems(),
       getFaqItems(),
       getSiteSettings(),
+      getPricingTiers(),
+      getLocation(),
     ]);
 
   // Transform hero content
@@ -89,8 +93,8 @@ export default async function Home() {
         <EventHero data={heroData} />
         <EventSchedule items={scheduleData} />
         <EventSpeakers speakers={speakersData} />
-        <EventPricing />
-        <EventLocation />
+        <EventPricing pricing={pricingTiers} />
+        <EventLocation location={locationData} />
         <EventFAQ items={faqData} />
       </main>
       <EventFooter siteSettings={siteSettings} />

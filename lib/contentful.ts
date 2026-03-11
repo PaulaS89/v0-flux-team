@@ -109,6 +109,54 @@ export interface Theme {
   isActive?: boolean;
 }
 
+// Pricing Tier
+export interface PricingFields {
+  name: EntryFieldTypes.Text;
+  price: EntryFieldTypes.Text;
+  description?: EntryFieldTypes.Text;
+  features?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
+  isHighlighted?: EntryFieldTypes.Boolean;
+  ctaText?: EntryFieldTypes.Text;
+  order?: EntryFieldTypes.Integer;
+}
+
+export type PricingEntry = Entry<PricingFields, undefined, string>;
+
+export interface PricingTier {
+  id: string;
+  name: string;
+  price: string;
+  description?: string;
+  features: string[];
+  isHighlighted?: boolean;
+  ctaText?: string;
+  order?: number;
+}
+
+// Location
+export interface LocationFields {
+  venueName: EntryFieldTypes.Text;
+  address: EntryFieldTypes.Text;
+  city: EntryFieldTypes.Text;
+  mapEmbedUrl?: EntryFieldTypes.Text;
+  directionsCar?: EntryFieldTypes.Text;
+  directionsTrain?: EntryFieldTypes.Text;
+  directionsPlane?: EntryFieldTypes.Text;
+}
+
+export type LocationEntry = Entry<LocationFields, undefined, string>;
+
+export interface Location {
+  id: string;
+  venueName: string;
+  address: string;
+  city: string;
+  mapEmbedUrl?: string;
+  directionsCar?: string;
+  directionsTrain?: string;
+  directionsPlane?: string;
+}
+
 // ===================
 // Data Fetching Functions
 // ===================
@@ -185,6 +233,62 @@ export function getAssetUrl(asset: Asset | undefined): string | null {
   if (!asset?.fields?.file?.url) return null;
   const url = asset.fields.file.url;
   return url.startsWith("//") ? `https:${url}` : url;
+}
+
+// ===================
+// Pricing Functions
+// ===================
+
+export async function getPricingTiers(preview = false): Promise<PricingTier[]> {
+  const contentfulClient = getClient(preview);
+  try {
+    const entries = await contentfulClient.getEntries<PricingFields>({
+      content_type: "pricing",
+      order: ["fields.order"] as const,
+    });
+    return entries.items.map((entry) => ({
+      id: entry.sys.id,
+      name: entry.fields.name as string,
+      price: entry.fields.price as string,
+      description: entry.fields.description as string | undefined,
+      features: (entry.fields.features as string[]) || [],
+      isHighlighted: entry.fields.isHighlighted as boolean | undefined,
+      ctaText: entry.fields.ctaText as string | undefined,
+      order: entry.fields.order as number | undefined,
+    }));
+  } catch (error) {
+    console.error("Error fetching pricing tiers:", error);
+    return [];
+  }
+}
+
+// ===================
+// Location Functions
+// ===================
+
+export async function getLocation(preview = false): Promise<Location | null> {
+  const contentfulClient = getClient(preview);
+  try {
+    const entries = await contentfulClient.getEntries<LocationFields>({
+      content_type: "location",
+      limit: 1,
+    });
+    if (entries.items.length === 0) return null;
+    const entry = entries.items[0];
+    return {
+      id: entry.sys.id,
+      venueName: entry.fields.venueName as string,
+      address: entry.fields.address as string,
+      city: entry.fields.city as string,
+      mapEmbedUrl: entry.fields.mapEmbedUrl as string | undefined,
+      directionsCar: entry.fields.directionsCar as string | undefined,
+      directionsTrain: entry.fields.directionsTrain as string | undefined,
+      directionsPlane: entry.fields.directionsPlane as string | undefined,
+    };
+  } catch (error) {
+    console.error("Error fetching location:", error);
+    return null;
+  }
 }
 
 // ===================
