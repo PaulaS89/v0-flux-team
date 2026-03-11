@@ -85,7 +85,13 @@ export async function POST(request: NextRequest) {
         };
 
         const updated = await updateEntry(theme.sys.id, theme.sys.version, updatedFields);
-        await publishEntry(theme.sys.id, updated.sys.version);
+        
+        // Check if update was successful before publishing
+        if (updated.sys?.version) {
+          await publishEntry(theme.sys.id, updated.sys.version);
+        } else {
+          console.error("Failed to update theme entry:", updated);
+        }
       }
     }
 
