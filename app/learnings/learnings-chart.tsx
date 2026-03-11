@@ -143,9 +143,9 @@ export function LearningsChart() {
                     {/* Dot */}
                     <div
                       className={`
-                        w-5 h-5 md:w-6 md:h-6 rounded-full ${categoryColors[task.category]}
+                        w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${categoryColors[task.category]}
                         shadow-lg shadow-current/30
-                        ring-2 ring-background
+                        ring-1 ring-background
                       `}
                     />
 
