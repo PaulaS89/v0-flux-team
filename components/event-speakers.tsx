@@ -42,43 +42,37 @@ function getSpeakerImage(name: string, index: number, contentfulImage?: string |
   return fallbackImages[index % fallbackImages.length];
 }
 
-// Default fallback speakers (3 women, 3 men)
+// Default fallback speakers (matching agenda names)
 const defaultSpeakers: Speaker[] = [
   {
-    name: "Sarah Chen",
-    role: "CEO, TechVision Inc",
-    topic: "The Future of AI in Enterprise",
+    name: "Dr. Lena Hoffmann",
+    role: "Keynote Speaker",
+    topic: "The Future of Digital Experiences",
     image: "/speakers/speaker-woman-1.jpg",
   },
   {
-    name: "Marcus Johnson",
-    role: "Lead Developer, CloudScale",
-    topic: "Scalable Architectures",
+    name: "Markus Stein",
+    role: "Panelist",
+    topic: "AI, Personalization & Trust",
     image: "/speakers/speaker-man-1.jpg",
   },
   {
-    name: "Amara Williams",
-    role: "CTO, StartupLab",
-    topic: "From 0 to 1 Million Users",
+    name: "Sofia Alvarez",
+    role: "UX Director",
+    topic: "Designing Human-Centered Digital Journeys",
     image: "/speakers/speaker-woman-2.jpg",
   },
   {
-    name: "Raj Patel",
-    role: "VP Engineering, DataFlow",
-    topic: "Data-Driven Decisions",
+    name: "Prof. Dr. Adrian Keller",
+    role: "Panelist",
+    topic: "AI, Personalization & Trust",
     image: "/speakers/speaker-man-2.jpg",
   },
   {
-    name: "Christine Weber",
-    role: "Founder, DevOps Academy",
-    topic: "CI/CD Best Practices",
+    name: "Julia Brandt",
+    role: "Industry Expert",
+    topic: "Transformations Across Industries",
     image: "/speakers/speaker-woman-3.jpg",
-  },
-  {
-    name: "David Thompson",
-    role: "Principal Architect, Enterprise Co",
-    topic: "Microservices in Practice",
-    image: "/speakers/speaker-man-3.jpg",
   },
 ];
 
