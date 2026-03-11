@@ -143,7 +143,7 @@ export function LearningsChart() {
                     {/* Dot */}
                     <div
                       className={`
-                        w-3 h-3 md:w-4 md:h-4 rounded-full ${categoryColors[task.category]}
+                        w-5 h-5 md:w-6 md:h-6 rounded-full ${categoryColors[task.category]}
                         shadow-lg shadow-current/30
                         ring-2 ring-background
                       `}
@@ -152,16 +152,16 @@ export function LearningsChart() {
                     {/* Title Box */}
                     <div
                       className={`
-                        absolute left-1/2 -translate-x-1/2 bottom-full mb-2
-                        px-2 py-1 md:px-3 md:py-1.5 rounded-md
-                        bg-card border ${categoryBorderColors[task.category]}
+                        absolute left-1/2 -translate-x-1/2 bottom-full mb-3
+                        px-4 py-2 md:px-5 md:py-2.5 rounded-lg
+                        bg-card border-2 ${categoryBorderColors[task.category]}
                         shadow-xl
                         whitespace-nowrap
                         transition-all duration-200
                         ${hoveredTask === task.id ? "opacity-100" : "opacity-90"}
                       `}
                     >
-                      <span className="text-[10px] md:text-xs font-medium text-card-foreground">
+                      <span className="text-sm md:text-base font-semibold text-card-foreground">
                         {task.title}
                       </span>
                     </div>
@@ -170,18 +170,18 @@ export function LearningsChart() {
                     {hoveredTask === task.id && (
                       <div
                         className={`
-                          absolute left-1/2 -translate-x-1/2 top-full mt-2
-                          px-3 py-2 rounded-md
-                          bg-popover border ${categoryBorderColors[task.category]}
+                          absolute left-1/2 -translate-x-1/2 top-full mt-3
+                          px-4 py-3 rounded-lg
+                          bg-popover border-2 ${categoryBorderColors[task.category]}
                           shadow-xl
-                          w-48 md:w-56
+                          w-56 md:w-72
                           z-30
                         `}
                       >
-                        <p className="text-[10px] md:text-xs text-popover-foreground leading-relaxed">
+                        <p className="text-sm md:text-base text-popover-foreground leading-relaxed">
                           {task.description}
                         </p>
-                        <div className="mt-2 flex items-center justify-between text-[10px] text-muted-foreground">
+                        <div className="mt-3 flex items-center justify-between text-xs md:text-sm text-muted-foreground">
                           <span>Zeit: {task.time}%</span>
                           <span>Schwierigkeit: {task.difficulty}%</span>
                         </div>
