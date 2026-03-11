@@ -107,9 +107,10 @@ export function EventHero({ data }: EventHeroProps) {
         }
       `}</style>
 
-      {/* Hero Content */}
+      {/* Hero Content - Split layout with flux on left and 2026 on right */}
       <div className="relative z-10 flex-1 flex items-center w-full">
-        <div className="max-w-xl">
+        {/* Left side - Deloitte + flux */}
+        <div className="max-w-xl md:ml-[3%]">
           {heroData.themeName && (
             <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/80 mb-4">
               {heroData.themeName}
@@ -125,10 +126,20 @@ export function EventHero({ data }: EventHeroProps) {
             >
               flux
             </span>
-            <span className="block text-xs md:text-sm font-medium tracking-[0.4em] text-primary/70 mt-2 ml-1">
-              2026
-            </span>
           </h1>
+        </div>
+
+        {/* Right side - 2026 */}
+        <div className="absolute right-0 md:right-[5%] lg:right-[8%] top-1/2 -translate-y-1/2">
+          <span 
+            className="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-[0.02em] bg-gradient-to-l from-foreground via-foreground to-primary bg-clip-text text-transparent"
+            style={{
+              backgroundSize: '200% 100%',
+              backgroundPosition: '100% 0%',
+            }}
+          >
+            2026
+          </span>
         </div>
       </div>
 
