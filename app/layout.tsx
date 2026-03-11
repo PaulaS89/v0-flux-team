@@ -93,11 +93,13 @@ function generateThemeStyles(theme: Theme): string {
     styles.push(`--sidebar-foreground: ${theme.foregroundColor}`);
     styles.push(`--primary-foreground: ${theme.backgroundColor || '#0A0A0A'}`);
     styles.push(`--secondary-foreground: ${theme.foregroundColor}`);
-    // For dark backgrounds, muted text should still be light enough for accessibility (WCAG AA)
-    styles.push(`--muted-foreground: #D4D4D4`);
     styles.push(`--accent-foreground: ${theme.foregroundColor}`);
     styles.push(`--sidebar-accent-foreground: ${theme.foregroundColor}`);
   }
+  
+  // Always ensure muted-foreground is accessible on dark backgrounds (WCAG AA compliant)
+  // #D4D4D4 provides ~10:1 contrast ratio on black
+  styles.push(`--muted-foreground: #D4D4D4`);
   
   if (theme.borderColor) {
     styles.push(`--border: ${theme.borderColor}`);
