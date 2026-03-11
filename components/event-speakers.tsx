@@ -178,6 +178,11 @@ const talkDetailsByName: Record<string, { talkTitle: string; talkTime: string; t
     talkTime: "15:30 · Talk",
     talkDescription: "AI conversations don't translate - they transform. Nora explores the challenges of designing conversational interfaces for multilingual users, sharing frameworks for culturally-aware AI that adapts tone, formality, and interaction patterns.",
   },
+  "Nora Jones": {
+    talkTitle: "Voice Interfaces and the Future of Accessibility",
+    talkTime: "16:00 · Talk",
+    talkDescription: "Voice is the most natural interface, yet most AI voice experiences fall short. Nora shares insights on designing accessible voice interfaces that work for everyone, from multimodal fallbacks to inclusive conversation design patterns.",
+  },
 };
 
 // Function to enrich a speaker with talk details
@@ -199,6 +204,9 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
   const baseSpeakers = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
   // Enrich all speakers with detailed talk info
   const speakersList = baseSpeakers.map(enrichSpeakerWithTalkDetails);
+  
+  // Debug: Log speaker names to see what's coming from Contentful
+  console.log("[v0] Speaker names from Contentful:", baseSpeakers.map(s => s.name));
 
   return (
     <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
