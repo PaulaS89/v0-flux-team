@@ -60,6 +60,47 @@ async function getAllThemes() {
   return response.json();
 }
 
+async function updateAndPublishEntry(entryId: string, newIsActive: boolean, maxRetries = 3) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    // Always fetch the latest version before updating
+    const latestEntry = await getEntry(entryId);
+    
+    if (!latestEntry.sys?.version) {
+      console.error("Failed to get entry version:", latestEntry);
+      return false;
+    }
+
+    const updatedFields = {
+      ...latestEntry.fields,
+      isActive: { "en-US": newIsActive },
+    };
+
+    const updated = await updateEntry(entryId, latestEntry.sys.version, updatedFields);
+    
+    // Check for version mismatch error
+    if (updated.sys?.id === "VersionMismatch") {
+      console.log(`Version mismatch on attempt ${attempt + 1}, retrying...`);
+      await new Promise(resolve => setTimeout(resolve, 100)); // Small delay before retry
+      continue;
+    }
+    
+    // Check if update was successful
+    if (updated.sys?.version) {
+      const published = await publishEntry(entryId, updated.sys.version);
+      if (published.sys?.id === "VersionMismatch") {
+        console.log(`Publish version mismatch on attempt ${attempt + 1}, retrying...`);
+        await new Promise(resolve => setTimeout(resolve, 100));
+        continue;
+      }
+      return true;
+    } else {
+      console.error("Failed to update theme entry:", updated);
+      return false;
+    }
+  }
+  return false;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { themeId } = await request.json();
@@ -79,19 +120,7 @@ export async function POST(request: NextRequest) {
 
       // Only update if the state needs to change
       if ((isTarget && !currentIsActive) || (!isTarget && currentIsActive)) {
-        const updatedFields = {
-          ...theme.fields,
-          isActive: { "en-US": isTarget },
-        };
-
-        const updated = await updateEntry(theme.sys.id, theme.sys.version, updatedFields);
-        
-        // Check if update was successful before publishing
-        if (updated.sys?.version) {
-          await publishEntry(theme.sys.id, updated.sys.version);
-        } else {
-          console.error("Failed to update theme entry:", updated);
-        }
+        await updateAndPublishEntry(theme.sys.id, isTarget);
       }
     }
 
