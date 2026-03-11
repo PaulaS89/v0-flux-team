@@ -205,11 +205,27 @@ function enrichSpeakerWithTalkDetails(speaker: Speaker): Speaker {
   return speaker;
 }
 
+// Extract time from talkTime string (e.g., "09:30 · Keynote" -> 930)
+function extractTimeValue(talkTime?: string): number {
+  if (!talkTime) return 9999; // Put speakers without time at the end
+  const timeMatch = talkTime.match(/(\d{1,2}):(\d{2})/);
+  if (timeMatch) {
+    const hours = parseInt(timeMatch[1], 10);
+    const minutes = parseInt(timeMatch[2], 10);
+    return hours * 100 + minutes;
+  }
+  return 9999;
+}
+
 export function EventSpeakers({ speakers }: EventSpeakersProps) {
   // Use Contentful speakers if available, otherwise use defaults
   const baseSpeakers = speakers && speakers.length > 0 ? speakers : defaultSpeakers;
   // Enrich all speakers with detailed talk info
-  const speakersList = baseSpeakers.map(enrichSpeakerWithTalkDetails);
+  const enrichedSpeakers = baseSpeakers.map(enrichSpeakerWithTalkDetails);
+  // Sort speakers by talk time (earliest first)
+  const speakersList = [...enrichedSpeakers].sort((a, b) => {
+    return extractTimeValue(a.talkTime) - extractTimeValue(b.talkTime);
+  });
 
   return (
     <section id="speakers" className="bg-background px-8 md:px-16 lg:px-24 py-16">
