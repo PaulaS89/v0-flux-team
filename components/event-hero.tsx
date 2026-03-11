@@ -111,16 +111,15 @@ export function EventHero({ data }: EventHeroProps) {
       <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh] w-full">
         <div className="max-w-3xl">
           {heroData.themeName && (
-            <p className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-4 opacity-80">
+            <p className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-2">
               {heroData.themeName}
             </p>
           )}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal leading-[1.1] tracking-tight text-foreground">
-            {titleLines.map((line, index) => (
-              <span key={index} className="block">
-                {line}
-              </span>
-            ))}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1] tracking-tight text-foreground">
+            <span className="block">FLUX</span>
+            <span className="block text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light tracking-[0.2em] text-foreground/80 mt-1">
+              2026
+            </span>
           </h1>
         </div>
       </div>
