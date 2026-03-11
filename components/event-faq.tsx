@@ -49,7 +49,19 @@ interface EventFAQProps {
 export function EventFAQ({ items }: EventFAQProps) {
   // Use provided items or defaults, limit to 6
   const allFaqs = items && items.length > 0 ? items : defaultFaqs;
-  const faqs = allFaqs.slice(0, 6);
+  
+  // Reorder: swap "What is FLUX" to be before "How can I become"
+  const reorderedFaqs = [...allFaqs];
+  const whatIsFluxIndex = reorderedFaqs.findIndex(f => f.question.toLowerCase().includes("what is flux"));
+  const howCanIBecomeIndex = reorderedFaqs.findIndex(f => f.question.toLowerCase().includes("how can i become"));
+  
+  if (whatIsFluxIndex !== -1 && howCanIBecomeIndex !== -1 && whatIsFluxIndex > howCanIBecomeIndex) {
+    // Swap them so "What is FLUX" comes first
+    [reorderedFaqs[whatIsFluxIndex], reorderedFaqs[howCanIBecomeIndex]] = 
+      [reorderedFaqs[howCanIBecomeIndex], reorderedFaqs[whatIsFluxIndex]];
+  }
+  
+  const faqs = reorderedFaqs.slice(0, 6);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
