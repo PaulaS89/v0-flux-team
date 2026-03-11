@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus } from "lucide-react";
 
 interface FaqItem {
   question: string;
@@ -51,72 +51,48 @@ export function EventFAQ({ items }: EventFAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-background px-6 py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid md:grid-cols-12 gap-12">
-          {/* Left side - Title */}
-          <div className="md:col-span-3">
-            <h2 className="text-4xl md:text-5xl font-normal tracking-tight sticky top-24">
-              FAQ
-            </h2>
-          </div>
+    <section id="faq" className="bg-card px-6 py-16">
+      <div className="mx-auto max-w-7xl">
+        {/* Title - aligned with speakers/pricing */}
+        <h2 className="mb-8 ml-6 text-3xl font-light tracking-tight md:text-4xl">
+          FAQ
+        </h2>
 
-          {/* Right side - Questions */}
-          <div className="md:col-span-9">
-            {openIndex === 0 && (
-              <div className="mb-8 pb-8 border-b border-border">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-normal mb-4 tracking-tight">
-                      {faqs[0].question}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                      {faqs[0].answer}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setOpenIndex(null)}
-                    className="shrink-0 p-2 text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label="Close"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
+        {/* Questions grid - with matching margins */}
+        <div className="mx-6 grid gap-0 md:grid-cols-2">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+
+            return (
+              <div 
+                key={index} 
+                className={`border-b border-border ${index % 2 === 0 ? 'md:border-r md:pr-8' : 'md:pl-8'}`}
+              >
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  className="flex w-full items-center justify-between py-6 text-left group"
+                >
+                  <h3 className="text-base md:text-lg font-normal pr-4 group-hover:text-muted-foreground transition-colors">
+                    {faq.question}
+                  </h3>
+                  <Plus
+                    className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${
+                      isOpen ? "rotate-45" : ""
+                    }`}
+                  />
+                </button>
+                <div 
+                  className={`overflow-hidden transition-all duration-300 ${
+                    isOpen ? "max-h-40 pb-6" : "max-h-0"
+                  }`}
+                >
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </p>
                 </div>
               </div>
-            )}
-
-            <div className="space-y-0">
-              {faqs.slice(openIndex === 0 ? 1 : 0).map((faq, i) => {
-                const actualIndex = openIndex === 0 ? i + 1 : i;
-                const isOpen = openIndex === actualIndex;
-
-                return (
-                  <div key={actualIndex} className="border-b border-border">
-                    <button
-                      onClick={() => setOpenIndex(isOpen ? null : actualIndex)}
-                      className="flex w-full items-center justify-between py-6 text-left group"
-                    >
-                      <h3 className="text-lg md:text-xl font-normal pr-8 group-hover:text-muted-foreground transition-colors">
-                        {faq.question}
-                      </h3>
-                      <Plus
-                        className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform ${
-                          isOpen ? "rotate-45" : ""
-                        }`}
-                      />
-                    </button>
-                    {isOpen && (
-                      <div className="pb-6">
-                        <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -100,9 +100,9 @@ export function EventsSlider() {
   return (
     <section id="events" className="py-24 bg-muted/30">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="flex items-end justify-between mb-12">
+        <div className="flex items-end justify-between mb-8 ml-6">
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight mb-2">
+            <h2 className="text-3xl font-light tracking-tight md:text-4xl mb-2">
               Upcoming Events
             </h2>
             <p className="text-muted-foreground">
@@ -133,7 +133,7 @@ export function EventsSlider() {
 
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-6 px-6 snap-x snap-mandatory"
+          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 ml-6 snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {events.map((event) => (

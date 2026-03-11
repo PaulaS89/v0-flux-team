@@ -53,7 +53,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
   const pricingTiers = pricing && pricing.length > 0 ? pricing : defaultPricing;
 
   return (
-    <section id="pricing" className="relative bg-card px-6 pt-4 pb-24 overflow-hidden">
+    <section id="pricing" className="relative bg-background px-6 pt-4 pb-16 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       

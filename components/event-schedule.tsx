@@ -188,7 +188,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
   const schedule = items && items.length > 0 ? items : fallbackSchedule;
 
   return (
-    <section id="schedule" className="relative bg-background px-6 py-24 overflow-hidden">
+    <section id="schedule" className="relative bg-background px-6 py-16 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       

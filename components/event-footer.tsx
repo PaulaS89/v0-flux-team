@@ -18,7 +18,7 @@ export function EventFooter({ siteSettings }: EventFooterProps) {
   return (
     <footer className="border-t border-border bg-background px-6 py-16">
       <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between mx-6">
           <div>
             <span className="text-xl font-semibold tracking-tight">
               {eventName}{" "}
@@ -112,7 +112,7 @@ export function EventFooter({ siteSettings }: EventFooterProps) {
           </div>
         </div>
         
-        <div className="mt-16 pt-8 border-t border-border">
+        <div className="mt-16 pt-8 border-t border-border mx-6">
           <p className="text-xs text-muted-foreground">
             &copy; 2026 {eventName}. All rights reserved.
           </p>
