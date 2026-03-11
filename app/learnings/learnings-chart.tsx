@@ -83,7 +83,7 @@ export function LearningsChart() {
             </svg>
           </div>
           {/* Y-Axis Label */}
-          <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap">
+          <div className="absolute -top-10 left-1/2 -translate-x-1/2 -rotate-90 whitespace-nowrap origin-center">
             <span className="text-xs md:text-sm font-semibold text-foreground">
               Complexity
             </span>
