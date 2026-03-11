@@ -3,12 +3,21 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
 
 interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
+}
+
+interface ThemeData {
+  name: string
+  id: string
+  backgroundColor?: string
+  primaryColor?: string
+  accentColor?: string
+  foregroundColor?: string
+  borderColor?: string
 }
 
 export function EventChatbot() {
@@ -18,7 +27,6 @@ export function EventChatbot() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -45,23 +53,80 @@ export function EventChatbot() {
       const themes = data.themes || data
       
       // Find the theme that matches the name (case-insensitive partial match)
-      const targetTheme = themes.find((t: { name: string; id: string }) => 
+      const targetTheme = themes.find((t: ThemeData) => 
         t.name.toLowerCase().includes(themeName.toLowerCase())
-      )
+      ) as ThemeData | undefined
 
       if (targetTheme) {
-        // Activate the theme
+        // Activate the theme on the server (for persistence)
         await fetch('/api/themes/activate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ themeId: targetTheme.id }),
         })
         
-        // Refresh the page to apply the new theme
-        router.refresh()
+        // Apply theme CSS variables directly without page reload
+        const root = document.documentElement
+        
+        // Helper to adjust lightness for color variations
+        const adjustLightness = (color: string, amount: number): string => {
+          const oklchMatch = color.match(/oklch\(([0-9.]+)\s+([0-9.]+)\s+([0-9.]+)\)/)
+          if (oklchMatch) {
+            const l = parseFloat(oklchMatch[1])
+            const newL = Math.min(1, Math.max(0, l + amount))
+            return `oklch(${newL.toFixed(3)} ${oklchMatch[2]} ${oklchMatch[3]})`
+          }
+          if (color.startsWith('#')) {
+            const hex = color.slice(1)
+            const r = parseInt(hex.slice(0, 2), 16) / 255
+            const g = parseInt(hex.slice(2, 4), 16) / 255
+            const b = parseInt(hex.slice(4, 6), 16) / 255
+            const factor = 1 + amount * 2
+            const newR = Math.min(255, Math.max(0, Math.round(r * factor * 255)))
+            const newG = Math.min(255, Math.max(0, Math.round(g * factor * 255)))
+            const newB = Math.min(255, Math.max(0, Math.round(b * factor * 255)))
+            return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`
+          }
+          return color
+        }
+
+        // Apply background colors
+        if (targetTheme.backgroundColor) {
+          root.style.setProperty("--background", targetTheme.backgroundColor)
+          root.style.setProperty("--card", adjustLightness(targetTheme.backgroundColor, 0.04))
+          root.style.setProperty("--popover", adjustLightness(targetTheme.backgroundColor, 0.04))
+          root.style.setProperty("--muted", adjustLightness(targetTheme.backgroundColor, 0.09))
+          root.style.setProperty("--secondary", adjustLightness(targetTheme.backgroundColor, 0.1))
+        }
+        
+        // Apply primary color
+        if (targetTheme.primaryColor) {
+          root.style.setProperty("--primary", targetTheme.primaryColor)
+          root.style.setProperty("--ring", targetTheme.primaryColor)
+        }
+        
+        // Apply accent color
+        if (targetTheme.accentColor) {
+          root.style.setProperty("--accent", targetTheme.accentColor)
+        }
+        
+        // Apply foreground colors
+        if (targetTheme.foregroundColor) {
+          root.style.setProperty("--foreground", targetTheme.foregroundColor)
+          root.style.setProperty("--card-foreground", targetTheme.foregroundColor)
+          root.style.setProperty("--popover-foreground", targetTheme.foregroundColor)
+          root.style.setProperty("--muted-foreground", "#D4D4D4")
+          root.style.setProperty("--primary-foreground", targetTheme.backgroundColor || '#0A0A0A')
+        }
+        
+        // Apply border colors
+        if (targetTheme.borderColor) {
+          root.style.setProperty("--border", targetTheme.borderColor)
+          root.style.setProperty("--input", targetTheme.borderColor)
+        }
       }
-    } catch (error) {
-      console.error('Error switching theme:', error)
+    } catch (err) {
+      console.error('Error switching theme:', err)
     }
   }
 
