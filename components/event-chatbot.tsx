@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -27,6 +28,7 @@ export function EventChatbot() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -124,6 +126,12 @@ export function EventChatbot() {
           root.style.setProperty("--border", targetTheme.borderColor)
           root.style.setProperty("--input", targetTheme.borderColor)
         }
+        
+        // Refresh the page to load new Contentful content (hero image, etc.)
+        // Small delay to let CSS variables apply first for smoother transition
+        setTimeout(() => {
+          router.refresh()
+        }, 100)
       }
     } catch (err) {
       console.error('Error switching theme:', err)
