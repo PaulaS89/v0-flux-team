@@ -48,37 +48,37 @@ async function populateContentful() {
       name: "Sarah Chen",
       role: "AI Research Lead at OpenAI",
       bio: "Leading research on large language models and their applications in creative industries.",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
     },
     {
       name: "Marcus Weber",
       role: "CTO at TechVentures",
       bio: "Building the next generation of developer tools and infrastructure.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop",
     },
     {
       name: "Elena Rodriguez",
       role: "Product Design Director at Figma",
       bio: "Pioneering new approaches to collaborative design systems.",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?w=400&h=400&fit=crop",
     },
     {
       name: "James Liu",
       role: "Engineering Manager at Vercel",
       bio: "Scaling frontend infrastructure for millions of developers worldwide.",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop",
     },
     {
       name: "Anna Kowalski",
       role: "VP of Engineering at Stripe",
       bio: "Building reliable payment systems that power the internet economy.",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop",
     },
     {
       name: "David Park",
       role: "Founder & CEO at DataFlow",
       bio: "Creating real-time data pipelines for modern applications.",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop",
     },
   ];
 
