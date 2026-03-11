@@ -85,7 +85,7 @@ export function EventSchedule({ items }: EventScheduleProps) {
   const schedule = items && items.length > 0 ? items : defaultSchedule;
 
   return (
-    <section id="programm" className="bg-card px-6 py-24">
+    <section id="programm" className="bg-background px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <h2 className="mb-16 text-3xl font-light tracking-tight md:text-4xl">
           Programm

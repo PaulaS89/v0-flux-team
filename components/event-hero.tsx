@@ -144,7 +144,7 @@ export function EventHero({ data }: EventHeroProps) {
             </div>
             <Button
               size="lg"
-              className="group flex items-center gap-2 rounded-none bg-primary px-6 text-primary-foreground hover:bg-primary/90"
+              className="group"
               asChild={!!heroData.ctaButtonLink}
             >
               {heroData.ctaButtonLink ? (

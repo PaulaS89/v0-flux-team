@@ -64,7 +64,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
           {speakersList.map((speaker, index) => (
             <Card
               key={speaker.id || `${speaker.name}-${index}`}
-              className="group cursor-pointer border-border bg-card transition-colors hover:border-foreground/50"
+              className="group cursor-pointer border-border bg-secondary transition-colors hover:border-foreground/50"
             >
               <CardContent className="p-6">
                 <div className="mb-8 h-48 w-full bg-muted relative overflow-hidden">
