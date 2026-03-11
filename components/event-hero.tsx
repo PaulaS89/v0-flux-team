@@ -110,6 +110,11 @@ export function EventHero({ data }: EventHeroProps) {
       {/* Hero Content */}
       <div className="relative z-10 flex-1 flex items-center w-full">
         <div className="max-w-xl">
+          {heroData.themeName && (
+            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-primary mb-3">
+              {heroData.themeName}
+            </p>
+          )}
           <h1 className="leading-none">
             <span 
               className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-medium tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
