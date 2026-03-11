@@ -73,7 +73,7 @@ export function LearningsChart() {
   const [hoveredTask, setHoveredTask] = useState<string | null>(null)
 
   return (
-    <Card className="bg-card border-border">
+    <Card className="bg-card border-none shadow-none">
       <CardContent className="p-6 md:p-8">
         {/* Chart Container */}
         <div className="relative w-full aspect-[16/10] md:aspect-[2/1]">
