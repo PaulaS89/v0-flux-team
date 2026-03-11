@@ -255,8 +255,8 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
                   <p className="text-sm font-medium text-foreground">{speaker.topic}</p>
                 </div>
                 
-                {/* Slide-in overlay - slides up from bottom on hover */}
-                <div className="absolute inset-0 bg-background/95 backdrop-blur-sm p-4 flex flex-col translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                {/* Sheet overlay - slides up from bottom on hover */}
+                <div className="absolute inset-x-0 bottom-0 top-12 bg-background border-t border-muted-foreground/20 rounded-t-2xl p-4 flex flex-col translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_-10px_40px_rgba(0,0,0,0.3)]">
                   {/* Talk time badge */}
                   {speaker.talkTime && (
                     <span className="inline-block self-start font-mono text-[10px] text-primary mb-1.5 shrink-0">
