@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ContentfulThemeProvider } from '@/components/contentful-theme-provider'
+import { EventChatbot } from '@/components/event-chatbot'
 import { getActiveTheme, Theme } from '@/lib/contentful'
 import './globals.css'
 
@@ -126,6 +127,7 @@ export default async function RootLayout({
       <body className="font-sans antialiased">
         <ContentfulThemeProvider theme={theme}>
           {children}
+          <EventChatbot />
         </ContentfulThemeProvider>
         <Analytics />
       </body>
