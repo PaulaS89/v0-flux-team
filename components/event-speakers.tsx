@@ -19,31 +19,31 @@ const defaultSpeakers: Speaker[] = [
     name: "Sarah Chen",
     role: "CEO, TechVision Inc",
     topic: "The Future of AI in Enterprise",
+    image: "/speakers/sarah-chen.jpg",
   },
   {
     name: "Marcus Johnson",
     role: "Lead Developer, CloudScale",
     topic: "Scalable Architectures",
+    image: "/speakers/marcus-johnson.jpg",
   },
   {
     name: "Lisa Park",
     role: "CTO, StartupLab",
     topic: "From 0 to 1 Million Users",
+    image: "/speakers/lisa-park.jpg",
   },
   {
     name: "Thomas Miller",
     role: "VP Engineering, DataFlow",
     topic: "Data-Driven Decisions",
+    image: "/speakers/thomas-miller.jpg",
   },
   {
     name: "Sarah Klein",
     role: "Founder, DevOps Academy",
     topic: "CI/CD Best Practices",
-  },
-  {
-    name: "Michael Brown",
-    role: "Principal Architect, Enterprise Co",
-    topic: "Microservices in Practice",
+    image: "/speakers/sarah-klein.jpg",
   },
 ];
 
