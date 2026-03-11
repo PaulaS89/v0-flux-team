@@ -126,6 +126,14 @@ export function EventHero({ data }: EventHeroProps) {
               FLUX
             </span>
           </h1>
+          <div className="mt-6 ml-[0.15em]">
+            <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground/70 mb-1">
+              Future · LLMs · UX
+            </p>
+            <p className="text-sm md:text-base font-light tracking-wide text-muted-foreground">
+              Designing for the Age of AI
+            </p>
+          </div>
         </div>
       </div>
 
