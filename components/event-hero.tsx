@@ -50,7 +50,7 @@ export function EventHero({ data }: EventHeroProps) {
     <section className="relative flex min-h-screen flex-col overflow-hidden px-6 pt-14">
       {/* Green Swirling Sphere Background */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="relative h-[420px] w-[420px] md:h-[540px] md:w-[540px] lg:h-[660px] lg:w-[660px]">
+        <div className="relative h-[420px] w-[420px] md:h-[540px] md:w-[540px] lg:h-[660px] lg:w-[660px] left-1/2 -translate-x-1/2">
           <Image
             src="/images/schedule-header-green.jpg"
             alt=""
