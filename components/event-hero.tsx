@@ -140,7 +140,7 @@ export function EventHero({ data }: EventHeroProps) {
       {/* Event Details Footer */}
       <div className="relative z-10 pb-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          {/* Left side: Location & Date */}
+          {/* Left side: Location & Date info */}
           <div className="flex flex-col gap-4 md:flex-row md:gap-16">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -160,6 +160,10 @@ export function EventHero({ data }: EventHeroProps) {
                 {heroData.venue}
               </p>
             </div>
+          </div>
+          
+          {/* Right side: Early Bird + CTA (chatbot will sit to the right via fixed positioning) */}
+          <div className="flex items-center gap-6">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 {heroData.earlyBirdLabel || "Early Bird Tickets"}
