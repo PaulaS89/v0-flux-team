@@ -109,17 +109,17 @@ export function EventHero({ data }: EventHeroProps) {
 
       {/* Hero Content */}
       <div className="relative z-10 flex-1 flex items-center w-full">
-        <div className="max-w-xl md:ml-[5%] lg:ml-[10%]">
+        <div className="max-w-xl">
           {heroData.themeName && (
-            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-primary mb-1">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary/90 mb-3">
               {heroData.themeName}
             </p>
           )}
-          <h1 className="leading-none">
-            <span className="block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-[-0.02em] text-foreground">
+          <h1 className="leading-none flex items-baseline gap-3 md:gap-4">
+            <span className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold tracking-[-0.01em] text-foreground">
               FLUX
             </span>
-            <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[0.15em] text-foreground/70 -mt-1 md:-mt-2">
+            <span className="text-lg md:text-xl lg:text-2xl font-normal tracking-[0.25em] text-primary">
               2026
             </span>
           </h1>
