@@ -168,6 +168,16 @@ const talkDetailsByName: Record<string, { talkTitle: string; talkTime: string; t
     talkTime: "15:00 · Talk",
     talkDescription: "AI is transforming creative workflows, but not always for the better. Nora examines the tension between AI assistance and creative autonomy, sharing frameworks for designing AI tools that amplify human creativity rather than replace it.",
   },
+  "Jessica Belonda": {
+    talkTitle: "AI-Driven Design Systems at Scale",
+    talkTime: "14:00 · Talk",
+    talkDescription: "How do you build design systems that evolve with AI? Jessica shares her pioneering approach to collaborative design systems that leverage machine learning for component suggestions, automated accessibility checks, and predictive design patterns.",
+  },
+  "Nora Abdelrahman": {
+    talkTitle: "Conversational Design for Global Audiences",
+    talkTime: "15:30 · Talk",
+    talkDescription: "AI conversations don't translate - they transform. Nora explores the challenges of designing conversational interfaces for multilingual users, sharing frameworks for culturally-aware AI that adapts tone, formality, and interaction patterns.",
+  },
 };
 
 // Function to enrich a speaker with talk details
