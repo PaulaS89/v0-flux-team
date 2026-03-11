@@ -60,14 +60,25 @@ async function getAllThemes() {
   return response.json();
 }
 
-async function updateAndPublishEntry(entryId: string, newIsActive: boolean, maxRetries = 3) {
+async function updateAndPublishEntry(entryId: string, newIsActive: boolean, maxRetries = 5) {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
+    // Add delay between retries (exponential backoff)
+    if (attempt > 0) {
+      await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+    }
+    
     // Always fetch the latest version before updating
     const latestEntry = await getEntry(entryId);
     
+    // Check for rate limiting or other errors
+    if (latestEntry.sys?.type === "Error") {
+      console.log(`Error fetching entry on attempt ${attempt + 1}:`, latestEntry.sys.id);
+      continue;
+    }
+    
     if (!latestEntry.sys?.version) {
       console.error("Failed to get entry version:", latestEntry);
-      return false;
+      continue;
     }
 
     const updatedFields = {
@@ -75,27 +86,30 @@ async function updateAndPublishEntry(entryId: string, newIsActive: boolean, maxR
       isActive: { "en-US": newIsActive },
     };
 
+    // Small delay before update
+    await new Promise(resolve => setTimeout(resolve, 200));
+    
     const updated = await updateEntry(entryId, latestEntry.sys.version, updatedFields);
     
-    // Check for version mismatch error
-    if (updated.sys?.id === "VersionMismatch") {
-      console.log(`Version mismatch on attempt ${attempt + 1}, retrying...`);
-      await new Promise(resolve => setTimeout(resolve, 100)); // Small delay before retry
+    // Check for errors
+    if (updated.sys?.type === "Error") {
+      console.log(`Update error on attempt ${attempt + 1}:`, updated.sys.id);
       continue;
     }
     
     // Check if update was successful
     if (updated.sys?.version) {
+      // Small delay before publish
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
       const published = await publishEntry(entryId, updated.sys.version);
-      if (published.sys?.id === "VersionMismatch") {
-        console.log(`Publish version mismatch on attempt ${attempt + 1}, retrying...`);
-        await new Promise(resolve => setTimeout(resolve, 100));
+      if (published.sys?.type === "Error") {
+        console.log(`Publish error on attempt ${attempt + 1}:`, published.sys.id);
         continue;
       }
       return true;
     } else {
       console.error("Failed to update theme entry:", updated);
-      return false;
     }
   }
   return false;
@@ -114,12 +128,18 @@ export async function POST(request: NextRequest) {
     const themes = themesResponse.items || [];
 
     // Deactivate all themes and activate the selected one
+    let isFirst = true;
     for (const theme of themes) {
       const isTarget = theme.sys.id === themeId;
       const currentIsActive = theme.fields.isActive?.["en-US"] === true;
 
       // Only update if the state needs to change
       if ((isTarget && !currentIsActive) || (!isTarget && currentIsActive)) {
+        // Add delay between theme updates to avoid rate limiting
+        if (!isFirst) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        isFirst = false;
         await updateAndPublishEntry(theme.sys.id, isTarget);
       }
     }
