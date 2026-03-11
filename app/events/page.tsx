@@ -12,10 +12,13 @@ interface EventData {
   location: string
   venue: string
   event_date: string
-  end_date: string | null
-  price: number
+  event_time: string | null
+  ticket_price: number
+  vip_price: number
+  virtual_price: number
   image_url: string | null
   is_featured: boolean
+  max_attendees: number | null
 }
 
 export default function EventsPage() {
@@ -147,7 +150,7 @@ export default function EventsPage() {
                   </div>
                   <div className="flex items-center justify-between pt-4 border-t border-border">
                     <span className="text-lg font-semibold">
-                      {formatPrice(event.price)}
+                      From {formatPrice(event.ticket_price)}
                     </span>
                     <Button asChild size="sm">
                       <Link href={`/tickets?event=${encodeURIComponent(event.name)}`}>
