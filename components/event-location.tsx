@@ -23,14 +23,14 @@ export function EventLocation({ location }: EventLocationProps) {
   return (
     <section id="location" className="bg-secondary px-6 py-24">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-4 text-3xl font-light tracking-tight md:text-4xl">
+        <h2 className="mb-4 ml-6 text-3xl font-light tracking-tight md:text-4xl">
           Location & Directions
         </h2>
-        <p className="mb-16 text-muted-foreground">
+        <p className="mb-16 ml-6 text-muted-foreground">
           Join us at {locationData.venueName}
         </p>
 
-        <div className="grid gap-8 lg:grid-cols-2">
+        <div className="grid gap-8 lg:grid-cols-2 mx-6">
           {/* Venue Info */}
           <Card className="border-border bg-background">
             <CardHeader>
