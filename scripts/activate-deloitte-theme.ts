@@ -1,10 +1,11 @@
-import * as contentful from "contentful-management";
+import pkg from "contentful-management";
+const { createClient } = pkg;
 
 const SPACE_ID = "1bkq4170d8hb";
 const MANAGEMENT_TOKEN = "CFPAT-JGW3m0NFyjoDodaW0R3otydlz5eSkISXRIsoVwYSjbA";
 
 async function activateDeloitteTheme() {
-  const client = contentful.createClient({
+  const client = createClient({
     accessToken: MANAGEMENT_TOKEN,
   });
 
