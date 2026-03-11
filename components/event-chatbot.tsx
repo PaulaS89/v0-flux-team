@@ -156,22 +156,33 @@ export function EventChatbot() {
 
   return (
     <>
-      {/* Floating Chat Button - positioned higher on the right to avoid overlapping footer */}
+      {/* Tab-style Chat Trigger - vertical tab on right edge */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-24 right-8 md:right-16 lg:right-24 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+        className={`fixed right-0 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 bg-primary text-primary-foreground shadow-lg transition-all hover:pr-6 ${
+          isOpen ? 'pr-4' : 'pr-4'
+        }`}
+        style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'mixed',
+          borderRadius: '8px 0 0 8px',
+          padding: '16px 8px',
+        }}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         {isOpen ? (
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4 rotate-90" />
         ) : (
-          <MessageCircle className="h-5 w-5" />
+          <MessageCircle className="h-4 w-4 rotate-90" />
         )}
+        <span className="text-xs font-medium uppercase tracking-[0.15em]">
+          FLUX Assistant
+        </span>
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-40 right-8 md:right-16 lg:right-24 z-50 flex h-[450px] w-[350px] flex-col rounded-2xl border border-border bg-card shadow-2xl">
+        <div className="fixed top-1/2 -translate-y-1/2 right-12 z-50 flex h-[500px] w-[380px] flex-col rounded-2xl border border-border bg-card shadow-2xl">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-border px-4 py-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
