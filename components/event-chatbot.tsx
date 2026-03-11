@@ -156,10 +156,10 @@ export function EventChatbot() {
 
   return (
     <>
-      {/* Floating Chat Button - positioned at bottom right, aligned with footer */}
+      {/* Floating Chat Button - positioned at bottom, beside Get Tickets */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-8 right-8 md:right-16 lg:right-24 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+        className="fixed bottom-8 right-[140px] md:right-[200px] lg:right-[280px] z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 hover:shadow-xl"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         {isOpen ? (
@@ -171,7 +171,7 @@ export function EventChatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-8 md:right-16 lg:right-24 z-50 flex h-[500px] w-[380px] flex-col rounded-2xl border border-border bg-card shadow-2xl">
+        <div className="fixed bottom-24 right-8 md:right-16 lg:right-24 z-50 flex h-[450px] w-[350px] flex-col rounded-2xl border border-border bg-card shadow-2xl">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-border px-4 py-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
