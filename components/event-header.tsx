@@ -1,8 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LogOut, User } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface SiteSettings {
   eventName: string;
@@ -14,9 +22,43 @@ interface EventHeaderProps {
   siteSettings?: SiteSettings | null;
 }
 
+interface UserData {
+  id: number;
+  name: string;
+  email: string;
+}
+
 export function EventHeader({ siteSettings }: EventHeaderProps) {
+  const router = useRouter();
   const eventName = siteSettings?.eventName || "FLUX";
   const eventYear = siteSettings?.eventYear || "26";
+  const [user, setUser] = useState<UserData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSession() {
+      try {
+        const response = await fetch("/api/auth/session");
+        const data = await response.json();
+        setUser(data.user);
+      } catch (error) {
+        console.error("Failed to fetch session:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchSession();
+  }, []);
+
+  async function handleLogout() {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      setUser(null);
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
@@ -52,18 +94,39 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
         </Link>
 
         <div className="flex items-center gap-6">
-          <Link
-            href="#signup"
-            className="hidden md:block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Sign Up
-          </Link>
-          <Link
-            href="#login"
-            className="hidden md:block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Login
-          </Link>
+          {isLoading ? (
+            <div className="h-4 w-20 bg-muted animate-pulse rounded" />
+          ) : user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="hidden md:flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground">
+                  <User className="h-4 w-4" />
+                  {user.name}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link
+                href="/signup"
+                className="hidden md:block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Sign Up
+              </Link>
+              <Link
+                href="/login"
+                className="hidden md:block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Login
+              </Link>
+            </>
+          )}
           <Button
             size="sm"
             className="group hidden lg:flex items-center gap-2 bg-foreground px-4 text-background hover:bg-foreground/90"
