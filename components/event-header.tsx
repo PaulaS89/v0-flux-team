@@ -63,8 +63,8 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
-        <nav className="hidden md:flex items-center gap-8 ml-6">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-12">
+        <nav className="hidden md:flex items-center gap-8">
           <Link
             href="#schedule"
             className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
@@ -94,7 +94,7 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
           </span>
         </Link>
 
-        <div className="flex items-center gap-6 mr-6">
+        <div className="flex items-center gap-6">
           {isLoading ? (
             <div className="h-4 w-20 bg-muted animate-pulse rounded" />
           ) : user ? (
