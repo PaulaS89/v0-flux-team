@@ -162,14 +162,14 @@ function ScheduleCard({ item, index, isEven }: { item: ScheduleItem; index: numb
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Add a staggered delay based on index
+          // Faster staggered delay
           setTimeout(() => {
             setIsVisible(true);
-          }, index * 100);
+          }, index * 60);
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
     );
 
     if (cardRef.current) {
@@ -182,18 +182,17 @@ function ScheduleCard({ item, index, isEven }: { item: ScheduleItem; index: numb
   return (
     <div
       ref={cardRef}
-      className={`relative flex items-start gap-6 transition-all duration-700 ease-out ${
+      className={`relative flex items-start gap-6 transition-all duration-400 ease-out ${
         isEven ? "md:flex-row" : "md:flex-row-reverse"
       } ${
         isVisible 
           ? "opacity-100 translate-y-0" 
-          : "opacity-0 translate-y-8"
+          : "opacity-0 translate-y-4"
       }`}
-      style={{ transitionDelay: `${index * 50}ms` }}
     >
       {/* Timeline dot */}
       <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10 top-5">
-        <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
+        <div className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
           isVisible ? "bg-primary scale-100" : "bg-muted-foreground/50 scale-0"
         }`} />
       </div>
@@ -223,7 +222,7 @@ function ScheduleCard({ item, index, isEven }: { item: ScheduleItem; index: numb
           </div>
           
           {/* Title */}
-          <h3 className="text-base font-medium text-foreground mb-1" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-base font-medium text-foreground mb-1">
             {item.title}
           </h3>
           
@@ -269,10 +268,10 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
               </div>
             </div>
           )}
-          <h2 className="mb-4 text-4xl md:text-6xl font-medium tracking-tight text-foreground" style={{ fontFamily: 'var(--font-display)' }}>
-            Agenda
+          <h2 className="mb-4 text-5xl md:text-7xl font-medium tracking-[0.02em] text-foreground">
+            AGENDA
           </h2>
-          <p className="text-muted-foreground text-lg italic">
+          <p className="text-muted-foreground text-sm md:text-base tracking-wide">
             One day. Big ideas. The future of human-AI interaction.
           </p>
         </div>
