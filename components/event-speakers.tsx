@@ -18,6 +18,7 @@ interface Speaker {
 // Specific speaker images by name
 const speakerImagesByName: Record<string, string> = {
   "James Lui": "/speakers/james-lui.jpg",
+  "Nathan Jones": "/speakers/nathan-jones.jpg",
 };
 
 // Name overrides for speakers (to correct Contentful data)
