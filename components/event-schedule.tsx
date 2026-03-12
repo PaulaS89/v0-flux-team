@@ -123,15 +123,15 @@ interface EventScheduleProps {
 function getTagStyle(type: ScheduleItem["type"]) {
   switch (type) {
     case "keynote":
-      return "bg-amber-500/20 text-amber-300 border-amber-500/30";
+      return "bg-amber-500/20 dark:text-amber-300 text-amber-700 border-amber-500/30";
     case "talk":
-      return "bg-cyan-500/20 text-cyan-300 border-cyan-500/30";
+      return "bg-cyan-500/20 dark:text-cyan-300 text-cyan-700 border-cyan-500/30";
     case "break":
-      return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+      return "bg-emerald-500/20 dark:text-emerald-300 text-emerald-700 border-emerald-500/30";
     case "intro":
-      return "bg-violet-500/20 text-violet-300 border-violet-500/30";
+      return "bg-violet-500/20 dark:text-violet-300 text-violet-700 border-violet-500/30";
     case "afterparty":
-      return "bg-pink-500/20 text-pink-300 border-pink-500/30";
+      return "bg-pink-500/20 dark:text-pink-300 text-pink-700 border-pink-500/30";
     default:
       return "bg-muted text-muted-foreground border-border";
   }
