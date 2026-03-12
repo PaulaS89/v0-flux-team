@@ -124,7 +124,7 @@ export function EventHero({ data }: EventHeroProps) {
           )}
           <h1 className="leading-none">
             <span 
-              className="block text-5xl md:text-6xl lg:text-7xl xl:text-[7rem] font-medium tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
+              className="block text-5xl md:text-6xl lg:text-7xl xl:text-[7rem] font-bold tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
               style={{
                 backgroundSize: '200% 100%',
                 backgroundPosition: '0% 0%',
