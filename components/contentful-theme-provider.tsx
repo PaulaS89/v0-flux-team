@@ -8,7 +8,7 @@ interface ContentfulThemeProviderProps {
   theme: Theme | null;
 }
 
-// Light mode colors
+// Light mode colors (default - purple highlight)
 const lightModeColors = {
   background: "oklch(0.98 0 0)",
   foreground: "oklch(0.12 0 0)",
@@ -17,6 +17,13 @@ const lightModeColors = {
   mutedForeground: "#525252",
   border: "oklch(0.85 0 0)",
   primary: "oklch(0.55 0.25 300)", // Purple highlight color
+  primaryForeground: "oklch(0.98 0 0)",
+};
+
+// Light mode colors for Ocean Blue theme (red highlight from brand)
+const lightModeColorsOceanBlue = {
+  ...lightModeColors,
+  primary: "#8B4513", // Muted burgundy/terracotta red
   primaryForeground: "oklch(0.98 0 0)",
 };
 
@@ -85,30 +92,34 @@ export function ContentfulThemeProvider({ children, theme }: ContentfulThemeProv
     
     // If light mode, apply light colors
     if (isLightMode) {
-      root.style.setProperty("--background", lightModeColors.background);
-      root.style.setProperty("--foreground", lightModeColors.foreground);
-      root.style.setProperty("--card", lightModeColors.card);
-      root.style.setProperty("--card-foreground", lightModeColors.foreground);
-      root.style.setProperty("--popover", lightModeColors.background);
-      root.style.setProperty("--popover-foreground", lightModeColors.foreground);
-      root.style.setProperty("--muted", lightModeColors.muted);
-      root.style.setProperty("--muted-foreground", lightModeColors.mutedForeground);
-      root.style.setProperty("--border", lightModeColors.border);
-      root.style.setProperty("--input", lightModeColors.muted);
-      root.style.setProperty("--primary", lightModeColors.primary);
-      root.style.setProperty("--primary-foreground", lightModeColors.primaryForeground);
-      root.style.setProperty("--secondary", lightModeColors.muted);
-      root.style.setProperty("--secondary-foreground", lightModeColors.foreground);
-      root.style.setProperty("--accent", lightModeColors.muted);
-      root.style.setProperty("--accent-foreground", lightModeColors.foreground);
-      root.style.setProperty("--sidebar", lightModeColors.card);
-      root.style.setProperty("--sidebar-foreground", lightModeColors.foreground);
-      root.style.setProperty("--sidebar-border", lightModeColors.border);
-      root.style.setProperty("--sidebar-primary", lightModeColors.primary);
-      root.style.setProperty("--sidebar-primary-foreground", lightModeColors.primaryForeground);
-      root.style.setProperty("--sidebar-accent", lightModeColors.muted);
-      root.style.setProperty("--sidebar-accent-foreground", lightModeColors.foreground);
-      root.style.setProperty("--ring", lightModeColors.border);
+      // Check if ocean blue theme is active
+      const isOceanBlue = theme?.name?.toLowerCase().includes('ocean');
+      const colors = isOceanBlue ? lightModeColorsOceanBlue : lightModeColors;
+      
+      root.style.setProperty("--background", colors.background);
+      root.style.setProperty("--foreground", colors.foreground);
+      root.style.setProperty("--card", colors.card);
+      root.style.setProperty("--card-foreground", colors.foreground);
+      root.style.setProperty("--popover", colors.background);
+      root.style.setProperty("--popover-foreground", colors.foreground);
+      root.style.setProperty("--muted", colors.muted);
+      root.style.setProperty("--muted-foreground", colors.mutedForeground);
+      root.style.setProperty("--border", colors.border);
+      root.style.setProperty("--input", colors.muted);
+      root.style.setProperty("--primary", colors.primary);
+      root.style.setProperty("--primary-foreground", colors.primaryForeground);
+      root.style.setProperty("--secondary", colors.muted);
+      root.style.setProperty("--secondary-foreground", colors.foreground);
+      root.style.setProperty("--accent", colors.muted);
+      root.style.setProperty("--accent-foreground", colors.foreground);
+      root.style.setProperty("--sidebar", colors.card);
+      root.style.setProperty("--sidebar-foreground", colors.foreground);
+      root.style.setProperty("--sidebar-border", colors.border);
+      root.style.setProperty("--sidebar-primary", colors.primary);
+      root.style.setProperty("--sidebar-primary-foreground", colors.primaryForeground);
+      root.style.setProperty("--sidebar-accent", colors.muted);
+      root.style.setProperty("--sidebar-accent-foreground", colors.foreground);
+      root.style.setProperty("--ring", colors.border);
       return;
     }
     
