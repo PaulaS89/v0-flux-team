@@ -1,12 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Theme } from "@/lib/contentful";
 
 interface ContentfulThemeProviderProps {
   children: React.ReactNode;
   theme: Theme | null;
 }
+
+// Light mode colors
+const lightModeColors = {
+  background: "oklch(0.98 0 0)",
+  foreground: "oklch(0.12 0 0)",
+  card: "oklch(0.96 0 0)",
+  muted: "oklch(0.92 0 0)",
+  mutedForeground: "#525252",
+  border: "oklch(0.85 0 0)",
+  primary: "oklch(0.12 0 0)",
+  primaryForeground: "oklch(0.98 0 0)",
+};
 
 // Helper function to adjust lightness for both OKLCH and HEX colors
 function adjustLightness(color: string, amount: number): string {
@@ -39,10 +51,69 @@ function adjustLightness(color: string, amount: number): string {
 }
 
 export function ContentfulThemeProvider({ children, theme }: ContentfulThemeProviderProps) {
-  useEffect(() => {
-    if (!theme) return;
+  const [isLightMode, setIsLightMode] = useState(false);
 
+  // Listen for light/dark mode changes
+  useEffect(() => {
     const root = document.documentElement;
+    
+    const checkMode = () => {
+      const hasLight = root.classList.contains("light");
+      const hasDark = root.classList.contains("dark");
+      setIsLightMode(hasLight && !hasDark);
+    };
+    
+    // Check initial state
+    checkMode();
+    
+    // Watch for class changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          checkMode();
+        }
+      });
+    });
+    
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    
+    // If light mode, apply light colors
+    if (isLightMode) {
+      root.style.setProperty("--background", lightModeColors.background);
+      root.style.setProperty("--foreground", lightModeColors.foreground);
+      root.style.setProperty("--card", lightModeColors.card);
+      root.style.setProperty("--card-foreground", lightModeColors.foreground);
+      root.style.setProperty("--popover", lightModeColors.background);
+      root.style.setProperty("--popover-foreground", lightModeColors.foreground);
+      root.style.setProperty("--muted", lightModeColors.muted);
+      root.style.setProperty("--muted-foreground", lightModeColors.mutedForeground);
+      root.style.setProperty("--border", lightModeColors.border);
+      root.style.setProperty("--input", lightModeColors.muted);
+      root.style.setProperty("--primary", lightModeColors.primary);
+      root.style.setProperty("--primary-foreground", lightModeColors.primaryForeground);
+      root.style.setProperty("--secondary", lightModeColors.muted);
+      root.style.setProperty("--secondary-foreground", lightModeColors.foreground);
+      root.style.setProperty("--accent", lightModeColors.muted);
+      root.style.setProperty("--accent-foreground", lightModeColors.foreground);
+      root.style.setProperty("--sidebar", lightModeColors.card);
+      root.style.setProperty("--sidebar-foreground", lightModeColors.foreground);
+      root.style.setProperty("--sidebar-border", lightModeColors.border);
+      root.style.setProperty("--sidebar-primary", lightModeColors.primary);
+      root.style.setProperty("--sidebar-primary-foreground", lightModeColors.primaryForeground);
+      root.style.setProperty("--sidebar-accent", lightModeColors.muted);
+      root.style.setProperty("--sidebar-accent-foreground", lightModeColors.foreground);
+      root.style.setProperty("--ring", lightModeColors.border);
+      return;
+    }
+    
+    // Dark mode with Contentful theme
+    if (!theme) return;
 
     // Apply background colors
     if (theme.backgroundColor) {
@@ -101,7 +172,7 @@ export function ContentfulThemeProvider({ children, theme }: ContentfulThemeProv
       ];
       props.forEach(prop => root.style.removeProperty(prop));
     };
-  }, [theme]);
+  }, [theme, isLightMode]);
 
   return <>{children}</>;
 }
