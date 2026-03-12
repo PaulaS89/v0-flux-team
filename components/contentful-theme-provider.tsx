@@ -23,7 +23,7 @@ const lightModeColors = {
 // Light mode colors for Ocean Blue theme (red highlight from brand)
 const lightModeColorsOceanBlue = {
   ...lightModeColors,
-  primary: "#8B4513", // Muted burgundy/terracotta red
+  primary: "#8B2942", // Burgundy red
   primaryForeground: "oklch(0.98 0 0)",
 };
 
