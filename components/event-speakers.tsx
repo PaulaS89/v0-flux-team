@@ -18,6 +18,7 @@ interface Speaker {
 // Specific speaker images by name
 const speakerImagesByName: Record<string, string> = {
   "James Lui": "/speakers/james-lui.jpg",
+  "Nathan Jones": "/speakers/nathan-jones.jpg",
 };
 
 // Name overrides for speakers (to correct Contentful data)
@@ -35,15 +36,15 @@ const fallbackImages = [
   "/speakers/speaker-man-3.jpg",
 ];
 
-// Get image for a speaker - first use Contentful image, then check by name, then use fallback based on index
+// Get image for a speaker - prioritize name-based mapping for overridden speakers, then Contentful, then fallback
 function getSpeakerImage(name: string, index: number, contentfulImage?: string | null): string {
-  // First priority: use image from Contentful if available
-  if (contentfulImage && contentfulImage.trim() !== "") {
-    return contentfulImage;
-  }
-  // Second priority: use name-based mapping for specific speakers
+  // First priority: use name-based mapping for specific speakers (important for overridden names)
   if (speakerImagesByName[name]) {
     return speakerImagesByName[name];
+  }
+  // Second priority: use image from Contentful if available
+  if (contentfulImage && contentfulImage.trim() !== "") {
+    return contentfulImage;
   }
   // Third priority: use index-based fallback
   return fallbackImages[index % fallbackImages.length];
