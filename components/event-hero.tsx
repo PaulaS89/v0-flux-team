@@ -134,10 +134,10 @@ export function EventHero({ data }: EventHeroProps) {
             </span>
           </h1>
           <div className="mt-6" style={{ marginLeft: '4px' }}>
-            <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground/70 mb-1">
+            <p className="text-[10px] font-medium dark:font-medium font-semibold uppercase tracking-[0.3em] text-muted-foreground/70 dark:text-muted-foreground/70 text-muted-foreground mb-1">
               {tagline}
             </p>
-            <p className="text-sm md:text-base font-light tracking-wide text-muted-foreground">
+            <p className="text-sm md:text-base dark:font-light font-normal tracking-wide text-muted-foreground">
               {subtitle}
             </p>
           </div>
