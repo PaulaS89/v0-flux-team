@@ -41,14 +41,19 @@ export function ThemeToggle() {
 
   return (
     <button
-      onClick={toggleTheme}
-      className="flex items-center justify-center w-8 h-8 rounded-full border border-border hover:border-foreground transition-colors"
+      type="button"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleTheme();
+      }}
+      className="flex items-center justify-center w-8 h-8 rounded-full border border-border hover:border-foreground transition-colors cursor-pointer relative z-10"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       {isDark ? (
-        <Sun className="h-4 w-4 text-muted-foreground" />
+        <Sun className="h-4 w-4 text-muted-foreground pointer-events-none" />
       ) : (
-        <Moon className="h-4 w-4 text-muted-foreground" />
+        <Moon className="h-4 w-4 text-muted-foreground pointer-events-none" />
       )}
     </button>
   );
