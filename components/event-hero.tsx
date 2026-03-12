@@ -53,7 +53,7 @@ export function EventHero({ data }: EventHeroProps) {
   
   // Theme-specific taglines
   const tagline = isOceanBlueTheme ? "Future · Live · Underwater" : "Future · LLMs · UX";
-  const subtitle = isOceanBlueTheme ? "Exploring the Digital Ecosystem" : "Designing for the Age of AI";
+  const subtitle = isOceanBlueTheme ? "Exploring Underwater Ecosystems" : "Designing for the Age of AI";
   
   // Parse title for line breaks (from Contentful or fallback)
   const titleLines = heroData.title.split("\n");
