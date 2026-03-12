@@ -159,7 +159,7 @@ export function EventChatbot() {
       {/* Tab-style Chat Trigger - vertical tab on right edge */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed right-0 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 bg-primary text-primary-foreground shadow-lg transition-all hover:pr-6 ${
+        className={`fixed right-0 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 dark:bg-primary dark:text-primary-foreground bg-foreground text-background shadow-lg transition-all hover:pr-6 ${
           isOpen ? 'pr-4' : 'pr-4'
         }`}
         style={{
