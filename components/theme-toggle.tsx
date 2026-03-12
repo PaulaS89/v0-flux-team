@@ -23,9 +23,6 @@ export function ThemeToggle() {
     const newIsDark = !isDark;
     setIsDark(newIsDark);
     
-    console.log("[v0] toggleTheme called, switching to:", newIsDark ? "dark" : "light");
-    console.log("[v0] classList before:", document.documentElement.classList.toString());
-    
     if (newIsDark) {
       document.documentElement.classList.remove("light");
       document.documentElement.classList.add("dark");
@@ -35,8 +32,6 @@ export function ThemeToggle() {
       document.documentElement.classList.add("light");
       localStorage.setItem("theme", "light");
     }
-    
-    console.log("[v0] classList after:", document.documentElement.classList.toString());
   };
 
   return (
