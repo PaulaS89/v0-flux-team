@@ -155,7 +155,7 @@ export function EventsSlider() {
                   </div>
                 )}
                 {event.is_featured && (
-                  <span className="absolute top-3 left-3 bg-[#86BC25] text-background text-[10px] font-medium uppercase tracking-wider px-2 py-1 rounded-full">
+                  <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-[10px] font-medium uppercase tracking-wider px-2 py-1 rounded-full">
                     Featured
                   </span>
                 )}
@@ -169,11 +169,11 @@ export function EventsSlider() {
                 </p>
                 <div className="space-y-1.5 mb-3">
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Calendar className="h-3 w-3 text-[#86BC25]" />
+                    <Calendar className="h-3 w-3 text-primary" />
                     <span>{formatDate(event.event_date)}</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <MapPin className="h-3 w-3 text-[#86BC25]" />
+                    <MapPin className="h-3 w-3 text-primary" />
                     <span className="line-clamp-1">{event.location}</span>
                   </div>
                 </div>
@@ -183,7 +183,7 @@ export function EventsSlider() {
                   </span>
                   <Link
                     href={`/tickets?event=${event.id}`}
-                    className="text-[10px] font-medium uppercase tracking-wider text-[#86BC25] hover:text-[#86BC25]/70 transition-colors inline-flex items-center gap-1"
+                    className="text-[10px] font-medium uppercase tracking-wider text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1"
                   >
                     Tickets
                     <ArrowRight className="h-3 w-3" />

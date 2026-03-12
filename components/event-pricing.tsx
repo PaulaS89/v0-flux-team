@@ -76,14 +76,14 @@ export function EventPricing({ pricing }: EventPricingProps) {
                 key={tier.id}
                 className={`group relative flex flex-col h-full rounded-xl border p-5 transition-all duration-300 ${
                   isHighlighted 
-                    ? "border-[#86BC25]/50 bg-[#86BC25]/5 hover:border-[#86BC25]" 
+                    ? "border-primary/50 bg-primary/5 hover:border-primary" 
                     : "border-muted-foreground/20 bg-card/40 backdrop-blur-md hover:border-muted-foreground/40 hover:bg-card/60"
                 }`}
               >
                 {/* Badge - only for highlighted tier */}
                 {isHighlighted && (
                   <div className="absolute -top-3 left-4">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#86BC25] px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-background">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-primary-foreground">
                       <Sparkles className="h-3 w-3" />
                       Recommended
                     </span>
@@ -91,13 +91,13 @@ export function EventPricing({ pricing }: EventPricingProps) {
                 )}
 
                 {/* Tier name */}
-                <h3 className={`text-sm font-medium uppercase tracking-wide mb-3 ${isHighlighted ? "mt-2 text-[#86BC25]" : "text-foreground"}`}>
+                <h3 className={`text-sm font-medium uppercase tracking-wide mb-3 ${isHighlighted ? "mt-2 text-primary" : "text-foreground"}`}>
                   {tier.name}
                 </h3>
 
                 {/* Price */}
                 <div className="mb-2">
-                  <span className={`text-3xl font-semibold ${isHighlighted ? "text-[#86BC25]" : "text-foreground"}`}>
+                  <span className={`text-3xl font-semibold ${isHighlighted ? "text-primary" : "text-foreground"}`}>
                     {tier.price}
                   </span>
                 </div>
@@ -114,7 +114,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
                   <ul className="flex-grow space-y-2 mb-5">
                     {tier.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                        <Check className="h-3.5 w-3.5 mt-0.5 shrink-0 text-[#86BC25]" />
+                        <Check className="h-3.5 w-3.5 mt-0.5 shrink-0 text-primary" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -126,7 +126,7 @@ export function EventPricing({ pricing }: EventPricingProps) {
                   <Button 
                     className={`w-full group/btn flex items-center justify-center gap-2 transition-all h-9 ${
                       isHighlighted 
-                        ? "bg-[#86BC25] text-background hover:bg-[#86BC25]/90" 
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90" 
                         : "border border-muted-foreground/30 bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
                     }`}
                     asChild
