@@ -59,10 +59,10 @@ export function EventHero({ data }: EventHeroProps) {
   const titleLines = heroData.title.split("\n");
 
   return (
-    <section className="relative flex min-h-screen flex-col overflow-hidden px-8 md:px-16 lg:px-24 pt-14">
+    <section className="relative flex min-h-screen flex-col overflow-hidden px-8 md:px-16 lg:px-24 pt-14 bg-background">
       {/* Background Image from Contentful - centered with morphing animation for Deloitte theme */}
       {heroData.backgroundImageUrl && (
-        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
+        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center dark:opacity-100 opacity-90 dark:invert-0 invert dark:mix-blend-normal mix-blend-multiply">
           <div className={`relative h-[600px] w-[600px] md:h-[750px] md:w-[750px] lg:h-[900px] lg:w-[900px] ${isDeloitteTheme ? 'animate-morph' : ''}`}>
             <Image
               src={heroData.backgroundImageUrl}
