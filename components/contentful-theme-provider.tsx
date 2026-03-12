@@ -16,7 +16,7 @@ const lightModeColors = {
   muted: "oklch(0.92 0 0)",
   mutedForeground: "#525252",
   border: "oklch(0.85 0 0)",
-  primary: "oklch(0.12 0 0)",
+  primary: "oklch(0.55 0.25 300)", // Purple highlight color
   primaryForeground: "oklch(0.98 0 0)",
 };
 
