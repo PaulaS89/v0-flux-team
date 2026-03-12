@@ -1,151 +1,116 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 interface ScheduleItem {
   time: string;
   title: string;
   speaker: string;
-  type: "keynote" | "talk" | "break";
+  type: "keynote" | "talk" | "break" | "intro" | "afterparty";
 }
 
-// Default fallback schedule (using Contentful speaker names)
+// Default fallback schedule
 const defaultSchedule: ScheduleItem[] = [
   {
-    time: "08:30",
-    title: "Registration & Networking Breakfast",
-    speaker: "",
-    type: "break",
-  },
-  {
     time: "09:00",
-    title: "Welcome & Opening Remarks",
+    title: "Welcome to FLUX",
     speaker: "",
-    type: "break",
+    type: "intro",
   },
   {
-    time: "09:15",
-    title: "Keynote: The Future of Digital Experiences",
+    time: "09:30",
+    title: "When Machines Dream: Reimagining UX for the AI Era",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
-    time: "10:00",
-    title: "Panel Discussion: AI, Personalization & Trust",
+    time: "10:30",
+    title: "Beyond the Prompt: Crafting Intuitive LLM Interfaces",
     speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
   {
-    time: "10:45",
-    title: "Coffee Break",
-    speaker: "",
-    type: "break",
-  },
-  {
-    time: "11:00",
-    title: "Deep Dive: Designing Human-Centered Digital Journeys",
-    speaker: "Elena Rodriguez",
-    type: "talk",
-  },
-  {
-    time: "11:45",
-    title: "Case Studies: Transformations Across Industries",
-    speaker: "James Liu",
-    type: "talk",
-  },
-  {
-    time: "12:30",
+    time: "12:00",
     title: "Networking Lunch",
     speaker: "",
     type: "break",
   },
   {
     time: "13:30",
-    title: "Breakout Sessions",
-    speaker: "Experience Platforms / AR & VR / Responsible AI",
+    title: "The Empathy Algorithm: Human-Centered AI Design",
+    speaker: "Elena Rodriguez",
     type: "talk",
   },
   {
-    time: "14:15",
-    title: "Closing Insights & Q&A",
+    time: "14:30",
+    title: "Hands-On: Prototyping Conversational Experiences",
+    speaker: "Marcus Weber",
+    type: "talk",
+  },
+  {
+    time: "16:00",
+    title: "What Comes After the Chatbot?",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
-    time: "15:00",
-    title: "Informal Networking",
+    time: "17:00",
+    title: "Drinks & Afterparty",
     speaker: "",
-    type: "break",
+    type: "afterparty",
   },
 ];
 
 // Ocean theme schedule content
 const oceanSchedule: ScheduleItem[] = [
   {
-    time: "08:30",
-    title: "Welcome Reception & Blue Ocean Breakfast",
-    speaker: "",
-    type: "break",
-  },
-  {
     time: "09:00",
-    title: "Opening Ceremony: Navigating Digital Waters",
+    title: "Welcome to FLUX",
     speaker: "",
-    type: "break",
+    type: "intro",
   },
   {
-    time: "09:15",
-    title: "Keynote: Riding the Wave of Digital Transformation",
+    time: "09:30",
+    title: "Navigating the AI Tide: UX in Uncharted Waters",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
-    time: "10:00",
-    title: "Panel: Deep Dive into AI & Machine Learning",
+    time: "10:30",
+    title: "Deep Currents: Designing LLM Flows That Feel Natural",
     speaker: "James Liu, Elena Rodriguez, Marcus Weber",
     type: "talk",
   },
   {
-    time: "10:45",
-    title: "Refreshment Break: Ocean Breeze",
-    speaker: "",
-    type: "break",
-  },
-  {
-    time: "11:00",
-    title: "Exploring Uncharted Waters: New Market Strategies",
-    speaker: "Elena Rodriguez",
-    type: "talk",
-  },
-  {
-    time: "11:45",
-    title: "Case Studies: Sailing Through Industry Disruption",
-    speaker: "James Liu",
-    type: "talk",
-  },
-  {
-    time: "12:30",
+    time: "12:00",
     title: "Seaside Networking Lunch",
     speaker: "",
     type: "break",
   },
   {
     time: "13:30",
-    title: "Breakout Sessions: Currents of Innovation",
-    speaker: "Cloud Computing / Data Streams / Sustainable Tech",
+    title: "Surface Tension: Balancing AI Power with User Trust",
+    speaker: "Elena Rodriguez",
     type: "talk",
   },
   {
-    time: "14:15",
-    title: "Closing Keynote: Charting the Course Ahead",
+    time: "14:30",
+    title: "Hands-On: Building Adaptive AI Interfaces",
+    speaker: "Marcus Weber",
+    type: "talk",
+  },
+  {
+    time: "16:00",
+    title: "The Next Wave: Where AI UX Is Headed",
     speaker: "Sarah Chen",
     type: "keynote",
   },
   {
-    time: "15:00",
-    title: "Sunset Networking & Farewell",
+    time: "17:00",
+    title: "Sunset Drinks & Afterparty",
     speaker: "",
-    type: "break",
+    type: "afterparty",
   },
 ];
 
@@ -158,11 +123,15 @@ interface EventScheduleProps {
 function getTagStyle(type: ScheduleItem["type"]) {
   switch (type) {
     case "keynote":
-      return "bg-amber-500/20 text-amber-300 border-amber-500/30";
+      return "bg-amber-500/20 dark:text-amber-300 text-amber-700 border-amber-500/30";
     case "talk":
-      return "bg-cyan-500/20 text-cyan-300 border-cyan-500/30";
+      return "bg-cyan-500/20 dark:text-cyan-300 text-cyan-700 border-cyan-500/30";
     case "break":
-      return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+      return "bg-emerald-500/20 dark:text-emerald-300 text-emerald-700 border-emerald-500/30";
+    case "intro":
+      return "bg-violet-500/20 dark:text-violet-300 text-violet-700 border-violet-500/30";
+    case "afterparty":
+      return "bg-pink-500/20 dark:text-pink-300 text-pink-700 border-pink-500/30";
     default:
       return "bg-muted text-muted-foreground border-border";
   }
@@ -176,9 +145,100 @@ function getTagLabel(type: ScheduleItem["type"]) {
       return "Talk";
     case "break":
       return "Break";
+    case "intro":
+      return "Intro";
+    case "afterparty":
+      return "Afterparty";
     default:
       return type;
   }
+}
+
+function ScheduleCard({ item, index, isEven }: { item: ScheduleItem; index: number; isEven: boolean }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Faster staggered delay
+          setTimeout(() => {
+            setIsVisible(true);
+          }, index * 60);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [index]);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`relative flex items-start gap-6 transition-all duration-400 ease-out ${
+        isEven ? "md:flex-row" : "md:flex-row-reverse"
+      } ${
+        isVisible 
+          ? "opacity-100 translate-y-0" 
+          : "opacity-0 translate-y-4"
+      }`}
+    >
+      {/* Timeline dot */}
+      <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10 top-5">
+        <div className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+          isVisible ? "bg-primary scale-100" : "bg-muted-foreground/50 scale-0"
+        }`} />
+      </div>
+
+      {/* Spacer for mobile */}
+      <div className="w-6 md:hidden shrink-0" />
+
+      {/* Card */}
+      <div
+        className={`flex-1 md:w-[calc(50%-2rem)] ${
+          isEven ? "md:pr-8" : "md:pl-8"
+        }`}
+      >
+        <div className="relative rounded-xl border border-muted-foreground/20 bg-card/40 backdrop-blur-md p-4 transition-all duration-300 hover:border-muted-foreground/40 hover:bg-card/60">
+          {/* Time & Type */}
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-mono text-sm text-primary">
+              {item.time}
+            </span>
+            <span
+              className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ${getTagStyle(
+                item.type
+              )}`}
+            >
+              {getTagLabel(item.type)}
+            </span>
+          </div>
+          
+          {/* Title */}
+          <h3 className="text-base font-medium text-foreground mb-1">
+            {item.title}
+          </h3>
+          
+          {/* Speaker */}
+          {item.speaker && (
+            <p className="text-sm text-muted-foreground">
+              {item.speaker}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Empty space for alternating layout on desktop */}
+      <div className="hidden md:block flex-1 md:w-[calc(50%-2rem)]" />
+    </div>
+  );
 }
 
 export function EventSchedule({ items, headerImageUrl, themeName }: EventScheduleProps) {
@@ -188,7 +248,7 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
   const schedule = items && items.length > 0 ? items : fallbackSchedule;
 
   return (
-    <section id="schedule" className="relative bg-background px-6 py-16 overflow-hidden">
+    <section id="schedule" className="relative bg-background px-8 md:px-16 lg:px-24 py-16 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       
@@ -208,85 +268,33 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
               </div>
             </div>
           )}
-          <h2 className="mb-4 text-4xl font-light tracking-tight md:text-5xl text-foreground">
-            Agenda
+          <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
+            AGENDA
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Explore the schedule for the day
+          <p className="text-muted-foreground text-sm md:text-base tracking-wide">
+            {isOceanTheme 
+              ? "One day. Deep dives. Exploring underwater ecosystems." 
+              : "One day. Big ideas. The future of human-AI interaction."}
           </p>
         </div>
 
         {/* Timeline */}
         <div className="relative">
           {/* Vertical timeline line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-border to-transparent md:-translate-x-px" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-foreground/20 md:-translate-x-px" />
 
           {/* Schedule Items */}
-          <div className="space-y-8">
+          <div className="space-y-4">
             {schedule.map((item, index) => {
               const isEven = index % 2 === 0;
               
               return (
-                <div
-                  key={index}
-                  className={`relative flex items-start gap-8 ${
-                    isEven ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
-                >
-                  {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10">
-                    <div className="group relative">
-                      <div className="w-3 h-3 rounded-full bg-border transition-all duration-300 group-hover:bg-cyan-400 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.5)]" />
-                    </div>
-                  </div>
-
-                  {/* Spacer for mobile */}
-                  <div className="w-8 md:hidden shrink-0" />
-
-                  {/* Card */}
-                  <div
-                    className={`flex-1 md:w-[calc(50%-2rem)] ${
-                      isEven ? "md:pr-12" : "md:pl-12"
-                    }`}
-                  >
-                    <div className="group relative">
-                      {/* Glassmorphism card */}
-                      <div className="relative rounded-2xl border border-border/50 bg-card/40 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:shadow-cyan-950/20">
-                        {/* Time badge */}
-                        <div className="mb-3 flex items-center justify-between gap-3">
-                          <span className="font-mono text-sm text-cyan-400">
-                            {item.time}
-                          </span>
-                          <span
-                            className={`rounded-full border px-3 py-1 text-[10px] font-medium uppercase tracking-wider ${getTagStyle(
-                              item.type
-                            )}`}
-                          >
-                            {getTagLabel(item.type)}
-                          </span>
-                        </div>
-
-                        {/* Title */}
-                        <h3 className="mb-2 text-lg font-medium text-foreground leading-snug">
-                          {item.title}
-                        </h3>
-
-                        {/* Speaker */}
-                        {item.speaker && (
-                          <p className="text-sm text-muted-foreground">
-                            {item.speaker}
-                          </p>
-                        )}
-
-                        {/* Subtle glow on hover */}
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Empty space for alternating layout on desktop */}
-                  <div className="hidden md:block flex-1 md:w-[calc(50%-2rem)]" />
-                </div>
+                <ScheduleCard 
+                  key={index} 
+                  item={item} 
+                  index={index} 
+                  isEven={isEven} 
+                />
               );
             })}
           </div>

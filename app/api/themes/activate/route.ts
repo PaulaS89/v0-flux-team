@@ -5,6 +5,30 @@ const CONTENTFUL_SPACE_ID = process.env.CONTENTFUL_SPACE_ID!;
 const CONTENTFUL_MANAGEMENT_TOKEN = process.env.CONTENTFUL_MANAGEMENT_TOKEN!;
 const CONTENTFUL_ENVIRONMENT = "master";
 
+// Helper to wait
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Wrapper for API calls with rate limit retry
+async function withRateLimitRetry<T>(
+  fn: () => Promise<T>,
+  maxRetries = 3,
+  baseDelay = 1000
+): Promise<T> {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const result = await fn();
+    // Check if it's a rate limit error
+    if ((result as { sys?: { type?: string; id?: string } })?.sys?.id === "RateLimitExceeded") {
+      if (attempt < maxRetries - 1) {
+        const waitTime = baseDelay * (attempt + 1);
+        await delay(waitTime);
+        continue;
+      }
+    }
+    return result;
+  }
+  return fn(); // Final attempt
+}
+
 async function getEntry(entryId: string) {
   const response = await fetch(
     `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${entryId}`,
@@ -60,6 +84,8 @@ async function getAllThemes() {
   return response.json();
 }
 
+
+
 export async function POST(request: NextRequest) {
   try {
     const { themeId } = await request.json();
@@ -68,8 +94,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "themeId is required" }, { status: 400 });
     }
 
-    // Get all themes
-    const themesResponse = await getAllThemes();
+    // Get all themes with retry
+    const themesResponse = await withRateLimitRetry(() => getAllThemes());
     const themes = themesResponse.items || [];
 
     // Deactivate all themes and activate the selected one
@@ -79,13 +105,30 @@ export async function POST(request: NextRequest) {
 
       // Only update if the state needs to change
       if ((isTarget && !currentIsActive) || (!isTarget && currentIsActive)) {
+        // Get fresh version to avoid version mismatch
+        const freshEntry = await withRateLimitRetry(() => getEntry(theme.sys.id));
+        
+        if (!freshEntry.sys?.version) {
+          console.error("Failed to get entry version:", freshEntry);
+          continue;
+        }
+
         const updatedFields = {
-          ...theme.fields,
+          ...freshEntry.fields,
           isActive: { "en-US": isTarget },
         };
 
-        const updated = await updateEntry(theme.sys.id, theme.sys.version, updatedFields);
-        await publishEntry(theme.sys.id, updated.sys.version);
+        // Small delay before update to avoid rate limits
+        await delay(100);
+        
+        const updated = await withRateLimitRetry(() => 
+          updateEntry(theme.sys.id, freshEntry.sys.version, updatedFields)
+        );
+        
+        if (updated.sys?.version) {
+          await delay(100);
+          await withRateLimitRetry(() => publishEntry(theme.sys.id, updated.sys.version));
+        }
       }
     }
 

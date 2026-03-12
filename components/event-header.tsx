@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, LogOut, User } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -63,8 +64,8 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
-        <nav className="hidden md:flex items-center gap-8">
+      <div className="flex h-14 items-center justify-between px-8 md:px-16 lg:px-24">
+        <nav className="flex items-center gap-8">
           <Link
             href="#schedule"
             className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
@@ -83,6 +84,7 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
           >
             FAQ
           </Link>
+          <ThemeToggle />
         </nav>
 
         <Link href="/" className="absolute left-1/2 -translate-x-1/2">

@@ -1,46 +1,46 @@
 import { Button } from "@/components/ui/button";
 import { PricingTier } from "@/lib/contentful";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 
 const defaultPricing: PricingTier[] = [
   {
     id: "1",
-    name: "Standard Admission",
-    price: "€249",
-    description: "Full access to all sessions",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings", "Networking"],
-    isHighlighted: false,
-    ctaText: "Register",
+    name: "Early Bird",
+    price: "€199",
+    description: "Book early and save - Limited time offer ending soon",
+    features: ["All sessions & keynotes", "Networking lunch & coffee", "Materials & recordings", "Certificate of attendance"],
+    isHighlighted: true,
+    ctaText: "Register Now",
     order: 1,
   },
   {
     id: "2",
-    name: "Deloitte Clients",
-    price: "€149",
-    description: "Exclusive client pricing",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings", "Priority seating", "Executive networking"],
-    isHighlighted: true,
+    name: "Regular",
+    price: "€249",
+    description: "Standard admission for professionals",
+    features: ["All sessions & keynotes", "Networking lunch & coffee", "Materials & recordings", "Certificate of attendance"],
+    isHighlighted: false,
     ctaText: "Register",
     order: 2,
   },
   {
     id: "3",
-    name: "Startups & Scaleups",
-    price: "€99",
-    description: "Special rate for qualifying organizations",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings"],
+    name: "Client Special",
+    price: "€149",
+    description: "Exclusive rate for Deloitte clients",
+    features: ["All sessions & keynotes", "Networking lunch & coffee", "Materials & recordings", "Priority seating"],
     isHighlighted: false,
-    ctaText: "Apply",
+    ctaText: "Register as Client",
     order: 3,
   },
   {
     id: "4",
-    name: "Deloitte Alumni",
-    price: "€179",
-    description: "Alumni network pricing",
-    features: ["Full day access", "Breakfast & lunch", "Session recordings", "Alumni networking"],
+    name: "VIP",
+    price: "€449",
+    description: "Premium experience with exclusive perks",
+    features: ["All sessions & keynotes", "Networking lunch & coffee", "Materials & recordings", "Front row seating", "Speaker dinner access", "1-on-1 AI consultation"],
     isHighlighted: false,
-    ctaText: "Register",
+    ctaText: "Go VIP",
     order: 4,
   },
 ];
@@ -50,97 +50,98 @@ interface EventPricingProps {
 }
 
 export function EventPricing({ pricing }: EventPricingProps) {
-  const pricingTiers = pricing && pricing.length > 0 ? pricing : defaultPricing;
+  // Always use default pricing with the updated tiers (Early Bird, Regular, Client Special, VIP)
+  const pricingTiers = defaultPricing;
 
   return (
-    <section id="pricing" className="relative bg-background px-6 pt-4 pb-16 overflow-hidden">
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
-      
-      <div className="relative mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-16 ml-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            Tickets
-          </p>
-          <h2 className="text-4xl font-light tracking-tight md:text-5xl text-foreground mb-4">
-            Pricing
+    <section id="pricing" className="relative bg-background px-8 md:px-16 lg:px-24 py-16 overflow-hidden">
+      <div className="relative mx-auto max-w-6xl">
+        {/* Header - matching agenda/speakers style */}
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
+            TICKETS
           </h2>
-          <p className="text-muted-foreground max-w-xl">
-            Price includes breakfast, lunch, materials, and access to session recordings.
+          <p className="text-muted-foreground text-sm md:text-base tracking-wide">
+            Secure your spot at FLUX. All tickets include breakfast, lunch, and session recordings.
           </p>
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mx-6">
-          {pricingTiers.map((tier) => (
-            <div
-              key={tier.id}
-              className={`group relative flex flex-col h-full rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm p-6 transition-all duration-300 hover:border-border hover:shadow-lg ${
-                tier.isHighlighted ? "border-primary/50 bg-primary/5" : ""
-              }`}
-            >
-              {/* Highlighted badge */}
-              {tier.isHighlighted && (
-                <div className="absolute -top-3 left-6">
-                  <span className="rounded-full bg-primary px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-primary-foreground">
-                    Recommended
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {pricingTiers.map((tier) => {
+            const isHighlighted = tier.isHighlighted;
+            
+            return (
+              <div
+                key={tier.id}
+                className={`group relative flex flex-col h-full rounded-xl border p-5 transition-all duration-300 ${
+                  isHighlighted 
+                    ? "border-primary/50 bg-primary/5 hover:border-primary" 
+                    : "border-muted-foreground/20 bg-card/40 backdrop-blur-md hover:border-muted-foreground/40 hover:bg-card/60"
+                }`}
+              >
+                {/* Badge - only for highlighted tier */}
+                {isHighlighted && (
+                  <div className="absolute -top-3 left-4">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-primary-foreground">
+                      <Sparkles className="h-3 w-3" />
+                      Recommended
+                    </span>
+                  </div>
+                )}
+
+                {/* Tier name */}
+                <h3 className={`text-sm font-medium uppercase tracking-wide mb-3 ${isHighlighted ? "mt-2 text-primary" : "text-foreground"}`}>
+                  {tier.name}
+                </h3>
+
+                {/* Price */}
+                <div className="mb-2">
+                  <span className={`text-3xl font-semibold ${isHighlighted ? "text-primary" : "text-foreground"}`}>
+                    {tier.price}
                   </span>
                 </div>
-              )}
 
-              {/* Tier name */}
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
-                {tier.name}
-              </p>
+                {/* Description */}
+                {tier.description && (
+                  <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+                    {tier.description}
+                  </p>
+                )}
 
-              {/* Price */}
-              <div className="mb-4">
-                <span className="text-4xl font-light text-foreground">{tier.price}</span>
+                {/* Features */}
+                {tier.features && tier.features.length > 0 && (
+                  <ul className="flex-grow space-y-2 mb-5">
+                    {tier.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                        <Check className="h-3.5 w-3.5 mt-0.5 shrink-0 text-primary" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* CTA Button */}
+                <div className="mt-auto">
+                  <Button 
+                    className={`w-full group/btn flex items-center justify-center gap-2 transition-all h-9 ${
+                      isHighlighted 
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                        : "border border-muted-foreground/30 bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
+                    }`}
+                    asChild
+                  >
+                    <a href="/tickets">
+                      <span className="text-xs font-medium tracking-wide">
+                        {tier.ctaText || "Register"}
+                      </span>
+                      <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
+                    </a>
+                  </Button>
+                </div>
               </div>
-
-              {/* Description */}
-              {tier.description && (
-                <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">
-                  {tier.description}
-                </p>
-              )}
-
-              {/* Features */}
-              {tier.features && tier.features.length > 0 && (
-                <ul className="flex-grow space-y-2 mb-8">
-                  {tier.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* CTA Button - always at bottom */}
-              <div className="mt-auto">
-                <Button 
-                  className={`w-full group/btn flex items-center justify-center gap-2 border transition-all ${
-                    tier.isHighlighted 
-                      ? "border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground" 
-                      : "border-border bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
-                  }`}
-                  asChild
-                >
-                  <a href="/tickets">
-                    <span className="text-xs font-medium uppercase tracking-[0.15em]">
-                      {tier.ctaText || "Register"}
-                    </span>
-                    <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
-                  </a>
-                </Button>
-              </div>
-
-              {/* Subtle glow on hover */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

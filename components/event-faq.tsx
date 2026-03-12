@@ -8,37 +8,37 @@ interface FaqItem {
   answer: string;
 }
 
-// Default fallback FAQs
+// Default fallback FAQs - limited to 6
 const defaultFaqs: FaqItem[] = [
   {
-    question: "Who should attend?",
+    question: "Who should attend FLUX?",
     answer:
-      "Executives, digital leaders, product owners, CX/UX professionals, and transformation managers.",
+      "FLUX is designed for executives, digital leaders, product owners, CX/UX professionals, and transformation managers looking to understand how AI is reshaping design and user experience.",
   },
   {
-    question: "Is the event in English or German?",
+    question: "What language are the sessions in?",
     answer:
-      "The main sessions are in English; breakout sessions offer English and German options.",
+      "The main sessions and keynotes are conducted in English. Select breakout sessions and workshops offer both English and German options.",
   },
   {
-    question: "Will materials be shared afterward?",
+    question: "Will I receive session recordings?",
     answer:
-      "Yes, all registered participants receive slides, summaries, and session recordings.",
-  },
-  {
-    question: "Is there a dress code?",
-    answer:
-      "Business casual.",
-  },
-  {
-    question: "Can I transfer my ticket?",
-    answer:
-      "Yes, tickets are transferable up to 48 hours before the event.",
+      "Yes, all registered participants receive access to slides, session summaries, and full video recordings within 48 hours of the event.",
   },
   {
     question: "What is included in the ticket price?",
     answer:
-      "Price includes breakfast, lunch, materials, and access to session recordings.",
+      "Your ticket includes full conference access, breakfast, networking lunch, coffee breaks, all materials, and post-event session recordings.",
+  },
+  {
+    question: "Can I transfer or cancel my ticket?",
+    answer:
+      "Tickets are transferable to a colleague up to 48 hours before the event. Cancellations are accepted up to 14 days before for a full refund.",
+  },
+  {
+    question: "Is there parking available?",
+    answer:
+      "Yes, the venue offers underground parking. We also recommend public transport - the venue is a 5-minute walk from the main station.",
   },
 ];
 
@@ -47,32 +47,51 @@ interface EventFAQProps {
 }
 
 export function EventFAQ({ items }: EventFAQProps) {
-  const faqs = items && items.length > 0 ? items : defaultFaqs;
+  // Use provided items or defaults, limit to 6
+  const allFaqs = items && items.length > 0 ? items : defaultFaqs;
+  
+  // Reorder: swap "What is FLUX" to be before "How can I become"
+  const reorderedFaqs = [...allFaqs];
+  const whatIsFluxIndex = reorderedFaqs.findIndex(f => f.question.toLowerCase().includes("what is flux"));
+  const howCanIBecomeIndex = reorderedFaqs.findIndex(f => f.question.toLowerCase().includes("how can i become"));
+  
+  if (whatIsFluxIndex !== -1 && howCanIBecomeIndex !== -1 && whatIsFluxIndex > howCanIBecomeIndex) {
+    // Swap them so "What is FLUX" comes first
+    [reorderedFaqs[whatIsFluxIndex], reorderedFaqs[howCanIBecomeIndex]] = 
+      [reorderedFaqs[howCanIBecomeIndex], reorderedFaqs[whatIsFluxIndex]];
+  }
+  
+  const faqs = reorderedFaqs.slice(0, 6);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-card px-6 py-16">
-      <div className="mx-auto max-w-7xl">
-        {/* Title - aligned with speakers/pricing */}
-        <h2 className="mb-8 ml-6 text-3xl font-light tracking-tight md:text-4xl">
-          FAQ
-        </h2>
+    <section id="faq" className="bg-background px-8 md:px-16 lg:px-24 py-16">
+      <div className="mx-auto max-w-6xl">
+        {/* Header - matching site style */}
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl md:text-4xl font-medium tracking-[0.02em] text-foreground">
+            FAQs
+          </h2>
+          <p className="text-muted-foreground text-sm md:text-base tracking-wide">
+            Everything you need to know about attending FLUX.
+          </p>
+        </div>
 
-        {/* Questions grid - with matching margins */}
-        <div className="mx-6 grid gap-0 md:grid-cols-2">
+        {/* Questions - styled as bordered cards like the rest of the site */}
+        <div className="grid gap-3 md:grid-cols-2">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
               <div 
                 key={index} 
-                className={`border-b border-border ${index % 2 === 0 ? 'md:border-r md:pr-8' : 'md:pl-8'}`}
+                className="rounded-xl border border-muted-foreground/20 bg-card/40 backdrop-blur-md transition-all duration-300 hover:border-muted-foreground/40"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between py-6 text-left group"
+                  className="flex w-full items-center justify-between p-5 text-left group"
                 >
-                  <h3 className="text-base md:text-lg font-normal pr-4 group-hover:text-muted-foreground transition-colors">
+                  <h3 className="text-sm font-medium pr-4 text-foreground group-hover:text-muted-foreground transition-colors">
                     {faq.question}
                   </h3>
                   <Plus
@@ -83,10 +102,10 @@ export function EventFAQ({ items }: EventFAQProps) {
                 </button>
                 <div 
                   className={`overflow-hidden transition-all duration-300 ${
-                    isOpen ? "max-h-40 pb-6" : "max-h-0"
+                    isOpen ? "max-h-48 pb-5" : "max-h-0"
                   }`}
                 >
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed px-5">
                     {faq.answer}
                   </p>
                 </div>

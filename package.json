@@ -9,10 +9,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "contentful": "^11.0.0",
-    "contentful-management": "^11.0.0",
+    "@ai-sdk/groq": "^3.0.29",
+    "@ai-sdk/openai": "^3.0.41",
+    "@ai-sdk/react": "^3.0.118",
     "@hookform/resolvers": "^3.9.1",
-    "@vercel/analytics": "1.6.1",
+    "@neondatabase/serverless": "^1.0.0",
     "@radix-ui/react-accordion": "1.2.12",
     "@radix-ui/react-alert-dialog": "1.1.15",
     "@radix-ui/react-aspect-ratio": "1.1.8",
@@ -40,10 +41,15 @@
     "@radix-ui/react-toggle": "1.1.10",
     "@radix-ui/react-toggle-group": "1.1.11",
     "@radix-ui/react-tooltip": "1.2.8",
+    "@vercel/analytics": "1.6.1",
+    "ai": "^6.0.116",
     "autoprefixer": "^10.4.20",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
+    "contentful": "^11.0.0",
+    "contentful-management": "^11.0.0",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.6.0",
     "input-otp": "1.4.2",
@@ -59,9 +65,7 @@
     "sonner": "^1.7.1",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "zod": "^3.24.1",
-    "@neondatabase/serverless": "^1.0.0",
-    "bcryptjs": "^2.4.3"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.0",

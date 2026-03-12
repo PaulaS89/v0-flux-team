@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ContentfulThemeProvider } from '@/components/contentful-theme-provider'
+import { EventChatbot } from '@/components/event-chatbot'
 import { getActiveTheme, Theme } from '@/lib/contentful'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
   title: 'Future of Digital Experiences | Deloitte Executive Briefing',
@@ -119,13 +121,14 @@ export default async function RootLayout({
   const themeStyles = theme ? generateThemeStyles(theme) : '';
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <style dangerouslySetInnerHTML={{ __html: `:root { --muted-foreground: #D4D4D4; ${themeStyles} }` }} />
       </head>
-      <body className="font-sans antialiased">
+      <body className={`font-sans antialiased ${_spaceGrotesk.variable}`}>
         <ContentfulThemeProvider theme={theme}>
           {children}
+          <EventChatbot />
         </ContentfulThemeProvider>
         <Analytics />
       </body>

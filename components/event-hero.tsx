@@ -45,15 +45,25 @@ interface EventHeroProps {
 export function EventHero({ data }: EventHeroProps) {
   const heroData = data || defaultHeroData;
   
+  // Check if Deloitte theme is active
+  const isDeloitteTheme = heroData.themeName?.toLowerCase().includes('deloitte');
+  
+  // Check if Ocean Blue theme is active
+  const isOceanBlueTheme = heroData.themeName?.toLowerCase().includes('ocean');
+  
+  // Theme-specific taglines
+  const tagline = isOceanBlueTheme ? "Future · Live · Underwater" : "Future · LLMs · UX";
+  const subtitle = isOceanBlueTheme ? "Exploring Underwater Ecosystems" : "Designing for the Age of AI";
+  
   // Parse title for line breaks (from Contentful or fallback)
   const titleLines = heroData.title.split("\n");
 
   return (
-    <section className="relative flex min-h-screen flex-col overflow-hidden px-6 pt-14">
-      {/* Background Image from Contentful - with morphing animation */}
+    <section className="relative flex min-h-screen flex-col overflow-hidden px-8 md:px-16 lg:px-24 pt-14 bg-background">
+      {/* Background Image from Contentful - centered with morphing animation for Deloitte theme */}
       {heroData.backgroundImageUrl && (
-        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center">
-          <div className="relative h-[500px] w-[500px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] mx-auto animate-morph">
+        <div className="pointer-events-none absolute inset-0 w-full flex items-center justify-center dark:opacity-100 opacity-90 dark:invert-0 invert dark:mix-blend-normal mix-blend-multiply">
+          <div className={`relative h-[600px] w-[600px] md:h-[750px] md:w-[750px] lg:h-[900px] lg:w-[900px] ${isDeloitteTheme ? 'animate-morph' : ''}`}>
             <Image
               src={heroData.backgroundImageUrl}
               alt=""
@@ -61,41 +71,41 @@ export function EventHero({ data }: EventHeroProps) {
               className="object-contain"
               priority
               quality={100}
-              sizes="(max-width: 768px) 500px, (max-width: 1024px) 650px, 800px"
+              sizes="(max-width: 768px) 600px, (max-width: 1024px) 750px, 900px"
             />
           </div>
         </div>
       )}
 
-      {/* Morphing animation styles */}
+      {/* Morphing animation styles - for Deloitte theme */}
       <style jsx>{`
         @keyframes morph {
           0%, 100% {
-            filter: hue-rotate(0deg) saturate(1) brightness(1) contrast(1);
+            filter: hue-rotate(0deg) saturate(1) brightness(0.95) contrast(1);
             transform: rotate(0deg);
           }
           15% {
-            filter: hue-rotate(15deg) saturate(1.2) brightness(1.1) contrast(1.05);
-            transform: rotate(3deg);
-          }
-          30% {
-            filter: hue-rotate(-10deg) saturate(0.9) brightness(0.95) contrast(1.1);
-            transform: rotate(-2deg);
-          }
-          45% {
-            filter: hue-rotate(20deg) saturate(1.3) brightness(1.05) contrast(0.95);
-            transform: rotate(4deg);
-          }
-          60% {
-            filter: hue-rotate(-15deg) saturate(1.1) brightness(1.15) contrast(1.05);
-            transform: rotate(-3deg);
-          }
-          75% {
-            filter: hue-rotate(10deg) saturate(0.95) brightness(0.9) contrast(1.1);
+            filter: hue-rotate(12deg) saturate(1.15) brightness(0.92) contrast(1.02);
             transform: rotate(2deg);
           }
+          30% {
+            filter: hue-rotate(-8deg) saturate(0.95) brightness(0.88) contrast(1.05);
+            transform: rotate(-1.5deg);
+          }
+          45% {
+            filter: hue-rotate(15deg) saturate(1.2) brightness(0.9) contrast(0.98);
+            transform: rotate(3deg);
+          }
+          60% {
+            filter: hue-rotate(-12deg) saturate(1.1) brightness(0.85) contrast(1.03);
+            transform: rotate(-2deg);
+          }
+          75% {
+            filter: hue-rotate(8deg) saturate(0.98) brightness(0.92) contrast(1.05);
+            transform: rotate(1.5deg);
+          }
           90% {
-            filter: hue-rotate(-5deg) saturate(1.15) brightness(1.08) contrast(1);
+            filter: hue-rotate(-5deg) saturate(1.1) brightness(0.9) contrast(1);
             transform: rotate(-1deg);
           }
         }
@@ -105,26 +115,39 @@ export function EventHero({ data }: EventHeroProps) {
       `}</style>
 
       {/* Hero Content */}
-      <div className="relative z-10 mt-auto mb-auto flex flex-col justify-center min-h-[60vh]">
-        <div className="max-w-3xl md:ml-[5%] lg:ml-[8%]">
+      <div className="relative z-10 flex-1 flex items-center w-full">
+        <div className="max-w-xl">
           {heroData.themeName && (
-            <p className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-4 opacity-80">
+            <p className="text-[10px] dark:font-medium font-semibold uppercase tracking-[0.35em] dark:text-primary text-foreground mb-3" style={{ marginLeft: '4px' }}>
               {heroData.themeName}
             </p>
           )}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal leading-[1.1] tracking-tight text-foreground">
-            {titleLines.map((line, index) => (
-              <span key={index} className="block">
-                {line}
-              </span>
-            ))}
+          <h1 className="leading-none">
+            <span 
+              className="block text-5xl md:text-6xl lg:text-7xl xl:text-[7rem] font-bold tracking-[0.02em] bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent"
+              style={{
+                backgroundSize: '200% 100%',
+                backgroundPosition: '0% 0%',
+              }}
+            >
+              FLUX
+            </span>
           </h1>
+          <div className="mt-6" style={{ marginLeft: '4px' }}>
+            <p className="text-[10px] font-medium dark:font-medium font-semibold uppercase tracking-[0.3em] text-muted-foreground/70 dark:text-muted-foreground/70 text-muted-foreground mb-1">
+              {tagline}
+            </p>
+            <p className="text-sm md:text-base dark:font-light font-normal tracking-wide text-muted-foreground">
+              {subtitle}
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Event Details Footer */}
       <div className="relative z-10 pb-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          {/* Left side: Location & Date info */}
           <div className="flex flex-col gap-4 md:flex-row md:gap-16">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -145,30 +168,21 @@ export function EventHero({ data }: EventHeroProps) {
               </p>
             </div>
           </div>
-
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-10">
-            <div className="flex gap-10">
-              <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  {heroData.onlineLabel || "Online"}
-                </p>
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-foreground">
-                  {heroData.onlinePrice}
-                </p>
-              </div>
-              <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  {heroData.earlyBirdLabel || "Early Bird Tickets"}
-                </p>
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-foreground">
-                  {heroData.earlyBirdOriginalPrice && (
-                    <span className="text-muted-foreground line-through mr-2">
-                      {heroData.earlyBirdOriginalPrice}
-                    </span>
-                  )}
-                  {heroData.earlyBirdPrice}
-                </p>
-              </div>
+          
+          {/* Right side: Early Bird + CTA (chatbot will sit to the right via fixed positioning) */}
+          <div className="flex items-center gap-6">
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                {heroData.earlyBirdLabel || "Early Bird Tickets"}
+              </p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-foreground">
+                {heroData.earlyBirdOriginalPrice && (
+                  <span className="text-muted-foreground line-through mr-2">
+                    {heroData.earlyBirdOriginalPrice}
+                  </span>
+                )}
+                {heroData.earlyBirdPrice}
+              </p>
             </div>
             <Button
               size="lg"
@@ -185,6 +199,9 @@ export function EventHero({ data }: EventHeroProps) {
           </div>
         </div>
       </div>
+      
+      {/* Full-width separator line - positioned below the section */}
+      <div className="absolute -bottom-8 left-0 right-0 h-px bg-foreground/20" />
     </section>
   );
 }
