@@ -48,6 +48,13 @@ export function EventHero({ data }: EventHeroProps) {
   // Check if Deloitte theme is active
   const isDeloitteTheme = heroData.themeName?.toLowerCase().includes('deloitte');
   
+  // Check if Ocean Blue theme is active
+  const isOceanBlueTheme = heroData.themeName?.toLowerCase().includes('ocean');
+  
+  // Theme-specific taglines
+  const tagline = isOceanBlueTheme ? "Future · Live · Underwater" : "Future · LLMs · UX";
+  const subtitle = isOceanBlueTheme ? "Exploring the Digital Ecosystem" : "Designing for the Age of AI";
+  
   // Parse title for line breaks (from Contentful or fallback)
   const titleLines = heroData.title.split("\n");
 
@@ -128,10 +135,10 @@ export function EventHero({ data }: EventHeroProps) {
           </h1>
           <div className="mt-6" style={{ marginLeft: '4px' }}>
             <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground/70 mb-1">
-              Future · LLMs · UX
+              {tagline}
             </p>
             <p className="text-sm md:text-base font-light tracking-wide text-muted-foreground">
-              Designing for the Age of AI
+              {subtitle}
             </p>
           </div>
         </div>
