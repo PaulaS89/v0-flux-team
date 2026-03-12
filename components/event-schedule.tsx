@@ -272,7 +272,9 @@ export function EventSchedule({ items, headerImageUrl, themeName }: EventSchedul
             AGENDA
           </h2>
           <p className="text-muted-foreground text-sm md:text-base tracking-wide">
-            One day. Big ideas. The future of human-AI interaction.
+            {isOceanTheme 
+              ? "One day. Deep dives. Exploring underwater ecosystems." 
+              : "One day. Big ideas. The future of human-AI interaction."}
           </p>
         </div>
 
