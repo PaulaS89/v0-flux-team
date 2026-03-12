@@ -36,15 +36,15 @@ const fallbackImages = [
   "/speakers/speaker-man-3.jpg",
 ];
 
-// Get image for a speaker - first use Contentful image, then check by name, then use fallback based on index
+// Get image for a speaker - prioritize name-based mapping for overridden speakers, then Contentful, then fallback
 function getSpeakerImage(name: string, index: number, contentfulImage?: string | null): string {
-  // First priority: use image from Contentful if available
-  if (contentfulImage && contentfulImage.trim() !== "") {
-    return contentfulImage;
-  }
-  // Second priority: use name-based mapping for specific speakers
+  // First priority: use name-based mapping for specific speakers (important for overridden names like Nathan Jones)
   if (speakerImagesByName[name]) {
     return speakerImagesByName[name];
+  }
+  // Second priority: use image from Contentful if available
+  if (contentfulImage && contentfulImage.trim() !== "") {
+    return contentfulImage;
   }
   // Third priority: use index-based fallback
   return fallbackImages[index % fallbackImages.length];
@@ -262,6 +262,7 @@ export function EventSpeakers({ speakers }: EventSpeakersProps) {
         {/* 3x2 grid with bordered cards */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {speakersList.map((speaker, index) => {
+            // speaker.name is already the overridden name from enrichSpeakerWithTalkDetails
             const speakerImage = getSpeakerImage(speaker.name, index, speaker.photo || speaker.image);
             const bgColor = speakerColors[index % speakerColors.length];
             
