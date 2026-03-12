@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, LogOut, User } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -83,6 +84,7 @@ export function EventHeader({ siteSettings }: EventHeaderProps) {
           >
             FAQ
           </Link>
+          <ThemeToggle />
         </nav>
 
         <Link href="/" className="absolute left-1/2 -translate-x-1/2">

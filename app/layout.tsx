@@ -121,7 +121,7 @@ export default async function RootLayout({
   const themeStyles = theme ? generateThemeStyles(theme) : '';
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <style dangerouslySetInnerHTML={{ __html: `:root { --muted-foreground: #D4D4D4; ${themeStyles} }` }} />
       </head>
